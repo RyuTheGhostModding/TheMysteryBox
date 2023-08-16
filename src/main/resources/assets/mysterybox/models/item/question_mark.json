@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "question_mark",
+	"parent": "mysterybox:item/question_mark",
 	"texture_size": [32, 32],
 	"textures": {
 		"0": "mysterybox:item/question_mark",

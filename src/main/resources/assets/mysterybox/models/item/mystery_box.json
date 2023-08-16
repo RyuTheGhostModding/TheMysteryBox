@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "mystery_box",
+	"parent": "mysterybox:block/mystery_box",
 	"texture_size": [64, 64],
 	"textures": {
 		"0": "mysterybox:block/mystery_box",
