@@ -1,26 +1,26 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "key": {
-    "#": {
-      "tag": "minecraft:chest"
-    }
-  },
-  "key": {
-    "R": {
-      "tag": "minecraft:redstone_block"
-    }
-  },
-  "key": {
-    "Q": {
-      "tag": "mysterybox:question_mark"
-    }
-  },
   "pattern": [
     "QRQ",
     "R#R",
     "QRQ"
   ],
+  "key": {
+    "#": {
+      "item": "minecraft:chest"
+    }
+  },
+  "key": {
+    "R": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "key": {
+    "Q": {
+      "item": "mysterybox:question_mark"
+    }
+  },
   "result": {
     "item": "mysterybox:mystery_box",
     "count": 1
