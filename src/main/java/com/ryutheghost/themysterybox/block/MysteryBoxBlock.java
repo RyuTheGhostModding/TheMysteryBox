@@ -128,6 +128,12 @@ public class MysteryBoxBlock extends Block {
                     Items.IRON_BLOCK,
                     Items.AMETHYST_BLOCK,
                     Items.DIAMOND_BLOCK,
+                    Items.DRAGON_EGG,
+                    Items.DRAGON_HEAD,
+                    Items.SHEARS,
+                    Items.SHIELD,
+                    Items.FISHING_ROD,
+                    Items.FLINT_AND_STEEL
     };
     private static final List<String> good_translation_keys_messages = Arrays.asList(
             "goodluck.message.one",   // Translation key for a good luck message
