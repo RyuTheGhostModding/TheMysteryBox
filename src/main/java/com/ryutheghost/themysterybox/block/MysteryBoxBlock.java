@@ -242,15 +242,17 @@ public class MysteryBoxBlock extends Block {
                     Item item = ITEMS_LIST[RANDOM.nextInt(ITEMS_LIST.length)];
                     player.getInventory().add(new ItemStack(item));
                     hasGivenItem = true;
-                    if (!isgoodluckmessageSent) {
-                        // Generate a random index to get a random translation key for a good luck message
-                        int index = new Random().nextInt(good_translation_keys_messages.size());
+                    if(hasGivenItem){
+                        if (!isgoodluckmessageSent) {
+                            // Generate a random index to get a random translation key for a good luck message
+                            int index = new Random().nextInt(good_translation_keys_messages.size());
 
-                        // Send the good luck message to the player
-                        player.sendSystemMessage(Component.translatable(good_translation_keys_messages.get(index)));
+                            // Send the good luck message to the player
+                            player.sendSystemMessage(Component.translatable(good_translation_keys_messages.get(index)));
 
-                        // Set ismessageSent to true to prevent sending duplicate messages
-                        isgoodluckmessageSent = true;
+                            // Set ismessageSent to true to prevent sending duplicate messages
+                            isgoodluckmessageSent = true;
+                        }
                     }
                     // Set isBroken to true to indicate that the block has been broken
                     isBroken = true;
@@ -259,15 +261,17 @@ public class MysteryBoxBlock extends Block {
                     Item backpack = ModItems.BACKPACKS.get(RANDOM.nextInt(ModItems.BACKPACKS.size()));
                     player.getInventory().add(new ItemStack(backpack));
                     hasGivenBackpack = true;
-                    if (!isgoodluckmessageSent) {
-                        // Generate a random index to get a random translation key for a good luck message
-                        int index = new Random().nextInt(good_translation_keys_messages.size());
+                    if(hasGivenBackpack){
+                        if (!isgoodluckmessageSent) {
+                            // Generate a random index to get a random translation key for a good luck message
+                            int index = new Random().nextInt(good_translation_keys_messages.size());
 
-                        // Send the good luck message to the player
-                        player.sendSystemMessage(Component.translatable(good_translation_keys_messages.get(index)));
+                            // Send the good luck message to the player
+                            player.sendSystemMessage(Component.translatable(good_translation_keys_messages.get(index)));
 
-                        // Set ismessageSent to true to prevent sending duplicate messages
-                        isgoodluckmessageSent = true;
+                            // Set ismessageSent to true to prevent sending duplicate messages
+                            isgoodluckmessageSent = true;
+                        }
                     }
                     // Set isBroken to true to indicate that the block has been broken
                     isBroken = true;
@@ -279,7 +283,7 @@ public class MysteryBoxBlock extends Block {
                 }
 
                 isGoodLuck = true;
-            }else if (!isBadLuck) {
+            }if (!isBadLuck) {
                 // Check for Bad Luck
                 // Play sounds to indicate the successful opening of the mystery box
                 player.playSound(SoundEvents.WITHER_AMBIENT, 1f, 1f);
@@ -292,12 +296,14 @@ public class MysteryBoxBlock extends Block {
                         monster.spawn((ServerLevel) level, pos, MobSpawnType.SPAWNER);
                         hasSpawnedMonster = true;
 
-                        if (!isbackluckmessageSent) {
-                            // Generate a random index to get a random translation key for a bad luck message
-                            int index = new Random().nextInt(bad_translation_keys_messages.size());
-                            // Send the bad luck message to the player
-                            player.sendSystemMessage(Component.translatable(bad_translation_keys_messages.get(index)));
-                            isbackluckmessageSent = true;
+                        if(hasSpawnedMonster){
+                            if (!isbackluckmessageSent) {
+                                // Generate a random index to get a random translation key for a bad luck message
+                                int index = new Random().nextInt(bad_translation_keys_messages.size());
+                                // Send the bad luck message to the player
+                                player.sendSystemMessage(Component.translatable(bad_translation_keys_messages.get(index)));
+                                isbackluckmessageSent = true;
+                            }
                         }
 
                         // Set isBroken to true to indicate that the block has been broken
