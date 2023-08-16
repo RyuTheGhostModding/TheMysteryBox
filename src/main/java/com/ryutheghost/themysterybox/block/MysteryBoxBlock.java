@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
@@ -236,14 +237,11 @@ public class MysteryBoxBlock extends Block {
                 // Play sounds to indicate the successful opening of the mystery box
                 player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
                 player.playSound(SoundEvents.CHEST_OPEN, 1f, 1f);
-                if (!hasGivenItem) {
-                    // Give the player an item from the ITEMS_LIST
-                    Item[] item = {ITEMS_LIST[RANDOM.nextInt(ITEMS_LIST.length)]};
-                    for (Item tobeadded : item) {
-                        if(!hasGivenItem){
-                            player.getInventory().add(new ItemStack(tobeadded.getDefaultInstance().getItem()));
-                        }
-                    }
+                // Give the player an item from the ITEMS_LIST
+                if (!hasGivenItem && !hasGivenBackpack) {
+                    Item item = ITEMS_LIST[RANDOM.nextInt(ITEMS_LIST.length)];
+                    player.getInventory().add(new ItemStack(item));
+                    hasGivenItem = true;
                     if (!isgoodluckmessageSent) {
                         // Generate a random index to get a random translation key for a good luck message
                         int index = new Random().nextInt(good_translation_keys_messages.size());
@@ -254,17 +252,13 @@ public class MysteryBoxBlock extends Block {
                         // Set ismessageSent to true to prevent sending duplicate messages
                         isgoodluckmessageSent = true;
                     }
-                    hasGivenItem = true;
                     // Set isBroken to true to indicate that the block has been broken
                     isBroken = true;
-                } else if (!hasGivenBackpack) {
-                    // Give the player a backpack
-                    Item[] backpack = {ModItems.BACKPACKS.get(RANDOM.nextInt(ModItems.BACKPACKS.toArray().length))};
-                    for (Item tobeadded : backpack) {
-                        if(!hasGivenBackpack){
-                            player.getInventory().add(new ItemStack(tobeadded.getDefaultInstance().getItem()));
-                        }
-                    }
+                } // Give the player a backpack
+                if (hasGivenItem && !hasGivenBackpack) {
+                    Item backpack = ModItems.BACKPACKS.get(RANDOM.nextInt(ModItems.BACKPACKS.size()));
+                    player.getInventory().add(new ItemStack(backpack));
+                    hasGivenBackpack = true;
                     if (!isgoodluckmessageSent) {
                         // Generate a random index to get a random translation key for a good luck message
                         int index = new Random().nextInt(good_translation_keys_messages.size());
@@ -275,8 +269,6 @@ public class MysteryBoxBlock extends Block {
                         // Set ismessageSent to true to prevent sending duplicate messages
                         isgoodluckmessageSent = true;
                     }
-
-                    hasGivenBackpack = true;
                     // Set isBroken to true to indicate that the block has been broken
                     isBroken = true;
                 } else {
@@ -287,36 +279,36 @@ public class MysteryBoxBlock extends Block {
                 }
 
                 isGoodLuck = true;
-            }else if(!isBadLuck){
-                // Check is Bad Luck
+            }else if (!isBadLuck) {
+                // Check for Bad Luck
                 // Play sounds to indicate the successful opening of the mystery box
                 player.playSound(SoundEvents.WITHER_AMBIENT, 1f, 1f);
-                player.playSound(SoundEvents.CHEST_OPEN, 1f, 1f);
-                if(!hasSpawnedMonster){
+                player.playSound(SoundEvents.CHEST_OPEN,  1f, 1f);
+
+                if (!hasSpawnedMonster) {
                     // Select the player and spawn a monster from the MONSTERS list
-                    EntityType<?>[] monster = {MONSTERS[RANDOM.nextInt(MONSTERS.length)]};
-                    for(EntityType<?> type: monster){
-                        if(!hasSpawnedMonster){
-                            level.addFreshEntity(type.spawn((ServerLevel) level, pos, MobSpawnType.SPAWNER));
-                        }
-                    }
-                        if(!isbackluckmessageSent) {
-                            // Generate a random index to get a random translation key for a good luck message
+                    EntityType<?> monster = MONSTERS[RANDOM.nextInt(MONSTERS.length)];
+                    if (monster != null) {
+                        monster.spawn((ServerLevel) level, pos, MobSpawnType.SPAWNER);
+                        hasSpawnedMonster = true;
+
+                        if (!isbackluckmessageSent) {
+                            // Generate a random index to get a random translation key for a bad luck message
                             int index = new Random().nextInt(bad_translation_keys_messages.size());
-                            // Send the good luck message to the player
+                            // Send the bad luck message to the player
                             player.sendSystemMessage(Component.translatable(bad_translation_keys_messages.get(index)));
                             isbackluckmessageSent = true;
                         }
 
-
-                    hasSpawnedMonster = true;
-                    // Set isBroken to true to indicate that the block has been broken
-                    isBroken = true;
-                }else {
+                        // Set isBroken to true to indicate that the block has been broken
+                        isBroken = true;
+                    }
+                } else {
                     // Reset the block
                     hasSpawnedMonster = false;
                     isbackluckmessageSent = false;
                 }
+
                 isBadLuck = true;
             } else{
                 // Reset the block
