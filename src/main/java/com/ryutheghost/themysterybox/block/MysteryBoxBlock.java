@@ -149,6 +149,18 @@ public class MysteryBoxBlock extends Block {
                     Items.GLOWSTONE_DUST,
                     Items.GLOWSTONE,
                     Items.REDSTONE,
+                    Items.NETHER_STAR,
+                    Items.EXPERIENCE_BOTTLE,
+                    Items.HONEY_BOTTLE,
+                    Items.HONEYCOMB,
+                    Items.ENCHANTED_BOOK,
+                    Items.ENCHANTING_TABLE,
+                    Items.END_CRYSTAL,
+                    Items.ENDER_CHEST,
+                    Items.ENDER_EYE,
+                    Items.ENDER_PEARL,
+                    Items.CHEST,
+                    Items.FURNACE
     };
 
 
@@ -205,16 +217,15 @@ public class MysteryBoxBlock extends Block {
                 for (Item tobeadded : item) {
                     player.getInventory().add(new ItemStack(tobeadded.getDefaultInstance().getItem()));
                 }
+                // Play sounds to indicate the successful opening of the mystery box
+                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                player.playSound(SoundEvents.CHEST_OPEN, 1f, 1f);
                 if (!ismessageSent) {
                     // Generate a random index to get a random translation key for a good luck message
                     int index = new Random().nextInt(good_translation_keys_messages.size());
 
                     // Send the good luck message to the player
                     player.sendSystemMessage(Component.translatable(good_translation_keys_messages.get(index)));
-
-                    // Play sounds to indicate the successful opening of the mystery box
-                    player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                    player.playSound(SoundEvents.CHEST_OPEN, 1f, 1f);
 
                     // Set ismessageSent to true to prevent sending duplicate messages
                     ismessageSent = true;
@@ -231,16 +242,15 @@ public class MysteryBoxBlock extends Block {
                 for (Item tobeadded : backpack) {
                     player.getInventory().add(new ItemStack(tobeadded.getDefaultInstance().getItem()));
                 }
+                // Play sounds to indicate the successful opening of the mystery box
+                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                player.playSound(SoundEvents.CHEST_OPEN, 1f, 1f);
                 if (!ismessageSent) {
                     // Generate a random index to get a random translation key for a good luck message
                     int index = new Random().nextInt(good_translation_keys_messages.size());
 
                     // Send the good luck message to the player
                     player.sendSystemMessage(Component.translatable(good_translation_keys_messages.get(index)));
-
-                    // Play sounds to indicate the successful opening of the mystery box
-                    player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                    player.playSound(SoundEvents.CHEST_OPEN, 1f, 1f);
 
                     // Set ismessageSent to true to prevent sending duplicate messages
                     ismessageSent = true;
