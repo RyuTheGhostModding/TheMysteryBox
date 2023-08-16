@@ -1,5 +1,6 @@
 package com.ryutheghost.themysterybox.block;
 
+import com.tiviacz.travelersbackpack.init.ModItems;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -146,8 +147,53 @@ public class MysteryBoxBlock extends Block {
                     Items.GLOW_INK_SAC,
                     Items.GLOWSTONE_DUST,
                     Items.GLOWSTONE,
-                    Items.REDSTONE
+                    Items.REDSTONE,
+                    ModItems.BAT_TRAVELERS_BACKPACK.get(),
+                    ModItems.BEE_TRAVELERS_BACKPACK.get(),
+                    ModItems.BLAZE_TRAVELERS_BACKPACK.get(),
+                    ModItems.BOOKSHELF_TRAVELERS_BACKPACK.get(),
+                    ModItems.CACTUS_TRAVELERS_BACKPACK.get(),
+                    ModItems.CAKE_TRAVELERS_BACKPACK.get(),
+                    ModItems.CHICKEN_TRAVELERS_BACKPACK.get(),
+                    ModItems.COAL_TRAVELERS_BACKPACK.get(),
+                    ModItems.COW_TRAVELERS_BACKPACK.get(),
+                    ModItems.CREEPER_TRAVELERS_BACKPACK.get(),
+                    ModItems.DIAMOND_TRAVELERS_BACKPACK.get(),
+                    ModItems.DRAGON_TRAVELERS_BACKPACK.get(),
+                    ModItems.EMERALD_TRAVELERS_BACKPACK.get(),
+                    ModItems.END_TRAVELERS_BACKPACK.get(),
+                    ModItems.ENDERMAN_TRAVELERS_BACKPACK.get(),
+                    ModItems.FOX_TRAVELERS_BACKPACK.get(),
+                    ModItems.GHAST_TRAVELERS_BACKPACK.get(),
+                    ModItems.GOLD_TRAVELERS_BACKPACK.get(),
+                    ModItems.HAY_TRAVELERS_BACKPACK.get(),
+                    ModItems.HORSE_TRAVELERS_BACKPACK.get(),
+                    ModItems.IRON_GOLEM_TRAVELERS_BACKPACK.get(),
+                    ModItems.LAPIS_TRAVELERS_BACKPACK.get(),
+                    ModItems.MAGMA_CUBE_TRAVELERS_BACKPACK.get(),
+                    ModItems.MELON_TRAVELERS_BACKPACK.get(),
+                    ModItems.NETHER_TRAVELERS_BACKPACK.get(),
+                    ModItems.IRON_TRAVELERS_BACKPACK.get(),
+                    ModItems.NETHERITE_TRAVELERS_BACKPACK.get(),
+                    ModItems.OCELOT_TRAVELERS_BACKPACK.get(),
+                    ModItems.PIG_TRAVELERS_BACKPACK.get(),
+                    ModItems.PUMPKIN_TRAVELERS_BACKPACK.get(),
+                    ModItems.QUARTZ_TRAVELERS_BACKPACK.get(),
+                    ModItems.REDSTONE_TRAVELERS_BACKPACK.get(),
+                    ModItems.SANDSTONE_TRAVELERS_BACKPACK.get(),
+                    ModItems.SHEEP_TRAVELERS_BACKPACK.get(),
+                    ModItems.SKELETON_TRAVELERS_BACKPACK.get(),
+                    ModItems.SNOW_TRAVELERS_BACKPACK.get(),
+                    ModItems.SPIDER_TRAVELERS_BACKPACK.get(),
+                    ModItems.SPONGE_TRAVELERS_BACKPACK.get(),
+                    ModItems.STANDARD_TRAVELERS_BACKPACK.get(),
+                    ModItems.VILLAGER_TRAVELERS_BACKPACK.get(),
+                    ModItems.WITHER_TRAVELERS_BACKPACK.get(),
+                    ModItems.WOLF_TRAVELERS_BACKPACK.get(),
+
     };
+
+
     private static final List<String> good_translation_keys_messages = Arrays.asList(
             "goodluck.message.one",   // Translation key for a good luck message
             "goodluck.message.two",   // Translation key for a good luck message

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.ryutheghost.themysterybox.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "TheMysteryBox.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
