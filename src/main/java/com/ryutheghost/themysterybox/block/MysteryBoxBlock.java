@@ -133,7 +133,20 @@ public class MysteryBoxBlock extends Block {
                     Items.SHEARS,
                     Items.SHIELD,
                     Items.FISHING_ROD,
-                    Items.FLINT_AND_STEEL
+                    Items.FLINT_AND_STEEL,
+                    Items.FIRE_CHARGE,
+                    Items.FLINT,
+                    Items.WOLF_SPAWN_EGG,
+                    Items.BONE,
+                    Items.BONE_MEAL,
+                    Items.CAT_SPAWN_EGG,
+                    Items.TROPICAL_FISH,
+                    Items.PUFFERFISH,
+                    Items.INK_SAC,
+                    Items.GLOW_INK_SAC,
+                    Items.GLOWSTONE_DUST,
+                    Items.GLOWSTONE,
+                    Items.REDSTONE
     };
     private static final List<String> good_translation_keys_messages = Arrays.asList(
             "goodluck.message.one",   // Translation key for a good luck message
