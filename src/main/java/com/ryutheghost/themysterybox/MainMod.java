@@ -2,10 +2,11 @@ package com.ryutheghost.themysterybox;
 
 import com.mojang.logging.LogUtils;
 import com.ryutheghost.themysterybox.block.creativetab.ModBlocksTab;
-import com.ryutheghost.themysterybox.block.registry.ModBlocks;
+import com.ryutheghost.themysterybox.block.registry.MysteryBoxModBlocks;
 import com.ryutheghost.themysterybox.item.creativetab.ModItemsTab;
-import com.ryutheghost.themysterybox.item.registry.ModItems;
+import com.ryutheghost.themysterybox.item.registry.MysteryBoxModItems;
 import com.ryutheghost.themysterybox.util.OnLevelJoined;
+import com.tiviacz.travelersbackpack.TravelersBackpack;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -13,6 +14,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -38,8 +40,8 @@ public class MainMod {
         MinecraftForge.EVENT_BUS.register(this);
 
         // Register our Blocks and Items
-        ModItems.register(modEventBus);
-        ModBlocks.register(modEventBus);
+        MysteryBoxModItems.register(modEventBus);
+        MysteryBoxModBlocks.register(modEventBus);
 
         // Register our CreativeModeTabs
         ModItemsTab.register(modEventBus);
@@ -47,6 +49,9 @@ public class MainMod {
 
         // Register our OnJoinLevelEvent
         MinecraftForge.EVENT_BUS.register(new OnLevelJoined());
+
+        // Enable usage of travelers backpack
+        ModList.get().isLoaded(TravelersBackpack.MODID);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -73,7 +78,7 @@ public class MainMod {
             LOGGER.info("Mystery Box Filled.");
             LOGGER.info("Sorting Inventory For The Mystery Box.");
             LOGGER.info("Mystery Box Ready!.");
-            ItemBlockRenderTypes.setRenderLayer(ModBlocks.MYSTERY_BOX_BLOCK.get(), RenderType.solid());
+            ItemBlockRenderTypes.setRenderLayer(MysteryBoxModBlocks.MYSTERY_BOX_BLOCK.get(), RenderType.solid());
         }
     }
 }

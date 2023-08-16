@@ -2,7 +2,7 @@ package com.ryutheghost.themysterybox.block.registry;
 
 import com.ryutheghost.themysterybox.MainMod;
 import com.ryutheghost.themysterybox.block.MysteryBoxBlock;
-import com.ryutheghost.themysterybox.item.registry.ModItems;
+import com.ryutheghost.themysterybox.item.registry.MysteryBoxModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -16,7 +16,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
-public class ModBlocks {
+public class MysteryBoxModBlocks {
 
     // DeferredRegister for Block
     public static final DeferredRegister<Block> BLOCKS =
@@ -38,7 +38,7 @@ public class ModBlocks {
     // Helper method to register a block item
     private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block) {
         // Register the item with the same name as the block
-        return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+        return MysteryBoxModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
     // Register the blocks with the event bus

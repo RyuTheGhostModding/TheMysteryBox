@@ -67,7 +67,7 @@ description='''${mod_description}'''
 [[dependencies.${mod_id}]]
     modId="travelersbackpack"
     mandatory=true
-    versionRange="${9.1.4}"
+    versionRange="9.1.4"
     ordering="AFTER"
     side="BOTH"
 

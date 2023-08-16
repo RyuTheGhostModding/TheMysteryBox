@@ -1,7 +1,7 @@
 package com.ryutheghost.themysterybox.item.creativetab;
 
 import com.ryutheghost.themysterybox.MainMod;
-import com.ryutheghost.themysterybox.item.registry.ModItems;
+import com.ryutheghost.themysterybox.item.registry.MysteryBoxModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -20,12 +20,12 @@ public class ModItemsTab {
     public static final RegistryObject<CreativeModeTab> MYSTERY_ITEMS_TAB = CREATIVE_MODE_TABS.register("unknown_items_tab",
             () -> CreativeModeTab.builder()
                     // Set the icon for the creative mode tab to a question mark item
-                    .icon(() -> new ItemStack(ModItems.QUESTION_MARK_ITEM.get()))
+                    .icon(() -> new ItemStack(MysteryBoxModItems.QUESTION_MARK_ITEM.get()))
                     // Set the title of the creative mode tab using a translatable component
                     .title(Component.translatable("creativetab_unknown_items_tab"))
                     // Display the question mark item in the creative mode tab
                     .displayItems((pParameters, pOutput) -> {
-                        pOutput.accept(ModItems.QUESTION_MARK_ITEM.get());
+                        pOutput.accept(MysteryBoxModItems.QUESTION_MARK_ITEM.get());
                     })
                     .build());
 

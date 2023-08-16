@@ -1,6 +1,6 @@
 package com.ryutheghost.themysterybox.util;
 
-import com.ryutheghost.themysterybox.block.registry.ModBlocks;
+import com.ryutheghost.themysterybox.block.registry.MysteryBoxModBlocks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
@@ -23,14 +23,14 @@ public class OnLevelJoined {
                 "\n§bhttps://www.youtube.com/@ryutheghost/about\n§aSubscribe for more updates."));
 
         // Check if the player has the Mystery Box in their inventory
-        if(event.getEntity().getInventory().contains(new ItemStack(ModBlocks.MYSTERY_BOX_BLOCK.get()))) {
+        if(event.getEntity().getInventory().contains(new ItemStack(MysteryBoxModBlocks.MYSTERY_BOX_BLOCK.get()))) {
             // If the player has the Mystery Box, send a system message
             event.getEntity().sendSystemMessage(Component.nullToEmpty("§aSoon, I plan on adding support for CurseForge mod dependencies, " +
                     "so I can add more items and blocks and extend the functionality of this mod."));
         } else {
             // If the player doesn't have the Mystery Box, send a system message and give it to the player
             event.getEntity().sendSystemMessage(Component.nullToEmpty("§aHave a Mystery Box on the house."));
-            event.getEntity().getInventory().add(new ItemStack(ModBlocks.MYSTERY_BOX_BLOCK.get()));
+            event.getEntity().getInventory().add(new ItemStack(MysteryBoxModBlocks.MYSTERY_BOX_BLOCK.get()));
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.ryutheghost.themysterybox.block.creativetab;
 
 import com.ryutheghost.themysterybox.MainMod;
-import com.ryutheghost.themysterybox.block.registry.ModBlocks;
+import com.ryutheghost.themysterybox.block.registry.MysteryBoxModBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -19,10 +19,10 @@ public class ModBlocksTab {
     // RegistryObject for the custom Mystery Box creative mode tab
     public static final RegistryObject<CreativeModeTab> MYSTERY_BOX_TAB = CREATIVE_MODE_TABS.register("the_box_tab",
             () -> CreativeModeTab.builder()
-                    .icon(() -> new ItemStack(ModBlocks.MYSTERY_BOX_BLOCK.get())) // Set the icon to the Mystery Box block
+                    .icon(() -> new ItemStack(MysteryBoxModBlocks.MYSTERY_BOX_BLOCK.get())) // Set the icon to the Mystery Box block
                     .title(Component.translatable("creativetab_the_box_tab")) // Set the translation key for the tab title
                     .displayItems((pParameters, pOutput) -> {
-                        pOutput.accept(ModBlocks.MYSTERY_BOX_BLOCK.get()); // Display the Mystery Box block in the tab
+                        pOutput.accept(MysteryBoxModBlocks.MYSTERY_BOX_BLOCK.get()); // Display the Mystery Box block in the tab
                     })
                     .build());
 

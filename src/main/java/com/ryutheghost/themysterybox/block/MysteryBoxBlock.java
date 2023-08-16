@@ -1,6 +1,5 @@
 package com.ryutheghost.themysterybox.block;
 
-import com.tiviacz.travelersbackpack.init.ModItems;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -19,6 +18,8 @@ import net.minecraft.world.level.material.FluidState;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+
+import com.tiviacz.travelersbackpack.init.ModItems;
 
 public class MysteryBoxBlock extends Block {
     public MysteryBoxBlock(Properties pProperties) {
@@ -148,49 +149,6 @@ public class MysteryBoxBlock extends Block {
                     Items.GLOWSTONE_DUST,
                     Items.GLOWSTONE,
                     Items.REDSTONE,
-                    ModItems.BAT_TRAVELERS_BACKPACK.get(),
-                    ModItems.BEE_TRAVELERS_BACKPACK.get(),
-                    ModItems.BLAZE_TRAVELERS_BACKPACK.get(),
-                    ModItems.BOOKSHELF_TRAVELERS_BACKPACK.get(),
-                    ModItems.CACTUS_TRAVELERS_BACKPACK.get(),
-                    ModItems.CAKE_TRAVELERS_BACKPACK.get(),
-                    ModItems.CHICKEN_TRAVELERS_BACKPACK.get(),
-                    ModItems.COAL_TRAVELERS_BACKPACK.get(),
-                    ModItems.COW_TRAVELERS_BACKPACK.get(),
-                    ModItems.CREEPER_TRAVELERS_BACKPACK.get(),
-                    ModItems.DIAMOND_TRAVELERS_BACKPACK.get(),
-                    ModItems.DRAGON_TRAVELERS_BACKPACK.get(),
-                    ModItems.EMERALD_TRAVELERS_BACKPACK.get(),
-                    ModItems.END_TRAVELERS_BACKPACK.get(),
-                    ModItems.ENDERMAN_TRAVELERS_BACKPACK.get(),
-                    ModItems.FOX_TRAVELERS_BACKPACK.get(),
-                    ModItems.GHAST_TRAVELERS_BACKPACK.get(),
-                    ModItems.GOLD_TRAVELERS_BACKPACK.get(),
-                    ModItems.HAY_TRAVELERS_BACKPACK.get(),
-                    ModItems.HORSE_TRAVELERS_BACKPACK.get(),
-                    ModItems.IRON_GOLEM_TRAVELERS_BACKPACK.get(),
-                    ModItems.LAPIS_TRAVELERS_BACKPACK.get(),
-                    ModItems.MAGMA_CUBE_TRAVELERS_BACKPACK.get(),
-                    ModItems.MELON_TRAVELERS_BACKPACK.get(),
-                    ModItems.NETHER_TRAVELERS_BACKPACK.get(),
-                    ModItems.IRON_TRAVELERS_BACKPACK.get(),
-                    ModItems.NETHERITE_TRAVELERS_BACKPACK.get(),
-                    ModItems.OCELOT_TRAVELERS_BACKPACK.get(),
-                    ModItems.PIG_TRAVELERS_BACKPACK.get(),
-                    ModItems.PUMPKIN_TRAVELERS_BACKPACK.get(),
-                    ModItems.QUARTZ_TRAVELERS_BACKPACK.get(),
-                    ModItems.REDSTONE_TRAVELERS_BACKPACK.get(),
-                    ModItems.SANDSTONE_TRAVELERS_BACKPACK.get(),
-                    ModItems.SHEEP_TRAVELERS_BACKPACK.get(),
-                    ModItems.SKELETON_TRAVELERS_BACKPACK.get(),
-                    ModItems.SNOW_TRAVELERS_BACKPACK.get(),
-                    ModItems.SPIDER_TRAVELERS_BACKPACK.get(),
-                    ModItems.SPONGE_TRAVELERS_BACKPACK.get(),
-                    ModItems.STANDARD_TRAVELERS_BACKPACK.get(),
-                    ModItems.VILLAGER_TRAVELERS_BACKPACK.get(),
-                    ModItems.WITHER_TRAVELERS_BACKPACK.get(),
-                    ModItems.WOLF_TRAVELERS_BACKPACK.get(),
-
     };
 
 
@@ -233,39 +191,71 @@ public class MysteryBoxBlock extends Block {
 
     private boolean ismessageSent = false; // Boolean field to keep track of whether a message has been sent or not
 
+    private boolean hasGivenItem = false; // Boolean field to check if it is a vanilla item
+    private boolean hasGivenBackpack = false; // Boolean field to check if it is a backpack
+
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
         if (!isBroken) {
             // The block is being broken for the first time
 
-            // Obtain a random item from the ITEMS_LIST array
-            Item[] item = {ITEMS_LIST[RANDOM.nextInt(ITEMS_LIST.length)]};
+            if (!hasGivenItem) {
+                // Give the player an item from the ITEMS_LIST
+                Item[] item = {ITEMS_LIST[RANDOM.nextInt(ITEMS_LIST.length)]};
+                for (Item tobeadded : item) {
+                    player.getInventory().add(new ItemStack(tobeadded.getDefaultInstance().getItem()));
+                }
+                if (!ismessageSent) {
+                    // Generate a random index to get a random translation key for a good luck message
+                    int index = new Random().nextInt(good_translation_keys_messages.size());
 
-            // Add the obtained item to the player's inventory
-            for (Item tobeadded : item) {
-                player.getInventory().add(new ItemStack(tobeadded.getDefaultInstance().getItem()));
-            }
+                    // Send the good luck message to the player
+                    player.sendSystemMessage(Component.translatable(good_translation_keys_messages.get(index)));
 
-            if (!ismessageSent) {
-                // Generate a random index to get a random translation key for a good luck message
-                int index = new Random().nextInt(good_translation_keys_messages.size());
+                    // Play sounds to indicate the successful opening of the mystery box
+                    player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                    player.playSound(SoundEvents.CHEST_OPEN, 1f, 1f);
 
-                // Send the good luck message to the player
-                player.sendSystemMessage(Component.translatable(good_translation_keys_messages.get(index)));
+                    // Set ismessageSent to true to prevent sending duplicate messages
+                    ismessageSent = true;
+                } else {
+                    // If a message has already been sent, reset ismessageSent to false
+                    ismessageSent = false;
+                }
+                hasGivenItem = true;
+                // Set isBroken to true to indicate that the block has been broken
+                isBroken = true;
+            } else if (!hasGivenBackpack) {
+                // Give the player a backpack
+                Item[] backpack = {ModItems.BACKPACKS.get(RANDOM.nextInt(ModItems.BACKPACKS.toArray().length))};
+                for (Item tobeadded : backpack) {
+                    player.getInventory().add(new ItemStack(tobeadded.getDefaultInstance().getItem()));
+                }
+                if (!ismessageSent) {
+                    // Generate a random index to get a random translation key for a good luck message
+                    int index = new Random().nextInt(good_translation_keys_messages.size());
 
-                // Play sounds to indicate the successful opening of the mystery box
-                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                player.playSound(SoundEvents.CHEST_OPEN, 1f, 1f);
+                    // Send the good luck message to the player
+                    player.sendSystemMessage(Component.translatable(good_translation_keys_messages.get(index)));
 
-                // Set ismessageSent to true to prevent sending duplicate messages
-                ismessageSent = true;
+                    // Play sounds to indicate the successful opening of the mystery box
+                    player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                    player.playSound(SoundEvents.CHEST_OPEN, 1f, 1f);
+
+                    // Set ismessageSent to true to prevent sending duplicate messages
+                    ismessageSent = true;
+                } else {
+                    // If a message has already been sent, reset ismessageSent to false
+                    ismessageSent = false;
+                }
+                hasGivenBackpack = true;
+                // Set isBroken to true to indicate that the block has been broken
+                isBroken = true;
             } else {
-                // If a message has already been sent, reset ismessageSent to false
-                ismessageSent = false;
+                // Reset the block
+                hasGivenItem = false;
+                hasGivenBackpack = false;
             }
-
-            // Set isBroken to true to indicate that the block has been broken
-            isBroken = true;
         }
 
         // ...

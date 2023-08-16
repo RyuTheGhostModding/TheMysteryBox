@@ -8,7 +8,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-public class ModItems {
+public class MysteryBoxModItems {
 
     // Create a deferred register for items
     public static final DeferredRegister<Item> ITEMS =
