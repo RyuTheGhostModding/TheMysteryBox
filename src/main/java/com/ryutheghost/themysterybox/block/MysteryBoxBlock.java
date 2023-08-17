@@ -220,7 +220,7 @@ public class MysteryBoxBlock extends Block {
 
     private boolean isgoodluckmessageSent = false; // Boolean field to keep track of whether a message has been sent or not
 
-    private boolean isbackluckmessageSent = false;
+    private boolean isbackluckmessageSent = false; // Boolean field to keep track of whether a message has been sent or not
     private boolean hasGivenItem = false; // Boolean field to check if it is a vanilla item
     private boolean hasGivenBackpack = false; // Boolean field to check if it is a backpack
 
