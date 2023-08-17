@@ -1,5 +1,7 @@
 package com.ryutheghost.themysterybox.block;
 
+import com.progwml6.ironchest.common.item.IronChestBlockItem;
+import com.progwml6.ironchest.common.item.IronChestsItems;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -223,10 +225,11 @@ public class MysteryBoxBlock extends Block {
     private boolean isbackluckmessageSent = false; // Boolean field to keep track of whether a message has been sent or not
     private boolean hasGivenItem = false; // Boolean field to check if it is a vanilla item
     private boolean hasGivenBackpack = false; // Boolean field to check if it is a backpack
-
+    private boolean hasGivenIronChest = false; // Boolean field to check if it is a iron chest
     private boolean hasSpawnedExplosion = false; // Boolean field to check if it is a monster
     private boolean isGoodLuck = true; // Boolean field to check if it is good luck
     private boolean isBadLuck = false; // Boolean field to check if it is bad luck
+
 
     private boolean isLuck = false; // Boolean field to check the luck
 
@@ -237,8 +240,7 @@ public class MysteryBoxBlock extends Block {
             if (!isLuck) {
                 if (isGoodLuck && !isBadLuck) {
                     //Check is Good Luck
-                    // Give the player an item from the ITEMS_LIST
-                    if (!hasGivenItem && !hasGivenBackpack && !hasSpawnedExplosion) {
+                    if (!hasGivenItem && !hasGivenBackpack && !hasGivenIronChest && !hasSpawnedExplosion) {
                         if (isGoodLuck && !isBadLuck) {
                             if (!hasGivenItem) {
                                 if (!isgoodluckmessageSent) {
@@ -248,6 +250,7 @@ public class MysteryBoxBlock extends Block {
                                     player.sendSystemMessage(Component.translatable(good_translation_keys_messages.get(index)));
                                     // Set ismessageSent to true to prevent sending duplicate messages
                                     isgoodluckmessageSent = true;
+                                    // Give the player an item from the ITEMS_LIST
                                     Item item = ITEMS_LIST[RANDOM.nextInt(ITEMS_LIST.length)];
                                     player.getInventory().add(new ItemStack(item));
                                     // Play sounds to indicate the successful opening of the mystery box
@@ -263,7 +266,7 @@ public class MysteryBoxBlock extends Block {
                         isBroken = true;
                         hasGivenItem = true;
                     } // Give the player a backpack
-                    if (hasGivenItem && !hasGivenBackpack && !hasSpawnedExplosion) {
+                    if (hasGivenItem && !hasGivenBackpack && !hasGivenIronChest && !hasSpawnedExplosion) {
                         if (isGoodLuck && !isBadLuck) {
                             if (!hasGivenBackpack) {
                                 if (!isgoodluckmessageSent) {
@@ -287,12 +290,38 @@ public class MysteryBoxBlock extends Block {
                         // Set isBroken and hasGivenBackpack to true to indicate that the block has been broken
                         isBroken = true;
                         hasGivenBackpack = true;
+                    } // Give the player a iron chest
+                    if (hasGivenItem && hasGivenBackpack && !hasGivenIronChest && !hasSpawnedExplosion) {
+                        if (isGoodLuck && !isBadLuck) {
+                            if (!hasGivenIronChest) {
+                                if (!isgoodluckmessageSent) {
+                                    // Generate a random index to get a random translation key for a good luck message
+                                    int index = new Random().nextInt(good_translation_keys_messages.size());
+                                    // Send the good luck message to the player
+                                    player.sendSystemMessage(Component.translatable(good_translation_keys_messages.get(index)));
+                                    // Set ismessageSent to true to prevent sending duplicate messages
+                                    isgoodluckmessageSent = true;
+                                    // Play sounds to indicate the successful opening of the mystery box
+                                    player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                                    player.playSound(SoundEvents.CHEST_OPEN, 1f, 1f);
+                                    Item backpack = IronChestBlockItem.BY_BLOCK.get(RANDOM.nextInt(IronChestBlockItem.BY_BLOCK.size()));
+                                    player.getInventory().add(new ItemStack(backpack));
+                                }
+                                else{
+                                    isgoodluckmessageSent = false;
+                                }
+                            }
+                        }
+                        // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
+                        isBroken = true;
+                        hasGivenIronChest = true;
                     }
                     else {
                         // Reset the block
                         hasGivenItem = false;
                         hasGivenBackpack = false;
                         hasSpawnedExplosion = false;
+                        hasGivenIronChest = false;
                     }
                     isGoodLuck = false;
                     isBadLuck = true;
@@ -300,7 +329,7 @@ public class MysteryBoxBlock extends Block {
                 else if (!isGoodLuck && isBadLuck) {
                     // Check for Bad Luck
                     float radius = explosion_radius[RANDOM.nextInt(explosion_radius.length)];
-                    if (hasGivenItem && hasGivenBackpack && !hasSpawnedExplosion) {
+                    if (hasGivenItem && hasGivenBackpack && hasGivenIronChest && !hasSpawnedExplosion) {
                         if (!isGoodLuck && isBadLuck) {
                             if (!hasSpawnedExplosion) {
                                 if (!isbackluckmessageSent) {
@@ -329,6 +358,7 @@ public class MysteryBoxBlock extends Block {
                         hasGivenItem = false;
                         hasGivenBackpack = false;
                         hasSpawnedExplosion = false;
+                        hasGivenIronChest = false;
                     }
                     isBadLuck = false;
                     isGoodLuck = true;

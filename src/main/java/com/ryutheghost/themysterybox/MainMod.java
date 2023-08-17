@@ -1,6 +1,7 @@
 package com.ryutheghost.themysterybox;
 
 import com.mojang.logging.LogUtils;
+import com.progwml6.ironchest.IronChests;
 import com.ryutheghost.themysterybox.block.creativetab.ModBlocksTab;
 import com.ryutheghost.themysterybox.block.registry.MysteryBoxModBlocks;
 import com.ryutheghost.themysterybox.item.creativetab.ModItemsTab;
@@ -52,6 +53,8 @@ public class MainMod {
 
         // Enable usage of travelers backpack
         ModList.get().isLoaded(TravelersBackpack.MODID);
+        // Enable usage of iron chests
+        ModList.get().isLoaded(IronChests.MOD_ID);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
