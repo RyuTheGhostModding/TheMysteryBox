@@ -10,6 +10,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Objects;
+
 public class ModItemsTab {
 
     // Create a deferred register for creative mode tabs
@@ -20,13 +22,11 @@ public class ModItemsTab {
     public static final RegistryObject<CreativeModeTab> MYSTERY_ITEMS_TAB = CREATIVE_MODE_TABS.register("unknown_items_tab",
             () -> CreativeModeTab.builder()
                     // Set the icon for the creative mode tab to a question mark item
-                    .icon(() -> new ItemStack(MysteryBoxModItems.QUESTION_MARK_ITEM.get()))
+                    .icon(() -> new ItemStack(Objects.requireNonNull(MysteryBoxModItems.QUESTION_MARK_ITEM).get()))
                     // Set the title of the creative mode tab using a translatable component
                     .title(Component.translatable("creativetab_unknown_items_tab"))
                     // Display the question mark item in the creative mode tab
-                    .displayItems((pParameters, pOutput) -> {
-                        pOutput.accept(MysteryBoxModItems.QUESTION_MARK_ITEM.get());
-                    })
+                    .displayItems((pParameters, pOutput) -> pOutput.accept(Objects.requireNonNull(MysteryBoxModItems.QUESTION_MARK_ITEM).get()))
                     .build());
 
     // Register the deferred register with the event bus

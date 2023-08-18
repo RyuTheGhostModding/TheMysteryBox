@@ -10,6 +10,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Objects;
+
 public class ModBlocksTab {
 
     // DeferredRegister for CreativeModeTab
@@ -19,10 +21,10 @@ public class ModBlocksTab {
     // RegistryObject for the custom Mystery Box creative mode tab
     public static final RegistryObject<CreativeModeTab> MYSTERY_BOX_TAB = CREATIVE_MODE_TABS.register("the_box_tab",
             () -> CreativeModeTab.builder()
-                    .icon(() -> new ItemStack(MysteryBoxModBlocks.MYSTERY_BOX_BLOCK.get())) // Set the icon to the Mystery Box block
+                    .icon(() -> new ItemStack(Objects.requireNonNull(MysteryBoxModBlocks.MYSTERY_BOX_BLOCK).get())) // Set the icon to the Mystery Box block
                     .title(Component.translatable("creativetab_the_box_tab")) // Set the translation key for the tab title
                     .displayItems((pParameters, pOutput) -> {
-                        pOutput.accept(MysteryBoxModBlocks.MYSTERY_BOX_BLOCK.get()); // Display the Mystery Box block in the tab
+                        pOutput.accept(Objects.requireNonNull(MysteryBoxModBlocks.MYSTERY_BOX_BLOCK).get()); // Display the Mystery Box block in the tab
                     })
                     .build());
 

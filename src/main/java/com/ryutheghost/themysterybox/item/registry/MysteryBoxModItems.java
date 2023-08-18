@@ -8,11 +8,13 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Objects;
+
 public class MysteryBoxModItems {
 
     // Create a deferred register for items
     public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, MainMod.MODID);
+            DeferredRegister.create(Objects.requireNonNull(ForgeRegistries.ITEMS), MainMod.MODID);
 
     // Define a registry object for the question mark item
     public static final RegistryObject<Item> QUESTION_MARK_ITEM = ITEMS.register("question_mark",

@@ -20,7 +20,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
+
+import java.util.Objects;
 
 @Mod(MainMod.MODID)
 public class MainMod {
@@ -32,13 +35,13 @@ public class MainMod {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public MainMod() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus modEventBus = Objects.requireNonNull(FMLJavaModLoadingContext.get()).getModEventBus();
 
         // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
+        Objects.requireNonNull(modEventBus).addListener(this::commonSetup);
 
         // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
+        Objects.requireNonNull(MinecraftForge.EVENT_BUS).register(this);
 
         // Register our Blocks and Items
         MysteryBoxModItems.register(modEventBus);
@@ -51,13 +54,14 @@ public class MainMod {
         // Register our OnJoinLevelEvent
         MinecraftForge.EVENT_BUS.register(new OnLevelJoined());
 
-        // Enable usage of travelers backpack
-        ModList.get().isLoaded(TravelersBackpack.MODID);
+        // Enable usage of traveler's backpack
+        Objects.requireNonNull(ModList.get()).isLoaded(TravelersBackpack.MODID);
         // Enable usage of iron chests
-        ModList.get().isLoaded(IronChests.MOD_ID);
+        Objects.requireNonNull(ModList.get()).isLoaded(IronChests.MOD_ID);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event) {
+    @SuppressWarnings("EmptyMethod")
+    private void commonSetup(final @Nullable FMLCommonSetupEvent ignoredEvent) {
         // Do any common setup tasks here
     }
 
@@ -74,6 +78,7 @@ public class MainMod {
     // Use EventBusSubscriber to automatically register static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
+        @SuppressWarnings("ConstantValue")
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             // Some client setup code
@@ -81,7 +86,10 @@ public class MainMod {
             LOGGER.info("Mystery Box Filled.");
             LOGGER.info("Sorting Inventory For The Mystery Box.");
             LOGGER.info("Mystery Box Ready!.");
-            ItemBlockRenderTypes.setRenderLayer(MysteryBoxModBlocks.MYSTERY_BOX_BLOCK.get(), RenderType.solid());
+            if (MysteryBoxModBlocks.MYSTERY_BOX_BLOCK != null) {
+                //noinspection deprecation
+                ItemBlockRenderTypes.setRenderLayer(MysteryBoxModBlocks.MYSTERY_BOX_BLOCK.get(), RenderType.solid());
+            }
         }
     }
 }

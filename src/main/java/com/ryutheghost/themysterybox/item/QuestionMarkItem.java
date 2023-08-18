@@ -6,18 +6,20 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Objects;
 
 public class QuestionMarkItem extends Item {
 
     public QuestionMarkItem(Properties pProperties) {
-        super(pProperties);
+        super(Objects.requireNonNull(pProperties));
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+    public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         // Check if the shift key is pressed
         if(Screen.hasShiftDown()){
             // If shift key is pressed, add a translatable component indicating it
