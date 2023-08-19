@@ -6,7 +6,13 @@ import com.tiviacz.travelersbackpack.init.ModItems;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -194,6 +200,66 @@ public class MysteryBoxBlock extends Block {
             "badluck.message.five"    // Translation key for a bad luck message
     );
 
+    private static final EntityType<?>[] MONSTERS = new EntityType<?>[]{
+            EntityType.ZOMBIE,
+            EntityType.SKELETON,
+            EntityType.WITHER_SKELETON,
+            EntityType.WITCH,
+            EntityType.BLAZE,
+            EntityType.CREEPER,
+            EntityType.GHAST,
+            EntityType.MAGMA_CUBE,
+            EntityType.SPIDER,
+            EntityType.CAVE_SPIDER,
+            EntityType.WITHER,
+            EntityType.WARDEN,
+            EntityType.SLIME,
+            EntityType.DROWNED,
+            EntityType.HUSK
+    };
+
+    private static final EntityType<?>[] PETS = new EntityType<?>[]{
+            EntityType.WOLF,
+            EntityType.CAT,
+            EntityType.PARROT,
+            EntityType.LLAMA,
+            EntityType.HORSE,
+            EntityType.DONKEY,
+            EntityType.MULE
+    };
+
+    private static final MobEffect[] BAD_EFFECTS = new MobEffect[]{
+            MobEffects.WITHER,
+            MobEffects.WEAKNESS,
+            MobEffects.CONFUSION,
+            MobEffects.POISON,
+            MobEffects.DIG_SLOWDOWN,
+            MobEffects.MOVEMENT_SLOWDOWN,
+            MobEffects.HUNGER,
+            MobEffects.BLINDNESS,
+            MobEffects.UNLUCK,
+            MobEffects.BAD_OMEN
+    };
+
+    private static final MobEffect[] GOOD_EFFECTS = new MobEffect[]{
+            MobEffects.DAMAGE_BOOST,
+            MobEffects.MOVEMENT_SPEED,
+            MobEffects.JUMP,
+            MobEffects.DIG_SPEED,
+            MobEffects.ABSORPTION,
+            MobEffects.DAMAGE_RESISTANCE,
+            MobEffects.FIRE_RESISTANCE,
+            MobEffects.GLOWING,
+            MobEffects.HEALTH_BOOST,
+            MobEffects.INVISIBILITY,
+            MobEffects.LUCK,
+            MobEffects.NIGHT_VISION,
+            MobEffects.REGENERATION,
+            MobEffects.SATURATION,
+            MobEffects.SLOW_FALLING,
+            MobEffects.WATER_BREATHING
+    };
+
     /**
      * This method appends hover text to the item stack's tooltip.
      * If the player is holding shift, it adds a translation component indicating that the shift key is down.
@@ -220,7 +286,11 @@ public class MysteryBoxBlock extends Block {
     private boolean hasGivenItem = false; // Boolean field to check if it is a vanilla item
     private boolean hasGivenBackpack = false; // Boolean field to check if it is a backpack
     private boolean hasGivenIronChest = false; // Boolean field to check if it is an iron chest
-    private boolean hasSpawnedExplosion = false; // Boolean field to check if it is a monster
+    private boolean hasSpawnedExplosion = false; // Boolean field to check if it is a explosion
+    private boolean hasSpawnedMonster = false; // Boolean field to check if it is a monster
+    private boolean hasSpawnedPet = false; // Boolean field to check if it is a pet
+    private boolean hasGivenBadEffect = false; // Boolean field to check if it is a bad potion effect
+    private boolean hasGivenGoodEffect = false; // Boolean field to check if it is a good potion effect
     private boolean isGoodLuck = true; // Boolean field to check if it is good luck
     private boolean isBadLuck = false; // Boolean field to check if it is bad luck
     private boolean isDirtChest = true; // Boolean field to check if it is dirt
@@ -234,6 +304,11 @@ public class MysteryBoxBlock extends Block {
     private boolean isItem = true; // Boolean field to check if it is a vanilla item
     private boolean isBackpack = false; // Boolean field to check if it is a backpack
     private boolean isIronChestsChest = false; // Boolean field to check if it is an iron chests chest
+    private boolean isExplosion = true; // Boolean field to check if it is a explosion
+    private boolean isMobSpawn = false; // Boolean field to check if it is a monster
+    private boolean isPetSpawn = false; // Boolean field to check if it is a pet
+    private boolean isBadEffect = false; // Boolean field to check if it is a bad effect
+    private boolean isGoodEffect = false; // Boolean field to check if it is a good effect
 
     @Override
     public boolean onDestroyedByPlayer(BlockState state, @NotNull Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
@@ -301,6 +376,8 @@ public class MysteryBoxBlock extends Block {
                                 GiveIronChestsItemToPlayer(player);
                                 // Sets isIronChestsChest to false
                                 isIronChestsChest = false;
+                                // Sets isGoodEffect to true
+                                isGoodEffect = true;
                             }
                             // Reset the default boolean values
                             else{
@@ -312,16 +389,115 @@ public class MysteryBoxBlock extends Block {
                             isIronChestsChest = false;
                         }
                     }
-                    // Check if is Bad Luck
-                    else if (isBadLuck == true) {
-                        // Check if the explosion has spawned
-                        if(!hasSpawnedExplosion){
-                            // Spawn a explosion on open
-                            SpawnExplosionAtPlayer(level, pos, player, true);
+                    // Check if is Good Luck
+                    if(isGoodLuck == true){
+                        //Various condition checks
+                        if(isGoodEffect){
+                            //Check if is iron chests chest item
+                            if(!hasGivenGoodEffect){
+                                // Give a good potioneffect
+                                GiveGoodpotionEffectToPlayer(player, 300*20, 2, false, true);
+                                // Sets isGoodEffect to false
+                                isGoodEffect = false;
+                                // Sets isPetSpawn to true
+                                isPetSpawn = true;
+                            }
+                            // Reset the default boolean values
+                            else{
+                                hasGivenGoodEffect = false;
+                            }
                         }
                         // Reset the default boolean values
                         else{
-                            hasSpawnedExplosion = false;
+                            isGoodEffect = false;
+                        }
+                    }
+                    // Check if is Good Luck
+                    if(isGoodLuck == true){
+                        //Various condition checks
+                        if(isPetSpawn){
+                            //Check if the pet has spawned
+                            if(!hasSpawnedPet){
+                                // Spawn a pet on open
+                                SpawnPetAtPlayer((ServerLevel) level, pos, MobSpawnType.SPAWNER, player);
+                                // Sets isPetSpawn to false
+                                isPetSpawn = false;
+                            }
+                            // Reset the default boolean values
+                            else{
+                                hasSpawnedPet = false;
+                            }
+                        }
+                        // Reset the default boolean values
+                        else{
+                            isPetSpawn = false;
+                        }
+                    }
+                    // Check if is Bad Luck
+                    if (isBadLuck == true) {
+                        //Various condition checks
+                        if(isExplosion){
+                            // Check if the explosion has spawned
+                            if(!hasSpawnedExplosion){
+                                // Spawn a explosion on open
+                                SpawnExplosionAtPlayer(level, pos, player, true);
+                                // Sets isExplosion to false
+                                isExplosion = false;
+                                // Sets isMobSpawn to true
+                                isMobSpawn = true;
+                            }
+                            // Reset the default boolean values
+                            else{
+                                hasSpawnedExplosion = false;
+                            }
+                        }
+                        // Reset the default boolean values
+                        else{
+                            isExplosion = true;
+                        }
+                    }
+                    // Check if is Bad Luck
+                    if (isBadLuck == true) {
+                        //Various condition checks
+                        if(isMobSpawn){
+                            // Check if the monster has spawned
+                            if(!hasSpawnedMonster){
+                                // Spawn a monster on open
+                                SpawnMonsterAtPlayer((ServerLevel) level, pos, MobSpawnType.SPAWNER, player);
+                                // Sets isMobSpawn to false
+                                isMobSpawn = false;
+                                // Sets isBadEffect to true
+                                isBadEffect = true;
+                            }
+                            // Reset the default boolean values
+                            else{
+                                hasSpawnedMonster = false;
+                            }
+                        }
+                        // Reset the default boolean values
+                        else{
+                            isMobSpawn = false;
+                        }
+                    }
+                    // Check if is Bad Luck
+                    if (isBadLuck == true) {
+                        //Various condition checks
+                        if(isBadEffect){
+                            // Check if the bad effect has been applied to the player
+                            if(!hasGivenBadEffect){
+                                // Give a bad potion effect on open
+                                GiveBadpotionEffectToPlayer(player, 120*20, 2, false, true);
+                                // Sets isBadEffect to false
+                                isBadEffect = false;
+                            }
+                            // Reset the default boolean values
+                            else{
+                                hasGivenBadEffect = false;
+                            }
+                        }
+                        // Reset the default boolean values
+                        else{
+                            isBadEffect = false;
                         }
                     }
                     // Reset the luck options
@@ -639,5 +815,140 @@ public class MysteryBoxBlock extends Block {
         }else{
             isBroken = false;
         }
+    }
+
+    public void SpawnMonsterAtPlayer(ServerLevel level, BlockPos pos, MobSpawnType type, Player player){
+        if(!isBroken){
+            if(isBadLuck){
+                if(!hasSpawnedMonster){
+                    if(!isbadluckmessageSent){
+                        // Generate a random index to get a random translation key for a bad luck message
+                        int index = new Random().nextInt(Objects.requireNonNull(bad_translation_keys_messages).size());
+                        // Send the bad luck message to the player
+                        Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(bad_translation_keys_messages.get(index))));
+                        // Play sounds to indicate the successful opening of the mystery box
+                        player.playSound(SoundEvents.WITHER_AMBIENT, 1f, 1f);
+                        int index1 = RANDOM.nextInt(MONSTERS.length);
+                        EntityType<?> monster = MONSTERS[RANDOM.nextInt(index1)];
+                        level.addFreshEntity(monster.spawn(level, pos, type));
+                        // Set isBroken and hasSpawnedMonster to true to indicate that the block has been broken
+                        isbadluckmessageSent = true;
+                        hasSpawnedMonster = true;
+                        isBroken = true;
+                        isGoodLuck = true;
+                        isBadLuck = false;
+                    }else{
+                        isbadluckmessageSent = false;
+                    }
+                }
+            }else{
+                isBadLuck = false;
+            }
+        }else{
+            isBroken = false;
+        }
+        return;
+    }
+
+    public void GiveGoodpotionEffectToPlayer(Player player, int time, int amplifier, boolean isAmbient, boolean HideParticles){
+        if(!isBroken){
+            if(isGoodLuck){
+                if(!hasGivenGoodEffect){
+                    if(!isgoodluckmessageSent){
+                        // Generate a random index to get a random translation key for a good luck message
+                        int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                        // Send the good luck message to the player
+                        player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                        // Set ismessageSent to true to prevent sending duplicate messages
+                        isgoodluckmessageSent = true;
+                        // Play sounds to indicate the successful opening of the mystery box
+                        player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                        int index1 = RANDOM.nextInt(GOOD_EFFECTS.length);
+                        MobEffect good = GOOD_EFFECTS[RANDOM.nextInt(index1)];
+                        player.addEffect(new MobEffectInstance(good, time, amplifier, isAmbient, HideParticles));
+                        // Set isBroken and hasGivenGoodEffect to true to indicate that the block has been broken
+                        hasGivenGoodEffect = true;
+                        isBroken = true;
+                        isGoodLuck = false;
+                        isBadLuck = true;
+                    }else{
+                        isgoodluckmessageSent = false;
+                    }
+                }
+            }else{
+                isGoodLuck = true;
+            }
+        }else{
+            isBroken = false;
+        }
+        return;
+    }
+
+    public void GiveBadpotionEffectToPlayer(Player player, int time, int amplifier, boolean isAmbient, boolean HideParticles){
+        if(!isBroken){
+            if(isBadLuck){
+                if(!hasGivenBadEffect){
+                    if(!isbadluckmessageSent){
+                        // Generate a random index to get a random translation key for a bad luck message
+                        int index = new Random().nextInt(Objects.requireNonNull(bad_translation_keys_messages).size());
+                        // Send the bad luck message to the player
+                        Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(bad_translation_keys_messages.get(index))));
+                        // Set ismessageSent to true to prevent sending duplicate messages
+                        isbadluckmessageSent = true;
+                        // Play sounds to indicate the successful opening of the mystery box
+                        player.playSound(SoundEvents.WITHER_AMBIENT, 1f, 1f);
+                        int index1 = RANDOM.nextInt(BAD_EFFECTS.length);
+                        MobEffect bad = BAD_EFFECTS[RANDOM.nextInt(index1)];
+                        player.addEffect(new MobEffectInstance(bad, time, amplifier, isAmbient, HideParticles));
+                        // Set isBroken and hasGivenBadEffect to true to indicate that the block has been broken
+                        hasGivenBadEffect = true;
+                        isBroken = true;
+                        isGoodLuck = true;
+                        isBadLuck = false;
+                    }else{
+                        isbadluckmessageSent = false;
+                    }
+                }
+            }else{
+                isBadLuck = false;
+            }
+        }else{
+            isBroken = false;
+        }
+        return;
+    }
+
+    public void SpawnPetAtPlayer(ServerLevel level, BlockPos pos, MobSpawnType type, Player player){
+        if(!isBroken){
+            if(isGoodLuck){
+                if(!hasSpawnedPet){
+                    if(!isgoodluckmessageSent){
+                        // Generate a random index to get a random translation key for a good luck message
+                        int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                        // Send the good luck message to the player
+                        player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                        // Set ismessageSent to true to prevent sending duplicate messages
+                        isgoodluckmessageSent = true;
+                        // Play sounds to indicate the successful opening of the mystery box
+                        player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                        int index1 = RANDOM.nextInt(PETS.length);
+                        EntityType<?> pet = PETS[RANDOM.nextInt(index1)];
+                        level.addFreshEntity(pet.spawn(level, pos, type));
+                        // Set isBroken and hasSpawnedPet to true to indicate that the block has been broken
+                        hasSpawnedPet = true;
+                        isBroken = true;
+                        isGoodLuck = false;
+                        isBadLuck = true;
+                    }else{
+                        isgoodluckmessageSent = false;
+                    }
+                }
+            }else{
+                isGoodLuck = true;
+            }
+        }else{
+            isBroken = false;
+        }
+        return;
     }
 }
