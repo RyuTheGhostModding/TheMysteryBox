@@ -434,7 +434,7 @@ public class MysteryBoxBlock extends Block {
                         }
                     }
                     // Check if is Bad Luck
-                    if (isBadLuck == true) {
+                    else if (isBadLuck == true) {
                         //Various condition checks
                         if(isExplosion){
                             // Check if the explosion has spawned
@@ -598,7 +598,6 @@ public class MysteryBoxBlock extends Block {
                     if (isDirtChest) {
                         AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.DIRT_CHEST).get();
                         Item item = chest.asItem().getDefaultInstance().getItem();
-                        if (!Objects.requireNonNull(player).getInventory().hasAnyOf(Set.of(item))) {
                             if (!isgoodluckmessageSent) {
                                 // Generate a random index to get a random translation key for a good luck message
                                 int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
@@ -619,12 +618,12 @@ public class MysteryBoxBlock extends Block {
                             isBroken = true;
                             isGoodLuck = false;
                             isBadLuck = true;
-                        }
+                    }else{
+                        isDirtChest = true;
                     }
-                    else if (isIronChest) {
+                    if (isIronChest) {
                         AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.IRON_CHEST).get();
                         Item item = chest.asItem().getDefaultInstance().getItem();
-                        if (!Objects.requireNonNull(player).getInventory().hasAnyOf(Set.of(item))) {
                             if (!isgoodluckmessageSent) {
                                 // Generate a random index to get a random translation key for a good luck message
                                 int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
@@ -645,12 +644,12 @@ public class MysteryBoxBlock extends Block {
                             isBroken = true;
                             isGoodLuck = false;
                             isBadLuck = true;
-                        }
+                    }else{
+                        isIronChest = false;
                     }
-                    else if (isGoldChest) {
+                    if (isGoldChest) {
                         AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.GOLD_CHEST).get();
                         Item item = chest.asItem().getDefaultInstance().getItem();
-                        if (!Objects.requireNonNull(player).getInventory().hasAnyOf(Set.of(item))) {
                             if (!isgoodluckmessageSent) {
                                 // Generate a random index to get a random translation key for a good luck message
                                 int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
@@ -671,12 +670,12 @@ public class MysteryBoxBlock extends Block {
                             isBroken = true;
                             isGoodLuck = false;
                             isBadLuck = true;
-                        }
+                    }else{
+                        isGoldChest = false;
                     }
-                    else if (isCopperChest) {
+                    if (isCopperChest) {
                         AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.COPPER_CHEST).get();
                         Item item = chest.asItem().getDefaultInstance().getItem();
-                        if (!Objects.requireNonNull(player).getInventory().hasAnyOf(Set.of(item))) {
                             if (!isgoodluckmessageSent) {
                                 // Generate a random index to get a random translation key for a good luck message
                                 int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
@@ -697,12 +696,12 @@ public class MysteryBoxBlock extends Block {
                             isBroken = true;
                             isGoodLuck = false;
                             isBadLuck = true;
-                        }
+                    }else{
+                        isCopperChest = false;
                     }
-                    else if (isDiamondChest) {
+                    if (isDiamondChest) {
                         AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.DIAMOND_CHEST).get();
                         Item item = chest.asItem().getDefaultInstance().getItem();
-                        if (!Objects.requireNonNull(player).getInventory().hasAnyOf(Set.of(item))) {
                             if (!isgoodluckmessageSent) {
                                 // Generate a random index to get a random translation key for a good luck message
                                 int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
@@ -723,12 +722,12 @@ public class MysteryBoxBlock extends Block {
                             isBroken = true;
                             isGoodLuck = false;
                             isBadLuck = true;
-                        }
+                    }else{
+                        isDiamondChest = false;
                     }
-                    else if (isObsidianChest) {
+                    if (isObsidianChest) {
                         AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.OBSIDIAN_CHEST).get();
                         Item item = chest.asItem().getDefaultInstance().getItem();
-                        if (Objects.requireNonNull(player).getInventory().hasAnyOf(Set.of(item))) {
                             if (!isgoodluckmessageSent) {
                                 // Generate a random index to get a random translation key for a good luck message
                                 int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
@@ -749,12 +748,12 @@ public class MysteryBoxBlock extends Block {
                             isBroken = true;
                             isGoodLuck = false;
                             isBadLuck = true;
-                        }
+                    }else{
+                        isObsidianChest = false;
                     }
-                    else if (isCrystalChest) {
+                    if (isCrystalChest) {
                         AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.CRYSTAL_CHEST).get();
                         Item item = chest.asItem().getDefaultInstance().getItem();
-                        if (Objects.requireNonNull(player).getInventory().hasAnyOf(Set.of(item))) {
                             if (!isgoodluckmessageSent) {
                                 // Generate a random index to get a random translation key for a good luck message
                                 int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
@@ -775,7 +774,8 @@ public class MysteryBoxBlock extends Block {
                             isBroken = true;
                             isGoodLuck = false;
                             isBadLuck = true;
-                        }
+                    }else{
+                        isCrystalChest = false;
                     }
                 }
             }else{
