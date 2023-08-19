@@ -54,9 +54,9 @@ public class MainMod {
         // Register our OnJoinLevelEvent
         MinecraftForge.EVENT_BUS.register(new OnLevelJoined());
 
-        // Enable usage of traveler's backpack
+        // Enable our mod usage after traveler's backpack is finished and loaded
         Objects.requireNonNull(ModList.get()).isLoaded(TravelersBackpack.MODID);
-        // Enable usage of iron chests
+        // Enable our mod usage after iron chests is finished and loaded
         Objects.requireNonNull(ModList.get()).isLoaded(IronChests.MOD_ID);
     }
 
