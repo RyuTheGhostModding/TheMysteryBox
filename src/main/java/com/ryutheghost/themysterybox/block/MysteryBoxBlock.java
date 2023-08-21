@@ -217,7 +217,70 @@ public class MysteryBoxBlock extends Block {
             Items.HOPPER,
             Items.CAULDRON,
             Items.HOPPER_MINECART,
-            Items.REDSTONE_LAMP
+            Items.REDSTONE_LAMP,
+            Items.REDSTONE_TORCH,
+            Items.TORCH,
+            Items.REPEATER,
+            Items.COMPARATOR,
+            Items.COMPASS,
+            Items.COMPOSTER,
+            Items.MAP,
+            Items.ITEM_FRAME,
+            Items.GLOW_ITEM_FRAME,
+            Items.OAK_BOAT,
+            Items.OAK_BUTTON,
+            Items.OAK_DOOR,
+            Items.OAK_FENCE,
+            Items.OAK_CHEST_BOAT,
+            Items.OAK_FENCE_GATE,
+            Items.OAK_HANGING_SIGN,
+            Items.OAK_LEAVES,
+            Items.OAK_PLANKS,
+            Items.OAK_LOG,
+            Items.OAK_PRESSURE_PLATE,
+            Items.OAK_SAPLING,
+            Items.OAK_SIGN,
+            Items.OAK_SLAB,
+            Items.OAK_STAIRS,
+            Items.OAK_TRAPDOOR,
+            Items.OAK_WOOD,
+            Items.STRIPPED_OAK_LOG,
+            Items.STRIPPED_OAK_WOOD,
+            Items.BLACK_BED,
+            Items.BROWN_BED,
+            Items.BLUE_BED,
+            Items.RED_BED,
+            Items.GREEN_BED,
+            Items.WHITE_BED,
+            Items.WHITE_DYE,
+            Items.BROWN_DYE,
+            Items.RED_DYE,
+            Items.BLACK_DYE,
+            Items.GREEN_DYE,
+            Items.BLUE_DYE,
+            Items.PISTON,
+            Items.STICKY_PISTON,
+            Items.SLIME_BALL,
+            Items.SLIME_BLOCK,
+            Items.HONEY_BLOCK,
+            Items.VINE,
+            Items.COCOA_BEANS,
+            Items.BOOKSHELF,
+            Items.BOOK,
+            Items.WRITABLE_BOOK,
+            Items.KNOWLEDGE_BOOK,
+            Items.CHISELED_BOOKSHELF,
+            Items.LADDER,
+            Items.LEVER,
+            Items.NETHERRACK,
+            Items.BLACK_WOOL,
+            Items.WHITE_WOOL,
+            Items.BROWN_WOOL,
+            Items.GREEN_WOOL,
+            Items.BLUE_WOOL,
+            Items.RED_WOOL,
+            Items.GLASS,
+            Items.SAND
 
 
     };
@@ -383,7 +446,7 @@ public class MysteryBoxBlock extends Block {
                     // Runs a luck check
                     if(!isLuck){
                             // Check if is Good Luck
-                            if (isGoodLuck) {
+                            if (isGoodLuck && !isBadLuck) {
                                 //Various condition checks
                                 if(isItem){
                                     // Check if is item
@@ -406,7 +469,7 @@ public class MysteryBoxBlock extends Block {
                                 }
                             }
                             // Check if is Good Luck
-                            if(isGoodLuck){
+                            if(isGoodLuck && !isBadLuck){
                                 //Various condition checks
                                 if(isBackpack){
                                     // Check if is backpack item
@@ -429,7 +492,7 @@ public class MysteryBoxBlock extends Block {
                                 }
                             }
                             // Check if is Good Luck
-                            if(isGoodLuck){
+                            if(isGoodLuck && !isBadLuck){
                                 //Various condition checks
                                 if(isIronChestsChest){
                                     //Check if is iron chests chest item
@@ -452,7 +515,7 @@ public class MysteryBoxBlock extends Block {
                                 }
                             }
                             // Check if is Good Luck
-                            if(isGoodLuck){
+                            if(isGoodLuck && !isBadLuck){
                                 //Various condition checks
                                 if(isGoodEffect){
                                     //Check if is iron chests chest item
@@ -475,7 +538,7 @@ public class MysteryBoxBlock extends Block {
                                 }
                             }
                             // Check if is Good Luck
-                            if(isGoodLuck){
+                            if(isGoodLuck && !isBadLuck){
                                 //Various condition checks
                                 if(isPetSpawn){
                                     //Check if the pet has spawned
@@ -496,7 +559,7 @@ public class MysteryBoxBlock extends Block {
                                 }
                             }
                             // Check if is Bad Luck
-                            if (isBadLuck) {
+                            if (isBadLuck && !isGoodLuck) {
                                 //Various condition checks
                                 if(isExplosion){
                                     // Check if the explosion has spawned
@@ -519,7 +582,7 @@ public class MysteryBoxBlock extends Block {
                                 }
                             }
                             // Check if is Bad Luck
-                            if (isBadLuck) {
+                            if (isBadLuck && !isGoodLuck) {
                                 //Various condition checks
                                 if(isMobSpawn){
                                     // Check if the monster has spawned
@@ -542,7 +605,7 @@ public class MysteryBoxBlock extends Block {
                                 }
                             }
                             // Check if is Bad Luck
-                            if (isBadLuck) {
+                            if (isBadLuck && !isGoodLuck) {
                                 //Various condition checks
                                 if(isBadEffect){
                                     // Check if the bad effect has been applied to the player
@@ -1108,7 +1171,7 @@ public class MysteryBoxBlock extends Block {
                             player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
                             int index1 = RANDOM.nextInt(PETS.length);
                             EntityType<?> pet = PETS[RANDOM.nextInt(index1)];
-                            level.addFreshEntity(pet.spawn(level, pos, type));
+                            level.addFreshEntity(pet.spawn(level, new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ()), type));
                             // Set isBroken and hasSpawnedPet to true to indicate that the block has been broken
                             hasSpawnedPet = true;
                             isBroken = true;
@@ -1170,7 +1233,7 @@ public class MysteryBoxBlock extends Block {
                             player.playSound(SoundEvents.WITHER_AMBIENT, 1f, 1f);
                             int index1 = RANDOM.nextInt(MONSTERS.length);
                             EntityType<?> monster = MONSTERS[RANDOM.nextInt(index1)];
-                            level.addFreshEntity(monster.spawn(level, pos, type));
+                            level.addFreshEntity(monster.spawn(level, new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ()), type));
                             // Set isBroken and hasSpawnedMonster to true to indicate that the block has been broken
                             isbadluckmessageSent = true;
                             hasSpawnedMonster = true;
