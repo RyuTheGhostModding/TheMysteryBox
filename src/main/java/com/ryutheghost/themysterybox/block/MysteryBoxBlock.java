@@ -166,6 +166,50 @@ public class MysteryBoxBlock extends Block {
             Items.ENDER_PEARL,
             Items.CHEST,
             Items.FURNACE,
+            Items.ACACIA_BOAT,
+            Items.ACACIA_BUTTON,
+            Items.ACACIA_DOOR,
+            Items.ACACIA_FENCE,
+            Items.ACACIA_CHEST_BOAT,
+            Items.ACACIA_FENCE_GATE,
+            Items.ACACIA_HANGING_SIGN,
+            Items.ACACIA_LEAVES,
+            Items.ACACIA_LOG,
+            Items.ACACIA_PLANKS,
+            Items.ACACIA_PRESSURE_PLATE,
+            Items.ACACIA_SAPLING,
+            Items.ACACIA_SIGN,
+            Items.ACACIA_SLAB,
+            Items.ACACIA_STAIRS,
+            Items.ACACIA_TRAPDOOR,
+            Items.ACACIA_WOOD,
+            Items.STRIPPED_ACACIA_LOG,
+            Items.STRIPPED_ACACIA_WOOD,
+            Items.CHEST_MINECART,
+            Items.TRAPPED_CHEST,
+            Items.TRIPWIRE_HOOK,
+            Items.OBSERVER,
+            Items.OBSIDIAN,
+            Items.STRING,
+            Items.TNT,
+            Items.TNT_MINECART,
+            Items.RAIL,
+            Items.ACTIVATOR_RAIL,
+            Items.DETECTOR_RAIL,
+            Items.POWERED_RAIL,
+            Items.NAME_TAG,
+            Items.FURNACE_MINECART,
+            Items.BLAST_FURNACE,
+            Items.GRINDSTONE,
+            Items.CAMPFIRE,
+            Items.SOUL_CAMPFIRE,
+            Items.LANTERN,
+            Items.JACK_O_LANTERN,
+            Items.PEARLESCENT_FROGLIGHT,
+            Items.OCHRE_FROGLIGHT,
+            Items.VERDANT_FROGLIGHT,
+            Items.SOUL_LANTERN,
+            Items.SEA_LANTERN
 
 
     };
@@ -300,6 +344,13 @@ public class MysteryBoxBlock extends Block {
     private boolean isDiamondChest = false; // Boolean field to check if it is diamond
     private boolean isObsidianChest = false; // Boolean field to check if it is obsidian
     private boolean isCrystalChest = false; // Boolean field to check if it is crystal
+    private boolean isTrappedDirtChest = false; // Boolean field to check if it is dirt
+    private boolean isTrappedIronChest = false; // Boolean field to check if it is iron
+    private boolean isTrappedGoldChest = false; // Boolean field to check if it is gold
+    private boolean isTrappedCopperChest = false; // Boolean field to check if it is copper
+    private boolean isTrappedDiamondChest = false; // Boolean field to check if it is diamond
+    private boolean isTrappedObsidianChest = false; // Boolean field to check if it is obsidian
+    private boolean isTrappedCrystalChest = false; // Boolean field to check if it is crystal
     private boolean isBroken = false; // Boolean field to check if it is broken
     private boolean isItem = true; // Boolean field to check if it is a vanilla item
     private boolean isBackpack = false; // Boolean field to check if it is a backpack
@@ -323,192 +374,191 @@ public class MysteryBoxBlock extends Block {
                 if (!isBroken) {
                     // Runs a luck check
                     if(!isLuck){
-                        // Check if is Good Luck
-                        if (isGoodLuck == true && isBadLuck == false) {
-                            //Various condition checks
-                            if(isItem){
-                                // Check if is item
-                                if(!hasGivenItem){
-                                    // Give a vanilla item
-                                    GiveItemToPlayer(player);
-                                    // Sets isItem to false
-                                    isItem = false;
-                                    // Sets isBackpack to true
-                                    isBackpack = true;
+                            // Check if is Good Luck
+                            if (isGoodLuck) {
+                                //Various condition checks
+                                if(isItem){
+                                    // Check if is item
+                                    if(!hasGivenItem){
+                                        // Give a vanilla item
+                                        GiveItemToPlayer(player);
+                                        // Sets isItem to false
+                                        isItem = false;
+                                        // Sets isBackpack to true
+                                        isBackpack = true;
+                                    }
+                                    // Reset the default boolean values
+                                    else{
+                                        hasGivenItem = false;
+                                    }
                                 }
                                 // Reset the default boolean values
                                 else{
-                                    hasGivenItem = false;
+                                    isItem = true;
                                 }
                             }
-                            // Reset the default boolean values
-                            else{
-                                isItem = true;
-                            }
-                        }
-                        // Check if is Good Luck
-                        if(isGoodLuck == true && isBadLuck == false){
-                            //Various condition checks
-                            if(isBackpack){
-                                // Check if is backpack item
-                                if(!hasGivenBackpack){
-                                    //Give a backpack item
-                                    GiveBackpackItemToPlayer(player);
-                                    // Sets isBackpack to false
+                            // Check if is Good Luck
+                            if(isGoodLuck){
+                                //Various condition checks
+                                if(isBackpack){
+                                    // Check if is backpack item
+                                    if(!hasGivenBackpack){
+                                        //Give a backpack item
+                                        GiveBackpackItemToPlayer(player);
+                                        // Sets isBackpack to false
+                                        isBackpack = false;
+                                        // Sets isIronChestsChest to true
+                                        isIronChestsChest = true;
+                                    }
+                                    // Reset the default boolean values
+                                    else{
+                                        hasGivenBackpack = false;
+                                    }
+                                }
+                                // Reset the default boolean values
+                                else{
                                     isBackpack = false;
-                                    // Sets isIronChestsChest to true
-                                    isIronChestsChest = true;
+                                }
+                            }
+                            // Check if is Good Luck
+                            if(isGoodLuck){
+                                //Various condition checks
+                                if(isIronChestsChest){
+                                    //Check if is iron chests chest item
+                                    if(!hasGivenIronChest){
+                                        // Give a iron chests chest item
+                                        GiveIronChestsItemToPlayer(player);
+                                        // Sets isIronChestsChest to false
+                                        isIronChestsChest = false;
+                                        // Sets isGoodEffect to true
+                                        isGoodEffect = true;
+                                    }
+                                    // Reset the default boolean values
+                                    else{
+                                        hasGivenIronChest = false;
+                                    }
                                 }
                                 // Reset the default boolean values
                                 else{
-                                    hasGivenBackpack = false;
-                                }
-                            }
-                            // Reset the default boolean values
-                            else{
-                                isBackpack = false;
-                            }
-                        }
-                        // Check if is Good Luck
-                        if(isGoodLuck == true && isBadLuck == false){
-                            //Various condition checks
-                            if(isIronChestsChest){
-                                //Check if is iron chests chest item
-                                if(!hasGivenIronChest){
-                                    // Give a iron chests chest item
-                                    GiveIronChestsItemToPlayer(player);
-                                    // Sets isIronChestsChest to false
                                     isIronChestsChest = false;
-                                    // Sets isGoodEffect to true
-                                    isGoodEffect = true;
+                                }
+                            }
+                            // Check if is Good Luck
+                            if(isGoodLuck){
+                                //Various condition checks
+                                if(isGoodEffect){
+                                    //Check if is iron chests chest item
+                                    if(!hasGivenGoodEffect){
+                                        // Give a good potioneffect
+                                        GiveGoodpotionEffectToPlayer(player, 300*20, 2, false, true);
+                                        // Sets isGoodEffect to false
+                                        isGoodEffect = false;
+                                        // Sets isPetSpawn to true
+                                        isPetSpawn = true;
+                                    }
+                                    // Reset the default boolean values
+                                    else{
+                                        hasGivenGoodEffect = false;
+                                    }
                                 }
                                 // Reset the default boolean values
                                 else{
-                                    hasGivenIronChest = false;
-                                }
-                            }
-                            // Reset the default boolean values
-                            else{
-                                isIronChestsChest = false;
-                            }
-                        }
-                        // Check if is Good Luck
-                        if(isGoodLuck == true && isBadLuck == false){
-                            //Various condition checks
-                            if(isGoodEffect){
-                                //Check if is iron chests chest item
-                                if(!hasGivenGoodEffect){
-                                    // Give a good potioneffect
-                                    GiveGoodpotionEffectToPlayer(player, 300*20, 2, false, true);
-                                    // Sets isGoodEffect to false
                                     isGoodEffect = false;
-                                    // Sets isPetSpawn to true
-                                    isPetSpawn = true;
+                                }
+                            }
+                            // Check if is Good Luck
+                            if(isGoodLuck){
+                                //Various condition checks
+                                if(isPetSpawn){
+                                    //Check if the pet has spawned
+                                    if(!hasSpawnedPet){
+                                        // Spawn a pet on open
+                                        SpawnPetAtPlayer((ServerLevel) level, pos, MobSpawnType.SPAWNER, player);
+                                        // Sets isPetSpawn to false
+                                        isPetSpawn = false;
+                                    }
+                                    // Reset the default boolean values
+                                    else{
+                                        hasSpawnedPet = false;
+                                    }
                                 }
                                 // Reset the default boolean values
                                 else{
-                                    hasGivenGoodEffect = false;
-                                }
-                            }
-                            // Reset the default boolean values
-                            else{
-                                isGoodEffect = false;
-                            }
-                        }
-                        // Check if is Good Luck
-                        if(isGoodLuck == true && isBadLuck == false){
-                            //Various condition checks
-                            if(isPetSpawn){
-                                //Check if the pet has spawned
-                                if(!hasSpawnedPet){
-                                    // Spawn a pet on open
-                                    SpawnPetAtPlayer((ServerLevel) level, pos, MobSpawnType.SPAWNER, player);
-                                    // Sets isPetSpawn to false
                                     isPetSpawn = false;
                                 }
-                                // Reset the default boolean values
-                                else{
-                                    hasSpawnedPet = false;
-                                }
                             }
-                            // Reset the default boolean values
-                            else{
-                                isPetSpawn = false;
-                            }
-                        }
-                        // Check if is Bad Luck
-                        if (isBadLuck == true && isGoodLuck == false) {
-                            //Various condition checks
-                            if(isExplosion){
-                                // Check if the explosion has spawned
-                                if(!hasSpawnedExplosion){
-                                    // Spawn a explosion on open
-                                    SpawnExplosionAtPlayer(level, pos, player, true);
-                                    // Sets isExplosion to false
-                                    isExplosion = false;
-                                    // Sets isMobSpawn to true
-                                    isMobSpawn = true;
+                            // Check if is Bad Luck
+                            if (isBadLuck) {
+                                //Various condition checks
+                                if(isExplosion){
+                                    // Check if the explosion has spawned
+                                    if(!hasSpawnedExplosion){
+                                        // Spawn a explosion on open
+                                        SpawnExplosionAtPlayer(level, pos, player, true);
+                                        // Sets isExplosion to false
+                                        isExplosion = false;
+                                        // Sets isMobSpawn to true
+                                        isMobSpawn = true;
+                                    }
+                                    // Reset the default boolean values
+                                    else{
+                                        hasSpawnedExplosion = false;
+                                    }
                                 }
                                 // Reset the default boolean values
                                 else{
-                                    hasSpawnedExplosion = false;
+                                    isExplosion = true;
                                 }
                             }
-                            // Reset the default boolean values
-                            else{
-                                isExplosion = true;
-                            }
-                        }
-                        // Check if is Bad Luck
-                        if (isBadLuck == true && isGoodLuck == false) {
-                            //Various condition checks
-                            if(isMobSpawn){
-                                // Check if the monster has spawned
-                                if(!hasSpawnedMonster){
-                                    // Spawn a monster on open
-                                    SpawnMonsterAtPlayer((ServerLevel) level, pos, MobSpawnType.SPAWNER, player);
-                                    // Sets isMobSpawn to false
+                            // Check if is Bad Luck
+                            if (isBadLuck) {
+                                //Various condition checks
+                                if(isMobSpawn){
+                                    // Check if the monster has spawned
+                                    if(!hasSpawnedMonster){
+                                        // Spawn a monster on open
+                                        SpawnMonsterAtPlayer((ServerLevel) level, pos, MobSpawnType.SPAWNER, player);
+                                        // Sets isMobSpawn to false
+                                        isMobSpawn = false;
+                                        // Sets isBadEffect to true
+                                        isBadEffect = true;
+                                    }
+                                    // Reset the default boolean values
+                                    else{
+                                        hasSpawnedMonster = false;
+                                    }
+                                }
+                                // Reset the default boolean values
+                                else{
                                     isMobSpawn = false;
-                                    // Sets isBadEffect to true
-                                    isBadEffect = true;
+                                }
+                            }
+                            // Check if is Bad Luck
+                            if (isBadLuck) {
+                                //Various condition checks
+                                if(isBadEffect){
+                                    // Check if the bad effect has been applied to the player
+                                    if(!hasGivenBadEffect){
+                                        // Give a bad potion effect on open
+                                        GiveBadpotionEffectToPlayer(player, 120*20, 2, false, true);
+                                        // Sets isBadEffect to false
+                                        isBadEffect = false;
+                                    }
+                                    // Reset the default boolean values
+                                    else{
+                                        hasGivenBadEffect = false;
+                                    }
                                 }
                                 // Reset the default boolean values
                                 else{
-                                    hasSpawnedMonster = false;
-                                }
-                            }
-                            // Reset the default boolean values
-                            else{
-                                isMobSpawn = false;
-                            }
-                        }
-                        // Check if is Bad Luck
-                        if (isBadLuck == true && isGoodLuck == false) {
-                            //Various condition checks
-                            if(isBadEffect){
-                                // Check if the bad effect has been applied to the player
-                                if(!hasGivenBadEffect){
-                                    // Give a bad potion effect on open
-                                    GiveBadpotionEffectToPlayer(player, 120*20, 2, false, true);
-                                    // Sets isBadEffect to false
                                     isBadEffect = false;
                                 }
+                            }else{
                                 // Reset the default boolean values
-                                else{
-                                    hasGivenBadEffect = false;
-                                }
+                                isGoodLuck = true;
+                                isBadLuck = false;
                             }
-                            // Reset the default boolean values
-                            else{
-                                isBadEffect = false;
-                            }
-                        }
-                        // Reset the default boolean values
-                        else{
-                            isGoodLuck = true;
-                            isBadLuck = false;
-                        }
-                        isLuck = true;
+                            isLuck = true;
                     }
                     // Reset the default boolean values
                     else{
@@ -529,34 +579,33 @@ public class MysteryBoxBlock extends Block {
     // Give the vanilla item method
     public void GiveItemToPlayer(Player player) {
         if(!isBroken){
-            if(isGoodLuck){
-                if(!hasGivenItem){
-                    if (!isgoodluckmessageSent) {
-                        // Generate a random index to get a random translation key for a good luck message
-                        int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
-                        // Send the good luck message to the player
-                        Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
-                        // Set ismessageSent to true to prevent sending duplicate messages
-                        isgoodluckmessageSent = true;
-                        // Give the player an item from the ITEMS_LIST
-                        Item item = Objects.requireNonNull(ITEMS_LIST)[Objects.requireNonNull(RANDOM).nextInt(ITEMS_LIST.length)];
-                        player.getInventory().add(new ItemStack(Objects.requireNonNull(item)));
-                        // Play sounds to indicate the successful opening of the mystery box
-                        player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                    } else {
-                        isgoodluckmessageSent = false;
+                if(isGoodLuck && !isBadLuck){
+                    if(!hasGivenItem){
+                        if (!isgoodluckmessageSent) {
+                            // Generate a random index to get a random translation key for a good luck message
+                            int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                            // Send the good luck message to the player
+                            Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                            // Set ismessageSent to true to prevent sending duplicate messages
+                            isgoodluckmessageSent = true;
+                            // Give the player an item from the ITEMS_LIST
+                            Item item = Objects.requireNonNull(ITEMS_LIST)[Objects.requireNonNull(RANDOM).nextInt(ITEMS_LIST.length)];
+                            player.getInventory().add(new ItemStack(Objects.requireNonNull(item)));
+                            // Play sounds to indicate the successful opening of the mystery box
+                            player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                        } else {
+                            isgoodluckmessageSent = false;
+                        }
+                        // Set isBroken and hasGivenItem to true to indicate that the block has been broken
+                        isBroken = true;
+                        hasGivenItem = true;
+                        isGoodLuck = false;
+                        isBadLuck = true;
+                        // Give the player a vanilla item
                     }
-                    // Set isBroken and hasGivenItem to true to indicate that the block has been broken
-                    isBroken = true;
-                    hasGivenItem = true;
-                    isGoodLuck = false;
-                    isBadLuck = true;
-                    // Give the player a vanilla item
                 }
-            }else{
-                isGoodLuck = true;
             }
-        }else{
+        else {
             isBroken = false;
         }
         return;
@@ -566,32 +615,30 @@ public class MysteryBoxBlock extends Block {
     // Give the Traveler's Backpack backpack method
     public void GiveBackpackItemToPlayer(Player player) {
         if(!isBroken){
-            if(isGoodLuck){
-                if(!hasGivenBackpack){
-                    if (!isgoodluckmessageSent) {
-                        Item backpack = ModItems.BACKPACKS.get(Objects.requireNonNull(RANDOM).nextInt(ModItems.BACKPACKS.size()));
-                        // Generate a random index to get a random translation key for a good luck message
-                        int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
-                        // Send the good luck message to the player
-                        player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
-                        // Set ismessageSent to true to prevent sending duplicate messages
-                        isgoodluckmessageSent = true;
-                        // Play sounds to indicate the successful opening of the mystery box
-                        player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                        player.getInventory().add(new ItemStack(backpack));
-                    }else {
-                        isgoodluckmessageSent = false;
+                if(isGoodLuck && !isBadLuck){
+                    if(!hasGivenBackpack){
+                        if (!isgoodluckmessageSent) {
+                            Item backpack = ModItems.BACKPACKS.get(Objects.requireNonNull(RANDOM).nextInt(ModItems.BACKPACKS.size()));
+                            // Generate a random index to get a random translation key for a good luck message
+                            int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                            // Send the good luck message to the player
+                            player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                            // Set ismessageSent to true to prevent sending duplicate messages
+                            isgoodluckmessageSent = true;
+                            // Play sounds to indicate the successful opening of the mystery box
+                            player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                            player.getInventory().add(new ItemStack(backpack));
+                        }else {
+                            isgoodluckmessageSent = false;
+                        }
+                        // Set isBroken and hasGivenBackpack to true to indicate that the block has been broken
+                        isBroken = true;
+                        hasGivenBackpack = true;
+                        isGoodLuck = false;
+                        isBadLuck = true;
+                        // Give the player a Backpack item
                     }
-                    // Set isBroken and hasGivenBackpack to true to indicate that the block has been broken
-                    isBroken = true;
-                    hasGivenBackpack = true;
-                    isGoodLuck = false;
-                    isBadLuck = true;
-                    // Give the player a Backpack item
                 }
-            }else{
-                isGoodLuck = true;
-            }
         }else{
             isBroken = false;
         }
@@ -602,11 +649,11 @@ public class MysteryBoxBlock extends Block {
     // Give the Iron Chests chest method
     public void GiveIronChestsItemToPlayer(Player player) {
         if(!isBroken){
-            if(isGoodLuck){
-                if(!hasGivenIronChest){
-                    if (isDirtChest) {
-                        AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.DIRT_CHEST).get();
-                        Item item = chest.asItem().getDefaultInstance().getItem();
+                if(isGoodLuck && !isBadLuck){
+                    if(!hasGivenIronChest){
+                        if (isDirtChest) {
+                            AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.DIRT_CHEST).get();
+                            Item item = chest.asItem().getDefaultInstance().getItem();
                             if (!isgoodluckmessageSent) {
                                 // Generate a random index to get a random translation key for a good luck message
                                 int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
@@ -627,181 +674,377 @@ public class MysteryBoxBlock extends Block {
                             isBroken = true;
                             isGoodLuck = false;
                             isBadLuck = true;
-                    }else{
-                        isDirtChest = true;
-                    }
-                }
-                if(!hasGivenIronChest){
-                    if (isIronChest) {
-                        AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.IRON_CHEST).get();
-                        Item item = chest.asItem().getDefaultInstance().getItem();
-                        if (!isgoodluckmessageSent) {
-                            // Generate a random index to get a random translation key for a good luck message
-                            int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
-                            // Send the good luck message to the player
-                            player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
-                            // Set ismessageSent to true to prevent sending duplicate messages
-                            isgoodluckmessageSent = true;
-                            // Play sounds to indicate the successful opening of the mystery box
-                            player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                            player.getInventory().add(new ItemStack(item));
-                        } else {
-                            isgoodluckmessageSent = false;
+                        }else{
+                            isDirtChest = true;
                         }
-                        isIronChest = false;
-                        isGoldChest = true;
-                        // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
-                        hasGivenIronChest = true;
-                        isBroken = true;
-                        isGoodLuck = false;
-                        isBadLuck = true;
-                    }else{
-                        isIronChest = false;
                     }
-                }
-                if(!hasGivenIronChest){
-                    if (isGoldChest) {
-                        AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.GOLD_CHEST).get();
-                        Item item = chest.asItem().getDefaultInstance().getItem();
-                        if (!isgoodluckmessageSent) {
-                            // Generate a random index to get a random translation key for a good luck message
-                            int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
-                            // Send the good luck message to the player
-                            player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
-                            // Set ismessageSent to true to prevent sending duplicate messages
-                            isgoodluckmessageSent = true;
-                            // Play sounds to indicate the successful opening of the mystery box
-                            player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                            player.getInventory().add(new ItemStack(item));
-                        } else {
-                            isgoodluckmessageSent = false;
+                    if(!hasGivenIronChest){
+                        if (isIronChest) {
+                            AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.IRON_CHEST).get();
+                            Item item = chest.asItem().getDefaultInstance().getItem();
+                            if (!isgoodluckmessageSent) {
+                                // Generate a random index to get a random translation key for a good luck message
+                                int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                                // Send the good luck message to the player
+                                player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                                // Set ismessageSent to true to prevent sending duplicate messages
+                                isgoodluckmessageSent = true;
+                                // Play sounds to indicate the successful opening of the mystery box
+                                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                                player.getInventory().add(new ItemStack(item));
+                            } else {
+                                isgoodluckmessageSent = false;
+                            }
+                            isIronChest = false;
+                            isGoldChest = true;
+                            // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
+                            hasGivenIronChest = true;
+                            isBroken = true;
+                            isGoodLuck = false;
+                            isBadLuck = true;
+                        }else{
+                            isIronChest = false;
                         }
-                        isGoldChest = false;
-                        isCopperChest = true;
-                        // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
-                        hasGivenIronChest = true;
-                        isBroken = true;
-                        isGoodLuck = false;
-                        isBadLuck = true;
-                    }else{
-                        isGoldChest = false;
                     }
-                }
-                if(!hasGivenIronChest){
-                    if (isCopperChest) {
-                        AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.COPPER_CHEST).get();
-                        Item item = chest.asItem().getDefaultInstance().getItem();
-                        if (!isgoodluckmessageSent) {
-                            // Generate a random index to get a random translation key for a good luck message
-                            int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
-                            // Send the good luck message to the player
-                            player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
-                            // Set ismessageSent to true to prevent sending duplicate messages
-                            isgoodluckmessageSent = true;
-                            // Play sounds to indicate the successful opening of the mystery box
-                            player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                            player.getInventory().add(new ItemStack(item));
-                        } else {
-                            isgoodluckmessageSent = false;
+                    if(!hasGivenIronChest){
+                        if (isGoldChest) {
+                            AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.GOLD_CHEST).get();
+                            Item item = chest.asItem().getDefaultInstance().getItem();
+                            if (!isgoodluckmessageSent) {
+                                // Generate a random index to get a random translation key for a good luck message
+                                int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                                // Send the good luck message to the player
+                                player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                                // Set ismessageSent to true to prevent sending duplicate messages
+                                isgoodluckmessageSent = true;
+                                // Play sounds to indicate the successful opening of the mystery box
+                                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                                player.getInventory().add(new ItemStack(item));
+                            } else {
+                                isgoodluckmessageSent = false;
+                            }
+                            isGoldChest = false;
+                            isCopperChest = true;
+                            // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
+                            hasGivenIronChest = true;
+                            isBroken = true;
+                            isGoodLuck = false;
+                            isBadLuck = true;
+                        }else{
+                            isGoldChest = false;
                         }
-                        isCopperChest = false;
-                        isDiamondChest = true;
-                        // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
-                        hasGivenIronChest = true;
-                        isBroken = true;
-                        isGoodLuck = false;
-                        isBadLuck = true;
-                    }else{
-                        isCopperChest = false;
                     }
-                }
-                if(!hasGivenIronChest){
-                    if (isDiamondChest) {
-                        AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.DIAMOND_CHEST).get();
-                        Item item = chest.asItem().getDefaultInstance().getItem();
-                        if (!isgoodluckmessageSent) {
-                            // Generate a random index to get a random translation key for a good luck message
-                            int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
-                            // Send the good luck message to the player
-                            player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
-                            // Set ismessageSent to true to prevent sending duplicate messages
-                            isgoodluckmessageSent = true;
-                            // Play sounds to indicate the successful opening of the mystery box
-                            player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                            player.getInventory().add(new ItemStack(item));
-                        } else {
-                            isgoodluckmessageSent = false;
+                    if(!hasGivenIronChest){
+                        if (isCopperChest) {
+                            AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.COPPER_CHEST).get();
+                            Item item = chest.asItem().getDefaultInstance().getItem();
+                            if (!isgoodluckmessageSent) {
+                                // Generate a random index to get a random translation key for a good luck message
+                                int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                                // Send the good luck message to the player
+                                player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                                // Set ismessageSent to true to prevent sending duplicate messages
+                                isgoodluckmessageSent = true;
+                                // Play sounds to indicate the successful opening of the mystery box
+                                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                                player.getInventory().add(new ItemStack(item));
+                            } else {
+                                isgoodluckmessageSent = false;
+                            }
+                            isCopperChest = false;
+                            isDiamondChest = true;
+                            // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
+                            hasGivenIronChest = true;
+                            isBroken = true;
+                            isGoodLuck = false;
+                            isBadLuck = true;
+                        }else{
+                            isCopperChest = false;
                         }
-                        isDiamondChest = false;
-                        isObsidianChest = true;
-                        // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
-                        hasGivenIronChest = true;
-                        isBroken = true;
-                        isGoodLuck = false;
-                        isBadLuck = true;
-                    }else{
-                        isDiamondChest = false;
                     }
-                }
-                if(!hasGivenIronChest){
-                    if (isObsidianChest) {
-                        AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.OBSIDIAN_CHEST).get();
-                        Item item = chest.asItem().getDefaultInstance().getItem();
-                        if (!isgoodluckmessageSent) {
-                            // Generate a random index to get a random translation key for a good luck message
-                            int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
-                            // Send the good luck message to the player
-                            player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
-                            // Set ismessageSent to true to prevent sending duplicate messages
-                            isgoodluckmessageSent = true;
-                            // Play sounds to indicate the successful opening of the mystery box
-                            player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                            player.getInventory().add(new ItemStack(item));
-                        } else {
-                            isgoodluckmessageSent = false;
+                    if(!hasGivenIronChest){
+                        if (isDiamondChest) {
+                            AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.DIAMOND_CHEST).get();
+                            Item item = chest.asItem().getDefaultInstance().getItem();
+                            if (!isgoodluckmessageSent) {
+                                // Generate a random index to get a random translation key for a good luck message
+                                int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                                // Send the good luck message to the player
+                                player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                                // Set ismessageSent to true to prevent sending duplicate messages
+                                isgoodluckmessageSent = true;
+                                // Play sounds to indicate the successful opening of the mystery box
+                                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                                player.getInventory().add(new ItemStack(item));
+                            } else {
+                                isgoodluckmessageSent = false;
+                            }
+                            isDiamondChest = false;
+                            isObsidianChest = true;
+                            // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
+                            hasGivenIronChest = true;
+                            isBroken = true;
+                            isGoodLuck = false;
+                            isBadLuck = true;
+                        }else{
+                            isDiamondChest = false;
                         }
-                        isObsidianChest = false;
-                        isCrystalChest = true;
-                        // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
-                        hasGivenIronChest = true;
-                        isBroken = true;
-                        isGoodLuck = false;
-                        isBadLuck = true;
-                    }else{
-                        isObsidianChest = false;
                     }
-                }
-                if(!hasGivenIronChest){
-                    if (isCrystalChest) {
-                        AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.CRYSTAL_CHEST).get();
-                        Item item = chest.asItem().getDefaultInstance().getItem();
-                        if (!isgoodluckmessageSent) {
-                            // Generate a random index to get a random translation key for a good luck message
-                            int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
-                            // Send the good luck message to the player
-                            player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
-                            // Set ismessageSent to true to prevent sending duplicate messages
-                            isgoodluckmessageSent = true;
-                            // Play sounds to indicate the successful opening of the mystery box
-                            player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                            player.getInventory().add(new ItemStack(item));
-                        } else {
-                            isgoodluckmessageSent = false;
+                    if(!hasGivenIronChest){
+                        if (isObsidianChest) {
+                            AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.OBSIDIAN_CHEST).get();
+                            Item item = chest.asItem().getDefaultInstance().getItem();
+                            if (!isgoodluckmessageSent) {
+                                // Generate a random index to get a random translation key for a good luck message
+                                int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                                // Send the good luck message to the player
+                                player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                                // Set ismessageSent to true to prevent sending duplicate messages
+                                isgoodluckmessageSent = true;
+                                // Play sounds to indicate the successful opening of the mystery box
+                                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                                player.getInventory().add(new ItemStack(item));
+                            } else {
+                                isgoodluckmessageSent = false;
+                            }
+                            isObsidianChest = false;
+                            isCrystalChest = true;
+                            // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
+                            hasGivenIronChest = true;
+                            isBroken = true;
+                            isGoodLuck = false;
+                            isBadLuck = true;
+                        }else{
+                            isObsidianChest = false;
                         }
-                        isCrystalChest = false;
-                        isDirtChest = false;
-                        // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
-                        hasGivenIronChest = true;
-                        isBroken = true;
-                        isGoodLuck = false;
-                        isBadLuck = true;
-                    }else{
-                        isCrystalChest = false;
                     }
+                    if(!hasGivenIronChest){
+                        if (isCrystalChest) {
+                            AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.CRYSTAL_CHEST).get();
+                            Item item = chest.asItem().getDefaultInstance().getItem();
+                            if (!isgoodluckmessageSent) {
+                                // Generate a random index to get a random translation key for a good luck message
+                                int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                                // Send the good luck message to the player
+                                player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                                // Set ismessageSent to true to prevent sending duplicate messages
+                                isgoodluckmessageSent = true;
+                                // Play sounds to indicate the successful opening of the mystery box
+                                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                                player.getInventory().add(new ItemStack(item));
+                            } else {
+                                isgoodluckmessageSent = false;
+                            }
+                            isCrystalChest = false;
+                            isDirtChest = false;
+                            isTrappedDirtChest = true;
+                            // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
+                            hasGivenIronChest = true;
+                            isBroken = true;
+                            isGoodLuck = false;
+                            isBadLuck = true;
+                        }else{
+                            isCrystalChest = false;
+                        }
+                    }
+                    if(!hasGivenIronChest){
+                        if (isTrappedDirtChest) {
+                            AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.TRAPPED_DIRT_CHEST).get();
+                            Item item = chest.asItem().getDefaultInstance().getItem();
+                            if (!isgoodluckmessageSent) {
+                                // Generate a random index to get a random translation key for a good luck message
+                                int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                                // Send the good luck message to the player
+                                player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                                // Set ismessageSent to true to prevent sending duplicate messages
+                                isgoodluckmessageSent = true;
+                                // Play sounds to indicate the successful opening of the mystery box
+                                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                                player.getInventory().add(new ItemStack(item));
+                            } else {
+                                isgoodluckmessageSent = false;
+                            }
+                            isTrappedDirtChest = false;
+                            isTrappedIronChest = true;
+                            // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
+                            hasGivenIronChest = true;
+                            isBroken = true;
+                            isGoodLuck = false;
+                            isBadLuck = true;
+                        }else{
+                            isTrappedDirtChest = true;
+                        }
+                    }
+                    if(!hasGivenIronChest){
+                        if (isTrappedIronChest) {
+                            AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.TRAPPED_IRON_CHEST).get();
+                            Item item = chest.asItem().getDefaultInstance().getItem();
+                            if (!isgoodluckmessageSent) {
+                                // Generate a random index to get a random translation key for a good luck message
+                                int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                                // Send the good luck message to the player
+                                player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                                // Set ismessageSent to true to prevent sending duplicate messages
+                                isgoodluckmessageSent = true;
+                                // Play sounds to indicate the successful opening of the mystery box
+                                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                                player.getInventory().add(new ItemStack(item));
+                            } else {
+                                isgoodluckmessageSent = false;
+                            }
+                            isTrappedIronChest = false;
+                            isTrappedGoldChest = true;
+                            // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
+                            hasGivenIronChest = true;
+                            isBroken = true;
+                            isGoodLuck = false;
+                            isBadLuck = true;
+                        }else{
+                            isTrappedIronChest = false;
+                        }
+                    }
+                    if(!hasGivenIronChest){
+                        if (isTrappedGoldChest) {
+                            AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.TRAPPED_GOLD_CHEST).get();
+                            Item item = chest.asItem().getDefaultInstance().getItem();
+                            if (!isgoodluckmessageSent) {
+                                // Generate a random index to get a random translation key for a good luck message
+                                int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                                // Send the good luck message to the player
+                                player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                                // Set ismessageSent to true to prevent sending duplicate messages
+                                isgoodluckmessageSent = true;
+                                // Play sounds to indicate the successful opening of the mystery box
+                                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                                player.getInventory().add(new ItemStack(item));
+                            } else {
+                                isgoodluckmessageSent = false;
+                            }
+                            isTrappedGoldChest = false;
+                            isTrappedCopperChest = true;
+                            // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
+                            hasGivenIronChest = true;
+                            isBroken = true;
+                            isGoodLuck = false;
+                            isBadLuck = true;
+                        }else{
+                            isTrappedGoldChest = false;
+                        }
+                    }
+                    if(!hasGivenIronChest){
+                        if (isTrappedCopperChest) {
+                            AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.TRAPPED_COPPER_CHEST).get();
+                            Item item = chest.asItem().getDefaultInstance().getItem();
+                            if (!isgoodluckmessageSent) {
+                                // Generate a random index to get a random translation key for a good luck message
+                                int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                                // Send the good luck message to the player
+                                player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                                // Set ismessageSent to true to prevent sending duplicate messages
+                                isgoodluckmessageSent = true;
+                                // Play sounds to indicate the successful opening of the mystery box
+                                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                                player.getInventory().add(new ItemStack(item));
+                            } else {
+                                isgoodluckmessageSent = false;
+                            }
+                            isTrappedCopperChest = false;
+                            isTrappedDiamondChest = true;
+                            // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
+                            hasGivenIronChest = true;
+                            isBroken = true;
+                            isGoodLuck = false;
+                            isBadLuck = true;
+                        }else{
+                            isTrappedCopperChest = false;
+                        }
+                    }
+                    if(!hasGivenIronChest){
+                        if (isTrappedDiamondChest) {
+                            AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.TRAPPED_DIAMOND_CHEST).get();
+                            Item item = chest.asItem().getDefaultInstance().getItem();
+                            if (!isgoodluckmessageSent) {
+                                // Generate a random index to get a random translation key for a good luck message
+                                int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                                // Send the good luck message to the player
+                                player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                                // Set ismessageSent to true to prevent sending duplicate messages
+                                isgoodluckmessageSent = true;
+                                // Play sounds to indicate the successful opening of the mystery box
+                                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                                player.getInventory().add(new ItemStack(item));
+                            } else {
+                                isgoodluckmessageSent = false;
+                            }
+                            isTrappedDiamondChest = false;
+                            isTrappedObsidianChest = true;
+                            // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
+                            hasGivenIronChest = true;
+                            isBroken = true;
+                            isGoodLuck = false;
+                            isBadLuck = true;
+                        }else{
+                            isTrappedDiamondChest = false;
+                        }
+                    }
+                    if(!hasGivenIronChest){
+                        if (isTrappedObsidianChest) {
+                            AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.TRAPPED_OBSIDIAN_CHEST).get();
+                            Item item = chest.asItem().getDefaultInstance().getItem();
+                            if (!isgoodluckmessageSent) {
+                                // Generate a random index to get a random translation key for a good luck message
+                                int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                                // Send the good luck message to the player
+                                player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                                // Set ismessageSent to true to prevent sending duplicate messages
+                                isgoodluckmessageSent = true;
+                                // Play sounds to indicate the successful opening of the mystery box
+                                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                                player.getInventory().add(new ItemStack(item));
+                            } else {
+                                isgoodluckmessageSent = false;
+                            }
+                            isTrappedObsidianChest = false;
+                            isTrappedCrystalChest = true;
+                            // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
+                            hasGivenIronChest = true;
+                            isBroken = true;
+                            isGoodLuck = false;
+                            isBadLuck = true;
+                        }else{
+                            isTrappedObsidianChest = false;
+                        }
+                    }
+                    if(!hasGivenIronChest){
+                        if (isTrappedCrystalChest) {
+                            AbstractIronChestBlock chest = Objects.requireNonNull(IronChestsBlocks.TRAPPED_CRYSTAL_CHEST).get();
+                            Item item = chest.asItem().getDefaultInstance().getItem();
+                            if (!isgoodluckmessageSent) {
+                                // Generate a random index to get a random translation key for a good luck message
+                                int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                                // Send the good luck message to the player
+                                player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                                // Set ismessageSent to true to prevent sending duplicate messages
+                                isgoodluckmessageSent = true;
+                                // Play sounds to indicate the successful opening of the mystery box
+                                player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                                player.getInventory().add(new ItemStack(item));
+                            } else {
+                                isgoodluckmessageSent = false;
+                            }
+                            isTrappedCrystalChest = false;
+                            isTrappedDirtChest = false;
+                            // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
+                            hasGivenIronChest = true;
+                            isBroken = true;
+                            isGoodLuck = false;
+                            isBadLuck = true;
+                        }else{
+                            isTrappedCrystalChest = false;
+                        }
+                    }
+                    // Give the player a iron chests chest item
                 }
-            }else{
-                isGoodLuck = true;
-            }
         }else{
             isBroken = false;
         }
@@ -812,32 +1055,30 @@ public class MysteryBoxBlock extends Block {
     // Give the good effect method
     public void GiveGoodpotionEffectToPlayer(Player player, int time, int amplifier, boolean isAmbient, boolean HideParticles){
         if(!isBroken){
-            if(isGoodLuck){
-                if(!hasGivenGoodEffect){
-                    if(!isgoodluckmessageSent){
-                        // Generate a random index to get a random translation key for a good luck message
-                        int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
-                        // Send the good luck message to the player
-                        player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
-                        // Set ismessageSent to true to prevent sending duplicate messages
-                        isgoodluckmessageSent = true;
-                        // Play sounds to indicate the successful opening of the mystery box
-                        player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                        int index1 = RANDOM.nextInt(GOOD_EFFECTS.length);
-                        MobEffect good = GOOD_EFFECTS[RANDOM.nextInt(index1)];
-                        player.addEffect(new MobEffectInstance(good, time, amplifier, isAmbient, HideParticles));
-                        // Set isBroken and hasGivenGoodEffect to true to indicate that the block has been broken
-                        hasGivenGoodEffect = true;
-                        isBroken = true;
-                        isGoodLuck = false;
-                        isBadLuck = true;
-                    }else{
-                        isgoodluckmessageSent = false;
+                if(isGoodLuck && !isBadLuck){
+                    if(!hasGivenGoodEffect){
+                        if(!isgoodluckmessageSent){
+                            // Generate a random index to get a random translation key for a good luck message
+                            int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                            // Send the good luck message to the player
+                            player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                            // Set ismessageSent to true to prevent sending duplicate messages
+                            isgoodluckmessageSent = true;
+                            // Play sounds to indicate the successful opening of the mystery box
+                            player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                            int index1 = RANDOM.nextInt(GOOD_EFFECTS.length);
+                            MobEffect good = GOOD_EFFECTS[RANDOM.nextInt(index1)];
+                            player.addEffect(new MobEffectInstance(good, time, amplifier, isAmbient, HideParticles));
+                            // Set isBroken and hasGivenGoodEffect to true to indicate that the block has been broken
+                            hasGivenGoodEffect = true;
+                            isBroken = true;
+                            isGoodLuck = false;
+                            isBadLuck = true;
+                        }else{
+                            isgoodluckmessageSent = false;
+                        }
                     }
                 }
-            }else{
-                isGoodLuck = true;
-            }
         }else{
             isBroken = false;
         }
@@ -846,32 +1087,30 @@ public class MysteryBoxBlock extends Block {
     // Spawn the pet method
     public void SpawnPetAtPlayer(ServerLevel level, BlockPos pos, MobSpawnType type, Player player){
         if(!isBroken){
-            if(isGoodLuck){
-                if(!hasSpawnedPet){
-                    if(!isgoodluckmessageSent){
-                        // Generate a random index to get a random translation key for a good luck message
-                        int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
-                        // Send the good luck message to the player
-                        player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
-                        // Set ismessageSent to true to prevent sending duplicate messages
-                        isgoodluckmessageSent = true;
-                        // Play sounds to indicate the successful opening of the mystery box
-                        player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                        int index1 = RANDOM.nextInt(PETS.length);
-                        EntityType<?> pet = PETS[RANDOM.nextInt(index1)];
-                        level.addFreshEntity(pet.spawn(level, pos, type));
-                        // Set isBroken and hasSpawnedPet to true to indicate that the block has been broken
-                        hasSpawnedPet = true;
-                        isBroken = true;
-                        isGoodLuck = false;
-                        isBadLuck = true;
-                    }else{
-                        isgoodluckmessageSent = false;
+                if(isGoodLuck && !isBadLuck){
+                    if(!hasSpawnedPet){
+                        if(!isgoodluckmessageSent){
+                            // Generate a random index to get a random translation key for a good luck message
+                            int index = new Random().nextInt(Objects.requireNonNull(good_translation_keys_messages).size());
+                            // Send the good luck message to the player
+                            player.sendSystemMessage(Component.translatable(Objects.requireNonNull(good_translation_keys_messages.get(index))));
+                            // Set ismessageSent to true to prevent sending duplicate messages
+                            isgoodluckmessageSent = true;
+                            // Play sounds to indicate the successful opening of the mystery box
+                            player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                            int index1 = RANDOM.nextInt(PETS.length);
+                            EntityType<?> pet = PETS[RANDOM.nextInt(index1)];
+                            level.addFreshEntity(pet.spawn(level, pos, type));
+                            // Set isBroken and hasSpawnedPet to true to indicate that the block has been broken
+                            hasSpawnedPet = true;
+                            isBroken = true;
+                            isGoodLuck = false;
+                            isBadLuck = true;
+                        }else{
+                            isgoodluckmessageSent = false;
+                        }
                     }
                 }
-            }else{
-                isGoodLuck = true;
-            }
         }else{
             isBroken = false;
         }
@@ -881,31 +1120,29 @@ public class MysteryBoxBlock extends Block {
     // Spawn the explosion method
     public void SpawnExplosionAtPlayer(Level level, BlockPos pos, Player player, boolean SpawnFire){
         if(!isBroken){
-            if(isBadLuck){
-                if(!hasSpawnedExplosion){
-                    if(!isbadluckmessageSent){
-                        float radius = Objects.requireNonNull(explosion_radius)[Objects.requireNonNull(RANDOM).nextInt(explosion_radius.length)];
-                        // Generate a random index to get a random translation key for a bad luck message
-                        int index = new Random().nextInt(Objects.requireNonNull(bad_translation_keys_messages).size());
-                        // Send the bad luck message to the player
-                        Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(bad_translation_keys_messages.get(index))));
-                        // Play sounds to indicate the successful opening of the mystery box
-                        player.playSound(SoundEvents.WITHER_AMBIENT, 1f, 1f);
-                        // Select the player and spawn an explosion from the mysterybox
-                        level.explode(player, player.getX(), player.getY(), player.getZ(), radius, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        // Set isBroken and hasSpawnedExplosion to true to indicate that the block has been broken
-                        isbadluckmessageSent = true;
-                        hasSpawnedExplosion = true;
-                        isBroken = true;
-                        isGoodLuck = true;
-                        isBadLuck = false;
-                    }else{
-                        isbadluckmessageSent = false;
+                if(isBadLuck && !isGoodLuck){
+                    if(!hasSpawnedExplosion){
+                        if(!isbadluckmessageSent){
+                            float radius = Objects.requireNonNull(explosion_radius)[Objects.requireNonNull(RANDOM).nextInt(explosion_radius.length)];
+                            // Generate a random index to get a random translation key for a bad luck message
+                            int index = new Random().nextInt(Objects.requireNonNull(bad_translation_keys_messages).size());
+                            // Send the bad luck message to the player
+                            Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(bad_translation_keys_messages.get(index))));
+                            // Play sounds to indicate the successful opening of the mystery box
+                            player.playSound(SoundEvents.WITHER_AMBIENT, 1f, 1f);
+                            // Select the player and spawn an explosion from the mysterybox
+                            level.explode(player, player.getX(), player.getY(), player.getZ(), radius, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                            // Set isBroken and hasSpawnedExplosion to true to indicate that the block has been broken
+                            isbadluckmessageSent = true;
+                            hasSpawnedExplosion = true;
+                            isBroken = true;
+                            isGoodLuck = true;
+                            isBadLuck = false;
+                        }else{
+                            isbadluckmessageSent = false;
+                        }
                     }
                 }
-            }else{
-                isBadLuck = false;
-            }
         }else{
             isBroken = false;
         }
@@ -914,31 +1151,29 @@ public class MysteryBoxBlock extends Block {
     // Spawn the monster method
     public void SpawnMonsterAtPlayer(ServerLevel level, BlockPos pos, MobSpawnType type, Player player){
         if(!isBroken){
-            if(isBadLuck){
-                if(!hasSpawnedMonster){
-                    if(!isbadluckmessageSent){
-                        // Generate a random index to get a random translation key for a bad luck message
-                        int index = new Random().nextInt(Objects.requireNonNull(bad_translation_keys_messages).size());
-                        // Send the bad luck message to the player
-                        Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(bad_translation_keys_messages.get(index))));
-                        // Play sounds to indicate the successful opening of the mystery box
-                        player.playSound(SoundEvents.WITHER_AMBIENT, 1f, 1f);
-                        int index1 = RANDOM.nextInt(MONSTERS.length);
-                        EntityType<?> monster = MONSTERS[RANDOM.nextInt(index1)];
-                        level.addFreshEntity(monster.spawn(level, pos, type));
-                        // Set isBroken and hasSpawnedMonster to true to indicate that the block has been broken
-                        isbadluckmessageSent = true;
-                        hasSpawnedMonster = true;
-                        isBroken = true;
-                        isGoodLuck = true;
-                        isBadLuck = false;
-                    }else{
-                        isbadluckmessageSent = false;
+                if(isBadLuck && !isGoodLuck){
+                    if(!hasSpawnedMonster){
+                        if(!isbadluckmessageSent){
+                            // Generate a random index to get a random translation key for a bad luck message
+                            int index = new Random().nextInt(Objects.requireNonNull(bad_translation_keys_messages).size());
+                            // Send the bad luck message to the player
+                            Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(bad_translation_keys_messages.get(index))));
+                            // Play sounds to indicate the successful opening of the mystery box
+                            player.playSound(SoundEvents.WITHER_AMBIENT, 1f, 1f);
+                            int index1 = RANDOM.nextInt(MONSTERS.length);
+                            EntityType<?> monster = MONSTERS[RANDOM.nextInt(index1)];
+                            level.addFreshEntity(monster.spawn(level, pos, type));
+                            // Set isBroken and hasSpawnedMonster to true to indicate that the block has been broken
+                            isbadluckmessageSent = true;
+                            hasSpawnedMonster = true;
+                            isBroken = true;
+                            isGoodLuck = true;
+                            isBadLuck = false;
+                        }else{
+                            isbadluckmessageSent = false;
+                        }
                     }
                 }
-            }else{
-                isBadLuck = false;
-            }
         }else{
             isBroken = false;
         }
@@ -948,32 +1183,30 @@ public class MysteryBoxBlock extends Block {
     // Give the bad effect method
     public void GiveBadpotionEffectToPlayer(Player player, int time, int amplifier, boolean isAmbient, boolean HideParticles){
         if(!isBroken){
-            if(isBadLuck){
-                if(!hasGivenBadEffect){
-                    if(!isbadluckmessageSent){
-                        // Generate a random index to get a random translation key for a bad luck message
-                        int index = new Random().nextInt(Objects.requireNonNull(bad_translation_keys_messages).size());
-                        // Send the bad luck message to the player
-                        Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(bad_translation_keys_messages.get(index))));
-                        // Set ismessageSent to true to prevent sending duplicate messages
-                        isbadluckmessageSent = true;
-                        // Play sounds to indicate the successful opening of the mystery box
-                        player.playSound(SoundEvents.WITHER_AMBIENT, 1f, 1f);
-                        int index1 = RANDOM.nextInt(BAD_EFFECTS.length);
-                        MobEffect bad = BAD_EFFECTS[RANDOM.nextInt(index1)];
-                        player.addEffect(new MobEffectInstance(bad, time, amplifier, isAmbient, HideParticles));
-                        // Set isBroken and hasGivenBadEffect to true to indicate that the block has been broken
-                        hasGivenBadEffect = true;
-                        isBroken = true;
-                        isGoodLuck = true;
-                        isBadLuck = false;
-                    }else{
-                        isbadluckmessageSent = false;
+                if(isBadLuck && !isGoodLuck){
+                    if(!hasGivenBadEffect){
+                        if(!isbadluckmessageSent){
+                            // Generate a random index to get a random translation key for a bad luck message
+                            int index = new Random().nextInt(Objects.requireNonNull(bad_translation_keys_messages).size());
+                            // Send the bad luck message to the player
+                            Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(bad_translation_keys_messages.get(index))));
+                            // Set ismessageSent to true to prevent sending duplicate messages
+                            isbadluckmessageSent = true;
+                            // Play sounds to indicate the successful opening of the mystery box
+                            player.playSound(SoundEvents.WITHER_AMBIENT, 1f, 1f);
+                            int index1 = RANDOM.nextInt(BAD_EFFECTS.length);
+                            MobEffect bad = BAD_EFFECTS[RANDOM.nextInt(index1)];
+                            player.addEffect(new MobEffectInstance(bad, time, amplifier, isAmbient, HideParticles));
+                            // Set isBroken and hasGivenBadEffect to true to indicate that the block has been broken
+                            hasGivenBadEffect = true;
+                            isBroken = true;
+                            isGoodLuck = true;
+                            isBadLuck = false;
+                        }else{
+                            isbadluckmessageSent = false;
+                        }
                     }
                 }
-            }else{
-                isBadLuck = false;
-            }
         }else{
             isBroken = false;
         }
