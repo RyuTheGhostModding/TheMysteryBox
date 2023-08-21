@@ -209,7 +209,15 @@ public class MysteryBoxBlock extends Block {
             Items.OCHRE_FROGLIGHT,
             Items.VERDANT_FROGLIGHT,
             Items.SOUL_LANTERN,
-            Items.SEA_LANTERN
+            Items.SEA_LANTERN,
+            Items.PRISMARINE_SHARD,
+            Items.PRISMARINE_CRYSTALS,
+            Items.SMOKER,
+            Items.DROPPER,
+            Items.HOPPER,
+            Items.CAULDRON,
+            Items.HOPPER_MINECART,
+            Items.REDSTONE_LAMP
 
 
     };
@@ -872,7 +880,7 @@ public class MysteryBoxBlock extends Block {
                             isGoodLuck = false;
                             isBadLuck = true;
                         }else{
-                            isTrappedDirtChest = true;
+                            isTrappedDirtChest = false;
                         }
                     }
                     if(!hasGivenIronChest){
