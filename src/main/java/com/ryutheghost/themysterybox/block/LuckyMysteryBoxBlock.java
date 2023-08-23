@@ -424,96 +424,6 @@ public class LuckyMysteryBoxBlock extends Block {
                                     isItem = true;
                                 }
                             }
-                            // Check if is Good Luck
-                            if(isGoodLuck){
-                                //Various condition checks
-                                if(isBackpack){
-                                    // Check if is backpack item
-                                    if(!hasGivenBackpack){
-                                        //Give a backpack item
-                                        GiveBackpackItemToPlayer(player);
-                                        // Sets isBackpack to false
-                                        isBackpack = false;
-                                        // Sets isIronChestsChest to true
-                                        isIronChestsChest = true;
-                                    }
-                                    // Reset the default boolean values
-                                    else{
-                                        hasGivenBackpack = false;
-                                    }
-                                }
-                                // Reset the default boolean values
-                                else{
-                                    isBackpack = false;
-                                }
-                            }
-                            // Check if is Good Luck
-                            if(isGoodLuck){
-                                //Various condition checks
-                                if(isIronChestsChest){
-                                    //Check if is iron chests chest item
-                                    if(!hasGivenIronChest){
-                                        // Give a iron chests chest item
-                                        GiveIronChestsItemToPlayer(player);
-                                        // Sets isIronChestsChest to false
-                                        isIronChestsChest = false;
-                                        // Sets isGoodEffect to true
-                                        isGoodEffect = true;
-                                    }
-                                    // Reset the default boolean values
-                                    else{
-                                        hasGivenIronChest = false;
-                                    }
-                                }
-                                // Reset the default boolean values
-                                else{
-                                    isIronChestsChest = false;
-                                }
-                            }
-                            // Check if is Good Luck
-                            if(isGoodLuck){
-                                //Various condition checks
-                                if(isGoodEffect){
-                                    //Check if is iron chests chest item
-                                    if(!hasGivenGoodEffect){
-                                        // Give a good potioneffect
-                                        GiveGoodpotionEffectToPlayer(player, 300*20, 2, false, true);
-                                        // Sets isGoodEffect to false
-                                        isGoodEffect = false;
-                                        // Sets isPetSpawn to true
-                                        isPetSpawn = true;
-                                    }
-                                    // Reset the default boolean values
-                                    else{
-                                        hasGivenGoodEffect = false;
-                                    }
-                                }
-                                // Reset the default boolean values
-                                else{
-                                    isGoodEffect = false;
-                                }
-                            }
-                            // Check if is Good Luck
-                            if(isGoodLuck){
-                                //Various condition checks
-                                if(isPetSpawn){
-                                    //Check if the pet has spawned
-                                    if(!hasSpawnedPet){
-                                        // Spawn a pet on open
-                                        SpawnPetAtPlayer((ServerLevel) level, pos, MobSpawnType.SPAWNER, player);
-                                        // Sets isPetSpawn to false
-                                        isPetSpawn = false;
-                                    }
-                                    // Reset the default boolean values
-                                    else{
-                                        hasSpawnedPet = false;
-                                    }
-                                }
-                                // Reset the default boolean values
-                                else{
-                                    isPetSpawn = false;
-                                }
-                            }
                             }else{
                                 // Reset the default boolean values
                                 isGoodLuck = true;
@@ -524,12 +434,203 @@ public class LuckyMysteryBoxBlock extends Block {
                     else{
                         isLuck = false;
                     }
+                    isBroken = true;
                 }
                 // Reset the isBroken check
                 else{
                     isBroken = false;
                 }
             }
+        // If it isn't on the client side
+        if (!level.isClientSide()) {
+            // If the block is broken
+            if (Objects.requireNonNull(level).destroyBlock(Objects.requireNonNull(pos), false, player)) {
+                // The block is being broken for the first time
+                if (!isBroken) {
+                    // Runs a luck check
+                    if(!isLuck){
+                        // Check if is Good Luck
+                        if(isGoodLuck){
+                            //Various condition checks
+                            if(isBackpack){
+                                // Check if is backpack item
+                                if(!hasGivenBackpack){
+                                    //Give a backpack item
+                                    GiveBackpackItemToPlayer(player);
+                                    // Sets isBackpack to false
+                                    isBackpack = false;
+                                    // Sets isIronChestsChest to true
+                                    isIronChestsChest = true;
+                                }
+                                // Reset the default boolean values
+                                else{
+                                    hasGivenBackpack = false;
+                                }
+                            }
+                            // Reset the default boolean values
+                            else{
+                                isBackpack = false;
+                            }
+                        }
+                    }else{
+                        // Reset the default boolean values
+                        isGoodLuck = true;
+                    }
+                    isLuck = true;
+                }
+                // Reset the default boolean values
+                else{
+                    isLuck = false;
+                }
+                isBroken = true;
+            }
+            // Reset the isBroken check
+            else{
+                isBroken = false;
+            }
+        }
+        // If it isn't on the client side
+        if (!level.isClientSide()) {
+            // If the block is broken
+            if (Objects.requireNonNull(level).destroyBlock(Objects.requireNonNull(pos), false, player)) {
+                // The block is being broken for the first time
+                if (!isBroken) {
+                    // Runs a luck check
+                    if(!isLuck){
+                        // Check if is Good Luck
+                        if(isGoodLuck){
+                            //Various condition checks
+                            if(isIronChestsChest){
+                                //Check if is iron chests chest item
+                                if(!hasGivenIronChest){
+                                    // Give a iron chests chest item
+                                    GiveIronChestsItemToPlayer(player);
+                                    // Sets isIronChestsChest to false
+                                    isIronChestsChest = false;
+                                    // Sets isGoodEffect to true
+                                    isGoodEffect = true;
+                                }
+                                // Reset the default boolean values
+                                else{
+                                    hasGivenIronChest = false;
+                                }
+                            }
+                            // Reset the default boolean values
+                            else{
+                                isIronChestsChest = false;
+                            }
+                        }
+                    }else{
+                        // Reset the default boolean values
+                        isGoodLuck = true;
+                    }
+                    isLuck = true;
+                }
+                // Reset the default boolean values
+                else{
+                    isLuck = false;
+                }
+                isBroken = true;
+            }
+            // Reset the isBroken check
+            else{
+                isBroken = false;
+            }
+        }
+        // If it isn't on the client side
+        if (!level.isClientSide()) {
+            // If the block is broken
+            if (Objects.requireNonNull(level).destroyBlock(Objects.requireNonNull(pos), false, player)) {
+                // The block is being broken for the first time
+                if (!isBroken) {
+                    // Runs a luck check
+                    if(!isLuck){
+                        // Check if is Good Luck
+                        if(isGoodLuck){
+                            //Various condition checks
+                            if(isGoodEffect){
+                                //Check if is iron chests chest item
+                                if(!hasGivenGoodEffect){
+                                    // Give a good potioneffect
+                                    GiveGoodpotionEffectToPlayer(player, 300*20, 2, false, true);
+                                    // Sets isGoodEffect to false
+                                    isGoodEffect = false;
+                                    // Sets isPetSpawn to true
+                                    isPetSpawn = true;
+                                }
+                                // Reset the default boolean values
+                                else{
+                                    hasGivenGoodEffect = false;
+                                }
+                            }
+                            // Reset the default boolean values
+                            else{
+                                isGoodEffect = false;
+                            }
+                        }
+                    }else{
+                        // Reset the default boolean values
+                        isGoodLuck = true;
+                    }
+                    isLuck = true;
+                }
+                // Reset the default boolean values
+                else{
+                    isLuck = false;
+                }
+                isBroken = true;
+            }
+            // Reset the isBroken check
+            else{
+                isBroken = false;
+            }
+        }
+        // If it isn't on the client side
+        if (!level.isClientSide()) {
+            // If the block is broken
+            if (Objects.requireNonNull(level).destroyBlock(Objects.requireNonNull(pos), false, player)) {
+                // The block is being broken for the first time
+                if (!isBroken) {
+                    // Runs a luck check
+                    if(!isLuck){
+                        // Check if is Good Luck
+                        if(isGoodLuck){
+                            //Various condition checks
+                            if(isPetSpawn){
+                                //Check if the pet has spawned
+                                if(!hasSpawnedPet){
+                                    // Spawn a pet on open
+                                    SpawnPetAtPlayer((ServerLevel) level, pos, MobSpawnType.SPAWNER, player);
+                                    // Sets isPetSpawn to false
+                                    isPetSpawn = false;
+                                }
+                                // Reset the default boolean values
+                                else{
+                                    hasSpawnedPet = false;
+                                }
+                            }
+                            // Reset the default boolean values
+                            else{
+                                isPetSpawn = false;
+                            }
+                        }
+                    }else{
+                        // Reset the default boolean values
+                        isGoodLuck = true;
+                    }
+                    isLuck = true;
+                }
+                // Reset the default boolean values
+                else{
+                    isLuck = false;
+                }
+                isBroken = true;
+            }
+            // Reset the isBroken check
+            else{
+                isBroken = false;
+            }
+        }
         // Return the boolean method for onDestroyedByPlayer
         return true;
     }
@@ -562,6 +663,8 @@ public class LuckyMysteryBoxBlock extends Block {
                         isGoodLuck = false;
                         // Give the player a vanilla item
                     }
+                }else{
+                    isGoodLuck = true;
                 }
             }
         else {
@@ -598,6 +701,8 @@ public class LuckyMysteryBoxBlock extends Block {
                         isGoodLuck = false;
                         // Give the player a Backpack item
                     }
+                }else{
+                    isGoodLuck = true;
                 }
         }else{
             isBroken = false;
@@ -1018,6 +1123,8 @@ public class LuckyMysteryBoxBlock extends Block {
                         }
                     }
                     // Give the player a iron chests chest item
+                }else{
+                    isGoodLuck = true;
                 }
         }else{
             isBroken = false;
@@ -1051,6 +1158,8 @@ public class LuckyMysteryBoxBlock extends Block {
                             isgoodluckmessageSent = false;
                         }
                     }
+                }else{
+                    isGoodLuck = true;
                 }
         }else{
             isBroken = false;
@@ -1082,6 +1191,8 @@ public class LuckyMysteryBoxBlock extends Block {
                             isgoodluckmessageSent = false;
                         }
                     }
+                }else{
+                    isGoodLuck = true;
                 }
         }else{
             isBroken = false;
