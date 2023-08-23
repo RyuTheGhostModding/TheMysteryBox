@@ -42,7 +42,7 @@ public class MysteryBoxModBlocks {
     }
 
     // RegistryObject for the Lucky Mystery Box block
-    public static final RegistryObject<Block> LUCKY_MYSTERY_BOX_BLOCK = registerBlock(
+    public static final RegistryObject<Block> LUCKY_MYSTERY_BOX_BLOCK = registerBlock1(
             () -> new LuckyMysteryBoxBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD)));
 
     // Helper method to register a block and its corresponding item
