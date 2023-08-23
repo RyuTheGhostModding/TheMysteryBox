@@ -366,7 +366,7 @@ public class LuckyMysteryBoxBlock extends Block {
     private boolean hasGivenIronChest = false; // Boolean field to check if it is an iron chest
     private boolean hasSpawnedPet = false; // Boolean field to check if it is a pet
     private boolean hasGivenGoodEffect = false; // Boolean field to check if it is a good potion effect
-    private boolean isGoodLuck = true; // Boolean field to check if it is good luck
+    private boolean isGoodLuck = false; // Boolean field to check if it is good luck
     private boolean isDirtChest = true; // Boolean field to check if it is dirt
     private boolean isIronChest = false; // Boolean field to check if it is iron
     private boolean isGoldChest = false; // Boolean field to check if it is gold
@@ -402,7 +402,7 @@ public class LuckyMysteryBoxBlock extends Block {
                     // Runs a luck check
                     if(!isLuck){
                             // Check if is Good Luck
-                            if (isGoodLuck) {
+                            if (!isGoodLuck) {
                                 //Various condition checks
                                 if(isItem){
                                     // Check if is item
@@ -426,7 +426,7 @@ public class LuckyMysteryBoxBlock extends Block {
                             }
                             }else{
                                 // Reset the default boolean values
-                                isGoodLuck = true;
+                                isGoodLuck = false;
                             }
                             isLuck = true;
                     }
@@ -450,7 +450,7 @@ public class LuckyMysteryBoxBlock extends Block {
                     // Runs a luck check
                     if(!isLuck){
                         // Check if is Good Luck
-                        if(isGoodLuck){
+                        if(!isGoodLuck){
                             //Various condition checks
                             if(isBackpack){
                                 // Check if is backpack item
@@ -474,7 +474,7 @@ public class LuckyMysteryBoxBlock extends Block {
                         }
                     }else{
                         // Reset the default boolean values
-                        isGoodLuck = true;
+                        isGoodLuck = false;
                     }
                     isLuck = true;
                 }
@@ -498,7 +498,7 @@ public class LuckyMysteryBoxBlock extends Block {
                     // Runs a luck check
                     if(!isLuck){
                         // Check if is Good Luck
-                        if(isGoodLuck){
+                        if(!isGoodLuck){
                             //Various condition checks
                             if(isIronChestsChest){
                                 //Check if is iron chests chest item
@@ -522,7 +522,7 @@ public class LuckyMysteryBoxBlock extends Block {
                         }
                     }else{
                         // Reset the default boolean values
-                        isGoodLuck = true;
+                        isGoodLuck = false;
                     }
                     isLuck = true;
                 }
@@ -546,7 +546,7 @@ public class LuckyMysteryBoxBlock extends Block {
                     // Runs a luck check
                     if(!isLuck){
                         // Check if is Good Luck
-                        if(isGoodLuck){
+                        if(!isGoodLuck){
                             //Various condition checks
                             if(isGoodEffect){
                                 //Check if is iron chests chest item
@@ -570,7 +570,7 @@ public class LuckyMysteryBoxBlock extends Block {
                         }
                     }else{
                         // Reset the default boolean values
-                        isGoodLuck = true;
+                        isGoodLuck = false;
                     }
                     isLuck = true;
                 }
@@ -594,7 +594,7 @@ public class LuckyMysteryBoxBlock extends Block {
                     // Runs a luck check
                     if(!isLuck){
                         // Check if is Good Luck
-                        if(isGoodLuck){
+                        if(!isGoodLuck){
                             //Various condition checks
                             if(isPetSpawn){
                                 //Check if the pet has spawned
@@ -616,7 +616,7 @@ public class LuckyMysteryBoxBlock extends Block {
                         }
                     }else{
                         // Reset the default boolean values
-                        isGoodLuck = true;
+                        isGoodLuck = false;
                     }
                     isLuck = true;
                 }
@@ -638,7 +638,7 @@ public class LuckyMysteryBoxBlock extends Block {
     // Give the vanilla item method
     public void GiveItemToPlayer(Player player) {
         if(!isBroken){
-                if(isGoodLuck){
+                if(!isGoodLuck){
                     if(!hasGivenItem){
                         if (!isgoodluckmessageSent) {
                             // Generate a random index to get a random int
@@ -660,11 +660,13 @@ public class LuckyMysteryBoxBlock extends Block {
                         // Set isBroken and hasGivenItem to true to indicate that the block has been broken
                         isBroken = true;
                         hasGivenItem = true;
-                        isGoodLuck = false;
+                        isGoodLuck = true;
+                        isItem = false;
+                        isBackpack = true;
                         // Give the player a vanilla item
                     }
                 }else{
-                    isGoodLuck = true;
+                    isGoodLuck = false;
                 }
             }
         else {
@@ -677,7 +679,7 @@ public class LuckyMysteryBoxBlock extends Block {
     // Give the Traveler's Backpack backpack method
     public void GiveBackpackItemToPlayer(Player player) {
         if(!isBroken){
-                if(isGoodLuck){
+                if(!isGoodLuck){
                     if(!hasGivenBackpack){
                         if (!isgoodluckmessageSent) {
                             // Generate a random index to get a random int
@@ -698,11 +700,13 @@ public class LuckyMysteryBoxBlock extends Block {
                         // Set isBroken and hasGivenBackpack to true to indicate that the block has been broken
                         isBroken = true;
                         hasGivenBackpack = true;
-                        isGoodLuck = false;
+                        isGoodLuck = true;
+                        isBackpack = false;
+                        isIronChest = true;
                         // Give the player a Backpack item
                     }
                 }else{
-                    isGoodLuck = true;
+                    isGoodLuck = false;
                 }
         }else{
             isBroken = false;
@@ -714,7 +718,7 @@ public class LuckyMysteryBoxBlock extends Block {
     // Give the Iron Chests chest method
     public void GiveIronChestsItemToPlayer(Player player) {
         if(!isBroken){
-                if(isGoodLuck){
+                if(!isGoodLuck){
                     if(!hasGivenIronChest){
                         if (isDirtChest) {
                             // Generate a random index to get a random int
@@ -739,7 +743,7 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
                             hasGivenIronChest = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
                         }else{
                             isDirtChest = true;
                         }
@@ -768,7 +772,7 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
                             hasGivenIronChest = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
                         }else{
                             isIronChest = false;
                         }
@@ -797,7 +801,7 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
                             hasGivenIronChest = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
                         }else{
                             isGoldChest = false;
                         }
@@ -826,7 +830,7 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
                             hasGivenIronChest = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
                         }else{
                             isCopperChest = false;
                         }
@@ -855,7 +859,7 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
                             hasGivenIronChest = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
                         }else{
                             isDiamondChest = false;
                         }
@@ -884,7 +888,7 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
                             hasGivenIronChest = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
                         }else{
                             isObsidianChest = false;
                         }
@@ -914,7 +918,7 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
                             hasGivenIronChest = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
                         }else{
                             isCrystalChest = false;
                         }
@@ -943,7 +947,7 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
                             hasGivenIronChest = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
                         }else{
                             isTrappedDirtChest = false;
                         }
@@ -972,7 +976,7 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
                             hasGivenIronChest = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
                         }else{
                             isTrappedIronChest = false;
                         }
@@ -1001,7 +1005,7 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
                             hasGivenIronChest = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
                         }else{
                             isTrappedGoldChest = false;
                         }
@@ -1030,7 +1034,7 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
                             hasGivenIronChest = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
                         }else{
                             isTrappedCopperChest = false;
                         }
@@ -1059,7 +1063,7 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
                             hasGivenIronChest = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
                         }else{
                             isTrappedDiamondChest = false;
                         }
@@ -1088,7 +1092,7 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
                             hasGivenIronChest = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
                         }else{
                             isTrappedObsidianChest = false;
                         }
@@ -1117,14 +1121,16 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasGivenIronChest to true to indicate that the block has been broken
                             hasGivenIronChest = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
                         }else{
                             isTrappedCrystalChest = false;
                         }
                     }
+                    isIronChest = false;
+                    isGoodEffect = true;
                     // Give the player a iron chests chest item
                 }else{
-                    isGoodLuck = true;
+                    isGoodLuck = false;
                 }
         }else{
             isBroken = false;
@@ -1136,7 +1142,7 @@ public class LuckyMysteryBoxBlock extends Block {
     // Give the good effect method
     public void GiveGoodpotionEffectToPlayer(Player player, int time, int amplifier, boolean isAmbient, boolean HideParticles){
         if(!isBroken){
-                if(isGoodLuck){
+                if(!isGoodLuck){
                     if(!hasGivenGoodEffect){
                         if(!isgoodluckmessageSent){
                             // Generate a random index to get a random translation key for a good luck message
@@ -1153,13 +1159,15 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasGivenGoodEffect to true to indicate that the block has been broken
                             hasGivenGoodEffect = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
+                            isGoodEffect = false;
+                            isPetSpawn = true;
                         }else{
                             isgoodluckmessageSent = false;
                         }
                     }
                 }else{
-                    isGoodLuck = true;
+                    isGoodLuck = false;
                 }
         }else{
             isBroken = false;
@@ -1186,13 +1194,15 @@ public class LuckyMysteryBoxBlock extends Block {
                             // Set isBroken and hasSpawnedPet to true to indicate that the block has been broken
                             hasSpawnedPet = true;
                             isBroken = true;
-                            isGoodLuck = false;
+                            isGoodLuck = true;
+                            isPetSpawn = false;
+                            isItem = true;
                         }else{
                             isgoodluckmessageSent = false;
                         }
                     }
                 }else{
-                    isGoodLuck = true;
+                    isGoodLuck = false;
                 }
         }else{
             isBroken = false;
