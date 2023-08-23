@@ -25,6 +25,7 @@ public class ModBlocksTab {
                     .title(Component.translatable("creativetab_the_box_tab")) // Set the translation key for the tab title
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(Objects.requireNonNull(MysteryBoxModBlocks.MYSTERY_BOX_BLOCK).get()); // Display the Mystery Box block in the tab
+                        pOutput.accept(Objects.requireNonNull(MysteryBoxModBlocks.LUCKY_MYSTERY_BOX_BLOCK).get()); // Display the Mystery Box block in the tab
                     })
                     .build());
 

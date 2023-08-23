@@ -4,6 +4,7 @@
   "questionmark_shift_key_not_down": "§aWhat does this do? §aWhat does it go to? §aWhat does it craft? §aPress §6SHIFT §afor more info!",
   "questionmark_shift_key_down": "Used to craft the Mystery Box.",
   "block.mysterybox.mystery_box": "§eMystery Box",
+  "block.mysterybox.lucky_mystery_box": "§eMystery Box",
   "item.mysterybox.question_mark": "§eQuestion Mark",
   "creativetab_the_box_tab": "§eThe Mystery Box",
   "creativetab_unknown_items_tab": "§eUnknown Items",

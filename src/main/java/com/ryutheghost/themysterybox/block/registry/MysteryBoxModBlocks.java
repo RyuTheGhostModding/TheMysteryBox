@@ -1,6 +1,7 @@
 package com.ryutheghost.themysterybox.block.registry;
 
 import com.ryutheghost.themysterybox.MainMod;
+import com.ryutheghost.themysterybox.block.LuckyMysteryBoxBlock;
 import com.ryutheghost.themysterybox.block.MysteryBoxBlock;
 import com.ryutheghost.themysterybox.item.registry.MysteryBoxModItems;
 import net.minecraft.world.item.BlockItem;
@@ -37,6 +38,20 @@ public class MysteryBoxModBlocks {
         RegistryObject<T> toReturn = BLOCKS.register("mystery_box", block);
         // Register the block item
         registerBlockItem("mystery_box", Objects.requireNonNull(toReturn));
+        return toReturn;
+    }
+
+    // RegistryObject for the Lucky Mystery Box block
+    public static final RegistryObject<Block> LUCKY_MYSTERY_BOX_BLOCK = registerBlock(
+            () -> new LuckyMysteryBoxBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD)));
+
+    // Helper method to register a block and its corresponding item
+    @SuppressWarnings("NullableProblems")
+    private static <T extends Block> @NotNull @Nullable RegistryObject<T> registerBlock1(Supplier<T> block) {
+        // Register the block
+        RegistryObject<T> toReturn = BLOCKS.register("lucky_mystery_box", block);
+        // Register the block item
+        registerBlockItem("lucky_mystery_box", Objects.requireNonNull(toReturn));
         return toReturn;
     }
 
