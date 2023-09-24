@@ -6,8 +6,8 @@ import net.minecraft.core.particles.SimpleParticleType;
 
 public class ConfettiParticles extends TextureSheetParticle {
 
-    protected ConfettiParticles(ClientLevel pLevel, double pX, double pY, double pZ,
-                                SpriteSet spriteSet, double pXSpeed, double pYSpeed, double pZSpeed) {
+    public ConfettiParticles(ClientLevel pLevel, double pX, double pY, double pZ,
+                             SpriteSet spriteSet, double pXSpeed, double pYSpeed, double pZSpeed) {
         super(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
 
         this.friction = 0.8f;

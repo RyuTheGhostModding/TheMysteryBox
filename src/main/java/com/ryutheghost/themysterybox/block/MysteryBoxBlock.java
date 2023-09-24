@@ -2,6 +2,7 @@ package com.ryutheghost.themysterybox.block;
 
 import com.progwml6.ironchest.common.block.IronChestsBlocks;
 import com.progwml6.ironchest.common.block.regular.AbstractIronChestBlock;
+import com.ryutheghost.themysterybox.particles.ConfettiParticles;
 import com.ryutheghost.themysterybox.particles.ModParticles;
 import com.ryutheghost.themysterybox.sound.ModSounds;
 import com.tiviacz.travelersbackpack.init.ModItems;
@@ -888,7 +889,7 @@ public class MysteryBoxBlock extends Block {
         for(int i = 0; i < 20; i++) {
             ServerLevel level = (ServerLevel) pContext.level();
 
-            level.sendParticles(ModParticles.CONFETTI_PARTICLES.get(),
+            level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, blockState),
                     positionClicked.getX() + 0.5d, positionClicked.getY() + 1, positionClicked.getZ() + 0.5d, 1,
                     Math.cos(i * 18) * 0.15d, 0.15d, Math.sin(i * 18) * 0.15d, 0.1);
         }
