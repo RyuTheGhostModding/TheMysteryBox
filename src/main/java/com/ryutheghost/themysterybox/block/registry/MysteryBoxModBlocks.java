@@ -2,6 +2,8 @@ package com.ryutheghost.themysterybox.block.registry;
 
 import com.ryutheghost.themysterybox.MainMod;
 import com.ryutheghost.themysterybox.block.MysteryBoxBlock;
+import com.ryutheghost.themysterybox.block.SuperLuckyMysteryBoxBlock;
+import com.ryutheghost.themysterybox.block.SuperUnluckyMysteryBoxBlock;
 import com.ryutheghost.themysterybox.item.registry.MysteryBoxModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -27,16 +29,42 @@ public class MysteryBoxModBlocks {
             DeferredRegister.create(Objects.requireNonNull(ForgeRegistries.BLOCKS), MainMod.MODID);
 
     // RegistryObject for the Mystery Box block
-    public static final RegistryObject<Block> MYSTERY_BOX_BLOCK = registerBlock(
+    public static final RegistryObject<Block> MYSTERY_BOX_BLOCK = registerNormalMysteryBox(
             () -> new MysteryBoxBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD)));
+
+    public static final RegistryObject<Block> SUPER_LUCKY_MYSTERY_BOX_BLOCK = registerSuperLuckyMysteryBox(
+            () -> new SuperLuckyMysteryBoxBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD)));
+
+    public static final RegistryObject<Block> SUPER_UNLUCKY_MYSTERY_BOX_BLOCK = registerSuperUnLuckyMysteryBox(
+            () -> new SuperUnluckyMysteryBoxBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).sound(SoundType.WOOD)));
 
     // Helper method to register a block and its corresponding item
     @SuppressWarnings("NullableProblems")
-    private static <T extends Block> @NotNull @Nullable RegistryObject<T> registerBlock(Supplier<T> block) {
+    private static <T extends Block> @NotNull @Nullable RegistryObject<T> registerNormalMysteryBox(Supplier<T> block) {
         // Register the block
         RegistryObject<T> toReturn = BLOCKS.register("mystery_box", block);
         // Register the block item
         registerBlockItem("mystery_box", Objects.requireNonNull(toReturn));
+        return toReturn;
+    }
+
+    // Helper method to register a block and its corresponding item
+    @SuppressWarnings("NullableProblems")
+    private static <T extends Block> @NotNull @Nullable RegistryObject<T> registerSuperLuckyMysteryBox(Supplier<T> block) {
+        // Register the block
+        RegistryObject<T> toReturn = BLOCKS.register("super_lucky_mystery_box", block);
+        // Register the block item
+        registerBlockItem("super_lucky_mystery_box", Objects.requireNonNull(toReturn));
+        return toReturn;
+    }
+
+    // Helper method to register a block and its corresponding item
+    @SuppressWarnings("NullableProblems")
+    private static <T extends Block> @NotNull @Nullable RegistryObject<T> registerSuperUnLuckyMysteryBox(Supplier<T> block) {
+        // Register the block
+        RegistryObject<T> toReturn = BLOCKS.register("super_unlucky_mystery_box", block);
+        // Register the block item
+        registerBlockItem("super_unlucky_mystery_box", Objects.requireNonNull(toReturn));
         return toReturn;
     }
 

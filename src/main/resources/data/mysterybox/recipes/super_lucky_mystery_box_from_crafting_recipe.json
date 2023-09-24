@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "W": {
+      "item": "minecraft:wither_rose"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    },
+    "Q": {
+      "item": "mysterybox:question_mark"
+    }
+  },
+  "pattern": [
+    "QRQ",
+    "RWR",
+    "QRQ"
+  ],
+  "result": {
+    "item": "mysterybox:super_unlucky_mystery_box",
+    "count": 1
+  }
+}
