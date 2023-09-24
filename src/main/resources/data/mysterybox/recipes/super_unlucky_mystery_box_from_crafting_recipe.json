@@ -2,8 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "E": {
-      "item": "minecraft:emerald"
+    "W": {
+      "item": "minecraft:wither_rose"
     },
     "R": {
       "item": "minecraft:redstone_block"
@@ -14,11 +14,11 @@
   },
   "pattern": [
     "QRQ",
-    "RER",
+    "RWR",
     "QRQ"
   ],
   "result": {
-    "item": "mysterybox:super_lucky_mystery_box",
+    "item": "mysterybox:super_unlucky_mystery_box",
     "count": 1
   }
 }
