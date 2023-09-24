@@ -1,0 +1,25 @@
+{
+  "mysterybox_shift_key_not_down": "§e??? §aPress §6SHIFT §afor more info.",
+  "mysterybox_shift_key_down": "§aWhen the block is broken gives you a random selected mystery box choice.",
+  "questionmark_shift_key_not_down": "§aWhat does this do? §aWhat does it go to? §aWhat does it craft? §aPress §6SHIFT §afor more info!",
+  "questionmark_shift_key_down": "Used to craft the Mystery Box.",
+  "block.mysterybox.mystery_box": "§eMystery Box",
+  "block.mysterybox.super_lucky_mystery_box": "§eSuper Lucky Mystery Box",
+  "block.mysterybox.super_unlucky_mystery_box": "§eSuper Unlucky Mystery Box",
+  "item.mysterybox.question_mark": "§eQuestion Mark",
+  "creativetab_the_box_tab": "§eThe Mystery Box",
+  "creativetab_unknown_items_tab": "§eUnknown Items",
+  "goodluck.message.one": "§aLady luck blesses you!",
+  "goodluck.message.two": "§aYou are lucky.",
+  "goodluck.message.three": "§aYou tested your luck and won!",
+  "goodluck.message.four": "§aThe Mystery Box has granted you boons.",
+  "goodluck.message.five": "§aThe Mystery Box is happy with you.",
+  "badluck.message.one": "§4Lady luck looks down on you.",
+  "badluck.message.two": "§4Bad luck! Oh No!!!",
+  "badluck.message.three": "§4You have been punished by the Mystery Box!",
+  "badluck.message.four": "§4You have been cursed with bad luck.",
+  "badluck.message.five": "§4The Mystery Box has tricked you!",
+  "sounds.mysterybox.mystery_box_bad_luck": "§4Bad Luck",
+  "sounds.mysterybox.mystery_box_good_luck": "§aGood Luck"
+
+}
