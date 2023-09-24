@@ -1,0 +1,14 @@
+{
+  "mystery_box_good_luck": {
+    "subtitle": "sounds.mysterybox.mystery_box_good_luck",
+    "sounds": [
+      "mysterybox:mystery_box_good_luck"
+    ]
+  },
+  "mystery_box_bad_luck": {
+    "subtitle": "sounds.mysterybox.mystery_box_bad_luck",
+    "sounds": [
+      "mysterybox:mystery_box_bad_luck"
+    ]
+  }
+}
