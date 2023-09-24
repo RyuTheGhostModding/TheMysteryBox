@@ -18,6 +18,6 @@
   "badluck.message.four": "§4You have been cursed with bad luck.",
   "badluck.message.five": "§4The Mystery Box has tricked you!",
   "sounds.mysterybox.mystery_box_bad_luck": "§4Bad Luck",
-  "sounds.mysterybox.mystery_box_good_luck": "§4Good Luck"
+  "sounds.mysterybox.mystery_box_good_luck": "§aGood Luck"
 
 }
