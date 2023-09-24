@@ -1,4 +1,4 @@
-package com.ryutheghost.themysterybox.util;
+package com.ryutheghost.themysterybox.util.events;
 
 import com.ryutheghost.themysterybox.block.registry.MysteryBoxModBlocks;
 import net.minecraft.network.chat.Component;

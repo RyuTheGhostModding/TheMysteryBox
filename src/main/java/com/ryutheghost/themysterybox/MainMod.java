@@ -7,7 +7,7 @@ import com.ryutheghost.themysterybox.block.registry.MysteryBoxModBlocks;
 import com.ryutheghost.themysterybox.item.creativetab.ModItemsTab;
 import com.ryutheghost.themysterybox.item.registry.MysteryBoxModItems;
 import com.ryutheghost.themysterybox.sound.ModSounds;
-import com.ryutheghost.themysterybox.util.OnLevelJoined;
+import com.ryutheghost.themysterybox.util.events.OnLevelJoined;
 import com.tiviacz.travelersbackpack.TravelersBackpack;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
