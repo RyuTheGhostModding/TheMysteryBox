@@ -6,8 +6,10 @@ import com.ryutheghost.themysterybox.sound.ModSounds;
 import com.tiviacz.travelersbackpack.init.ModItems;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
@@ -21,12 +23,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraftforge.common.data.SoundDefinition;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -514,6 +517,8 @@ public class MysteryBoxBlock extends Block {
     public boolean hasSpawnedPet = false; // Boolean field to check if it is a pet
     public boolean hasGivenBadEffect = false; // Boolean field to check if it is a bad potion effect
     public boolean hasGivenGoodEffect = false; // Boolean field to check if it is a good potion effect
+    public boolean hasTPToAir = false; // Boolean field to check if a teleport has been given to a player
+    public boolean hasClearedInventory = false; // Boolean field to check if a player's inventory has been cleared
     public boolean isGoodLuck = true; // Boolean field to check if it is good luck
     public boolean isBadLuck = false; // Boolean field to check if it is bad luck
     public boolean isDirtChest = true; // Boolean field to check if it is dirt
@@ -539,6 +544,8 @@ public class MysteryBoxBlock extends Block {
     public boolean isPetSpawn = false; // Boolean field to check if it is a pet
     public boolean isBadEffect = false; // Boolean field to check if it is a bad effect
     public boolean isGoodEffect = false; // Boolean field to check if it is a good effect
+    public boolean isTPToAir = false; // Boolean field to check if it is a teleport
+    public boolean isClearedInventory = false; // Boolean field to check if a player's inventory is cleared
     public boolean isLuck = false; // Boolean field to check if it is luck
 
     @Override
@@ -722,10 +729,11 @@ public class MysteryBoxBlock extends Block {
                                         int index = new Random().nextInt(Objects.requireNonNull(bad_translation_keys_messages).size());
                                         // Send the bad luck message to the player
                                         Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(bad_translation_keys_messages.get(index))));
+                                        player.sendSystemMessage(Component.nullToEmpty("§4Oh no! Not an explosion."));
                                     }else{
                                         isbadluckmessageSent = false;
                                     }
-                                    // Spawn a explosion on open
+                                    // Spawn an explosion on open
                                     SpawnExplosionAtPlayer(level, pos, player, true);
                                     // Sets isExplosion to false
                                     isExplosion = false;
@@ -751,11 +759,12 @@ public class MysteryBoxBlock extends Block {
                                         int index = new Random().nextInt(Objects.requireNonNull(bad_translation_keys_messages).size());
                                         // Send the bad luck message to the player
                                         Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(bad_translation_keys_messages.get(index))));
+                                        player.sendSystemMessage(Component.nullToEmpty("§4Oh no! Prepare to fight the monster that spawned."));
                                     }else{
                                         isbadluckmessageSent = false;
                                     }
                                     // Spawn a monster on open
-                                    SpawnMonsterAtPlayer((ServerLevel) level, pos, MobSpawnType.SPAWNER, player);
+                                    SpawnMonsterAtPlayer((ServerLevel) level, pos.above(), MobSpawnType.SPAWNER, player);
                                     // Sets isMobSpawn to false
                                     isMobSpawn = false;
                                     // Sets isBadEffect to true
@@ -787,6 +796,7 @@ public class MysteryBoxBlock extends Block {
                                     GiveBadpotionEffectToPlayer(player, 500, 2, false, true, level, pos);
                                     // Sets isBadEffect to false
                                     isBadEffect = false;
+                                    isTPToAir = true;
                                 }
                                 // Reset the default boolean values
                                 else {
@@ -796,6 +806,65 @@ public class MysteryBoxBlock extends Block {
                             // Reset the default boolean values
                             else {
                                 isBadEffect = false;
+                            }
+                        }
+                        if (isBadLuck) {
+                            //Various condition checks
+                            if (isTPToAir) {
+                                // Check if the block teleported the player in the air
+                                if (!hasTPToAir) {
+                                    if(!isbadluckmessageSent){
+                                        // Generate a random index to get a random translation key for a bad luck message
+                                        int index = new Random().nextInt(Objects.requireNonNull(bad_translation_keys_messages).size());
+                                        // Send the bad luck message to the player
+                                        Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(bad_translation_keys_messages.get(index))));
+                                        player.sendSystemMessage(Component.nullToEmpty("§4Look out below!\n§4Looks like you are catching some serious air my friend."));
+                                    }else{
+                                        isbadluckmessageSent = false;
+                                    }
+                                    // Teleport the player on open
+                                    TPToAir(pos, (ServerPlayer) player, (ServerLevel) level, level);
+                                    // Sets isTPToAir to false
+                                    isTPToAir = false;
+                                    isClearedInventory = true;
+                                }
+                                // Reset the default boolean values
+                                else {
+                                    hasTPToAir = false;
+                                }
+                            }
+                            // Reset the default boolean values
+                            else {
+                                isTPToAir = false;
+                            }
+                        }
+                        if (isBadLuck) {
+                            //Various condition checks
+                            if (isClearedInventory) {
+                                // Check if the player lost their inventory
+                                if (!hasClearedInventory) {
+                                    if(!isbadluckmessageSent){
+                                        // Generate a random index to get a random translation key for a bad luck message
+                                        int index = new Random().nextInt(Objects.requireNonNull(bad_translation_keys_messages).size());
+                                        // Send the bad luck message to the player
+                                        Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(bad_translation_keys_messages.get(index))));
+                                        player.sendSystemMessage(Component.nullToEmpty("§4Oh no! You've lost everything in your inventory."));
+                                    }else{
+                                        isbadluckmessageSent = false;
+                                    }
+                                    // Clear the inventory of the player on open
+                                    ClearInventory(player, level, pos);
+                                    // Sets isClearedInventory to false
+                                    isClearedInventory = false;
+                                }
+                                // Reset the default boolean values
+                                else {
+                                    hasClearedInventory = false;
+                                }
+                            }
+                            // Reset the default boolean values
+                            else {
+                                isClearedInventory = false;
                             }
                         }else{
                             isBadLuck = false;
@@ -1290,6 +1359,64 @@ public class MysteryBoxBlock extends Block {
                 }else{
                     isLuck = false;
                 }
+        }else{
+            isBroken = false;
+        }
+        return;
+    }
+
+    public void TPToAir(BlockPos pos, ServerPlayer player, ServerLevel level, Level level1){
+        if(!isBroken){
+            if(!isLuck){
+                if(isBadLuck) {
+                    if (!hasTPToAir) {
+                        // Play sounds to indicate the successful opening of the mystery box
+                        level.playSound(null, pos, ModSounds.MYSTERY_BOX_BAD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                        // Set isBroken and hasTPToAir to true to indicate that the block has been broken
+                        hasTPToAir = true;
+                        isBroken = true;
+                        isGoodLuck = true;
+                        isBadLuck = false;
+                        isLuck = true;
+                        BlockPos pos1 = player.getOnPos().containing(player.getBlockX(), player.getBlockY(), player.getBlockZ());
+                        player.teleportTo(pos1.getX(), pos1.getY() + 3000.0d, pos1.getZ());
+
+
+                    }
+
+                }else{
+                    isBadLuck = false;
+                }
+            }else{
+                isLuck = false;
+            }
+        }else{
+            isBroken = false;
+        }
+        return;
+    }
+
+    public void ClearInventory(Player player, Level level, BlockPos pos) {
+        if (!isBroken) {
+            if (!isLuck) {
+                if (isBadLuck) {
+                    if (!hasClearedInventory) {
+                        // Play sounds to indicate the successful opening of the mystery box
+                        level.playSound(null, pos, ModSounds.MYSTERY_BOX_BAD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                        player.getInventory().clearContent();
+                        // Set isBroken and hasClearedInventory to true to indicate that the block has been broken
+                        hasClearedInventory = true;
+                        isBroken = true;
+                        isGoodLuck = true;
+                        isBadLuck = false;
+                        isLuck = true;
+                    }
+                } else {
+                    isBadLuck = false;
+                }
+            } else {
+                isLuck = false;
+            }
         }else{
             isBroken = false;
         }
