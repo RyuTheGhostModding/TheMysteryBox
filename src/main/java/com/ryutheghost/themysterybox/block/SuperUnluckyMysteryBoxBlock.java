@@ -239,7 +239,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                                         int index = new Random().nextInt(Objects.requireNonNull(bad_translation_keys_messages).size());
                                         // Send the bad luck message to the player
                                         Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(bad_translation_keys_messages.get(index))));
-                                        player.sendSystemMessage(Component.nullToEmpty("§4Look out below!\n§4Looks like you are catching some serious air my friend."));
+                                        player.sendSystemMessage(Component.nullToEmpty("§4Look out below!\n§4Looks like you're catching some serious air my friend."));
                                     }else{
                                         isbadluckmessageSent = false;
                                     }
@@ -341,7 +341,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                         level.playSound(null, pos, ModSounds.MYSTERY_BOX_BAD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
                         int index1 = RANDOM.nextInt(MONSTERS.length);
                         EntityType<?> monster = MONSTERS[RANDOM.nextInt(index1)];
-                        level.addFreshEntity(monster.spawn(level, new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ()), type));
+                        level.addFreshEntity(monster.spawn(level, new BlockPos(pos.getX(), pos.above().getY() + 2, pos.getZ()), type));
                         // Set isBroken and hasSpawnedMonster to true to indicate that the block has been broken
                         hasSpawnedMonster = true;
                         isBroken = true;
@@ -395,7 +395,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                 if(isBadLuck) {
                     if (!hasTPToAir) {
                         // Play sounds to indicate the successful opening of the mystery box
-                        level.playSound(null, pos, ModSounds.MYSTERY_BOX_BAD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                        level.playSound(null, player.blockPosition().above(), ModSounds.MYSTERY_BOX_BAD_LUCK.get(), SoundSource.PLAYERS, 1f, 1f);
                         // Set isBroken and hasGivenBadEffect to true to indicate that the block has been broken
                         hasTPToAir = true;
                         isBroken = true;

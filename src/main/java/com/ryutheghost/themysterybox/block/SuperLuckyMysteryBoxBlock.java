@@ -1019,7 +1019,7 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                         level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
                         int index1 = RANDOM.nextInt(PETS.length);
                         EntityType<?> pet = PETS[RANDOM.nextInt(index1)];
-                        level.addFreshEntity(pet.spawn(level, new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ()), type));
+                        level.addFreshEntity(pet.spawn(level, new BlockPos(pos.getX(), pos.above().getY() + 2, pos.getZ()), type));
                         // Set isBroken and hasSpawnedPet to true to indicate that the block has been broken
                         hasSpawnedPet = true;
                         isBroken = true;
