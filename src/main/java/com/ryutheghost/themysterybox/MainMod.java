@@ -6,6 +6,7 @@ import com.ryutheghost.themysterybox.block.creativetab.ModBlocksTab;
 import com.ryutheghost.themysterybox.block.registry.MysteryBoxModBlocks;
 import com.ryutheghost.themysterybox.item.creativetab.ModItemsTab;
 import com.ryutheghost.themysterybox.item.registry.MysteryBoxModItems;
+import com.ryutheghost.themysterybox.particles.ModParticles;
 import com.ryutheghost.themysterybox.sound.ModSounds;
 import com.ryutheghost.themysterybox.util.events.OnLevelJoined;
 import com.tiviacz.travelersbackpack.TravelersBackpack;
@@ -51,6 +52,9 @@ public class MainMod {
         // Register our CreativeModeTabs
         ModItemsTab.register(modEventBus);
         ModBlocksTab.register(modEventBus);
+
+        // Register our particles
+        ModParticles.register(modEventBus);
 
         // Register our Sounds
         ModSounds.register(modEventBus);

@@ -2,6 +2,7 @@ package com.ryutheghost.themysterybox.block;
 
 import com.progwml6.ironchest.common.block.IronChestsBlocks;
 import com.progwml6.ironchest.common.block.regular.AbstractIronChestBlock;
+import com.ryutheghost.themysterybox.particles.ModParticles;
 import com.ryutheghost.themysterybox.sound.ModSounds;
 import com.tiviacz.travelersbackpack.init.ModItems;
 import net.minecraft.client.gui.screens.Screen;
@@ -14,6 +15,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -508,7 +510,7 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                                         isgoodluckmessageSent = false;
                                     }
                                     // Give a vanilla item
-                                    GiveItemToPlayer(player, level, pos);
+                                    GiveItemToPlayer(player, level, pos, player);
                                     // Sets isItem to false
                                     isItem = false;
                                     // Sets isBackpack to true
@@ -539,7 +541,7 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                                         isgoodluckmessageSent = false;
                                     }
                                     //Give a backpack item
-                                    GiveBackpackItemToPlayer(player, level, pos);
+                                    GiveBackpackItemToPlayer(player, level, pos, player);
                                     // Sets isBackpack to false
                                     isBackpack = false;
                                     // Sets isIronChestsChest to true
@@ -570,7 +572,7 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                                         isgoodluckmessageSent = false;
                                     }
                                     // Give a iron chests chest item
-                                    GiveIronChestsItemToPlayer(player, level, pos);
+                                    GiveIronChestsItemToPlayer(player, level, pos, player);
                                     // Sets isIronChestsChest to false
                                     isIronChestsChest = false;
                                     // Sets isGoodEffect to true
@@ -601,7 +603,7 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                                         isgoodluckmessageSent = false;
                                     }
                                     // Give a good potioneffect
-                                    GiveGoodpotionEffectToPlayer(player, 500, 2, false, true, level, pos);
+                                    GiveGoodpotionEffectToPlayer(player, 500, 2, false, true, level, pos, player);
                                     // Sets isGoodEffect to false
                                     isGoodEffect = false;
                                     // Sets isPetSpawn to true
@@ -632,7 +634,7 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                                         isgoodluckmessageSent = false;
                                     }
                                     // Spawn a pet on open
-                                    SpawnPetAtPlayer((ServerLevel) level, pos, MobSpawnType.SPAWNER, player, level);
+                                    SpawnPetAtPlayer((ServerLevel) level, pos, MobSpawnType.SPAWNER, player, player);
                                     // Sets isPetSpawn to false
                                     isPetSpawn = false;
                                 }
@@ -662,8 +664,18 @@ public class SuperLuckyMysteryBoxBlock extends Block {
         return true;
     }
 
+    private void spawnGoodLuckParticles(LivingEntity pContext, BlockPos positionClicked, BlockState blockState) {
+        for(int i = 0; i < 20; i++) {
+            ServerLevel level = (ServerLevel) pContext.level();
+
+            level.sendParticles(ModParticles.CONFETTI_PARTICLES.get(),
+                    positionClicked.getX() + 0.5d, positionClicked.getY() + 1, positionClicked.getZ() + 0.5d, 1,
+                    Math.cos(i * 18) * 0.15d, 0.15d, Math.sin(i * 18) * 0.15d, 0.1);
+        }
+    }
+
     // Give the vanilla item method
-    public void GiveItemToPlayer(Player player, Level level, BlockPos pos) {
+    public void GiveItemToPlayer(Player player, Level level, BlockPos pos, LivingEntity entity) {
         if(!isBroken){
             if(!isLuck){
                 if(isGoodLuck){
@@ -673,6 +685,14 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                         player.getInventory().add(new ItemStack(Objects.requireNonNull(item)));
                         // Play sounds to indicate the successful opening of the mystery box
                         level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                        level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                        // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                        entity = player;
+                        for(int i = 0; i <= pos.getY() + 4; i++) {
+                            BlockState blockState = entity.level().getBlockState(pos.above(i));
+                            spawnGoodLuckParticles(entity, pos, blockState);
+                            break;
+                        }
                         // Set isBroken and hasGivenItem to true to indicate that the block has been broken
                         isBroken = true;
                         hasGivenItem = true;
@@ -694,7 +714,7 @@ public class SuperLuckyMysteryBoxBlock extends Block {
     }
 
     // Give the Traveler's Backpack backpack method
-    public void GiveBackpackItemToPlayer(Player player, Level level, BlockPos pos) {
+    public void GiveBackpackItemToPlayer(Player player, Level level, BlockPos pos, LivingEntity entity) {
         if(!isBroken) {
             if (!isLuck) {
                 if (isGoodLuck) {
@@ -702,7 +722,15 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                         Item backpack = ModItems.BACKPACKS.get(Objects.requireNonNull(RANDOM).nextInt(ModItems.BACKPACKS.size()));
                         // Play sounds to indicate the successful opening of the mystery box
                         level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                        level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
                         player.getInventory().add(new ItemStack(backpack));
+                        // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                        entity = player;
+                        for(int i = 0; i <= pos.getY() + 4; i++) {
+                            BlockState blockState = entity.level().getBlockState(pos.above(i));
+                            spawnGoodLuckParticles(entity, pos, blockState);
+                            break;
+                        }
                         // Set isBroken and hasGivenBackpack to true to indicate that the block has been broken
                         isBroken = true;
                         hasGivenBackpack = true;
@@ -724,7 +752,7 @@ public class SuperLuckyMysteryBoxBlock extends Block {
     }
 
     // Give the Iron Chests chest method
-    public void GiveIronChestsItemToPlayer(Player player, Level level, BlockPos pos) {
+    public void GiveIronChestsItemToPlayer(Player player, Level level, BlockPos pos, LivingEntity entity) {
         if(!isBroken){
             if(!isLuck){
                 if(isGoodLuck){
@@ -734,6 +762,14 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                             Item item = chest.asItem().getDefaultInstance().getItem();
                             // Play sounds to indicate the successful opening of the mystery box
                             level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                            level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                            // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                            entity = player;
+                            for(int i = 0; i <= pos.getY() + 4; i++) {
+                                BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                spawnGoodLuckParticles(entity, pos, blockState);
+                                break;
+                            }
                             player.getInventory().add(new ItemStack(item));
                             isDirtChest = false;
                             isIronChest = true;
@@ -751,6 +787,14 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                             Item item = chest.asItem().getDefaultInstance().getItem();
                             // Play sounds to indicate the successful opening of the mystery box
                             level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                            level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                            // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                            entity = player;
+                            for(int i = 0; i <= pos.getY() + 4; i++) {
+                                BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                spawnGoodLuckParticles(entity, pos, blockState);
+                                break;
+                            }
                             player.getInventory().add(new ItemStack(item));
                             isIronChest = false;
                             isGoldChest = true;
@@ -768,6 +812,14 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                             Item item = chest.asItem().getDefaultInstance().getItem();
                             // Play sounds to indicate the successful opening of the mystery box
                             level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                            level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                            // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                            entity = player;
+                            for(int i = 0; i <= pos.getY() + 4; i++) {
+                                BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                spawnGoodLuckParticles(entity, pos, blockState);
+                                break;
+                            }
                             player.getInventory().add(new ItemStack(item));
                             isGoldChest = false;
                             isCopperChest = true;
@@ -785,6 +837,14 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                             Item item = chest.asItem().getDefaultInstance().getItem();
                             // Play sounds to indicate the successful opening of the mystery box
                             level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                            level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                            // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                            entity = player;
+                            for(int i = 0; i <= pos.getY() + 4; i++) {
+                                BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                spawnGoodLuckParticles(entity, pos, blockState);
+                                break;
+                            }
                             player.getInventory().add(new ItemStack(item));
                             isCopperChest = false;
                             isDiamondChest = true;
@@ -802,6 +862,14 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                             Item item = chest.asItem().getDefaultInstance().getItem();
                             // Play sounds to indicate the successful opening of the mystery box
                             level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                            level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                            // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                            entity = player;
+                            for(int i = 0; i <= pos.getY() + 4; i++) {
+                                BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                spawnGoodLuckParticles(entity, pos, blockState);
+                                break;
+                            }
                             player.getInventory().add(new ItemStack(item));
                             isDiamondChest = false;
                             isObsidianChest = true;
@@ -819,6 +887,14 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                             Item item = chest.asItem().getDefaultInstance().getItem();
                             // Play sounds to indicate the successful opening of the mystery box
                             level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                            level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                            // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                            entity = player;
+                            for(int i = 0; i <= pos.getY() + 4; i++) {
+                                BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                spawnGoodLuckParticles(entity, pos, blockState);
+                                break;
+                            }
                             player.getInventory().add(new ItemStack(item));
                             isObsidianChest = false;
                             isCrystalChest = true;
@@ -836,6 +912,14 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                             Item item = chest.asItem().getDefaultInstance().getItem();
                             // Play sounds to indicate the successful opening of the mystery box
                             level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                            level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                            // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                            entity = player;
+                            for(int i = 0; i <= pos.getY() + 4; i++) {
+                                BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                spawnGoodLuckParticles(entity, pos, blockState);
+                                break;
+                            }
                             player.getInventory().add(new ItemStack(item));
                             isCrystalChest = false;
                             isDirtChest = false;
@@ -854,6 +938,14 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                             Item item = chest.asItem().getDefaultInstance().getItem();
                             // Play sounds to indicate the successful opening of the mystery box
                             level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                            level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                            // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                            entity = player;
+                            for(int i = 0; i <= pos.getY() + 4; i++) {
+                                BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                spawnGoodLuckParticles(entity, pos, blockState);
+                                break;
+                            }
                             player.getInventory().add(new ItemStack(item));
                             isTrappedDirtChest = false;
                             isTrappedIronChest = true;
@@ -871,6 +963,14 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                             Item item = chest.asItem().getDefaultInstance().getItem();
                             // Play sounds to indicate the successful opening of the mystery box
                             level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                            level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                            // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                            entity = player;
+                            for(int i = 0; i <= pos.getY() + 4; i++) {
+                                BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                spawnGoodLuckParticles(entity, pos, blockState);
+                                break;
+                            }
                             player.getInventory().add(new ItemStack(item));
                             isTrappedIronChest = false;
                             isTrappedGoldChest = true;
@@ -888,6 +988,14 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                             Item item = chest.asItem().getDefaultInstance().getItem();
                             // Play sounds to indicate the successful opening of the mystery box
                             level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                            level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                            // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                            entity = player;
+                            for(int i = 0; i <= pos.getY() + 4; i++) {
+                                BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                spawnGoodLuckParticles(entity, pos, blockState);
+                                break;
+                            }
                             player.getInventory().add(new ItemStack(item));
                             isTrappedGoldChest = false;
                             isTrappedCopperChest = true;
@@ -905,6 +1013,14 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                             Item item = chest.asItem().getDefaultInstance().getItem();
                             // Play sounds to indicate the successful opening of the mystery box
                             level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                            level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                            // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                            entity = player;
+                            for(int i = 0; i <= pos.getY() + 4; i++) {
+                                BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                spawnGoodLuckParticles(entity, pos, blockState);
+                                break;
+                            }
                             player.getInventory().add(new ItemStack(item));
                             isTrappedCopperChest = false;
                             isTrappedDiamondChest = true;
@@ -922,6 +1038,14 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                             Item item = chest.asItem().getDefaultInstance().getItem();
                             // Play sounds to indicate the successful opening of the mystery box
                             level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                            level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                            // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                            entity = player;
+                            for(int i = 0; i <= pos.getY() + 4; i++) {
+                                BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                spawnGoodLuckParticles(entity, pos, blockState);
+                                break;
+                            }
                             player.getInventory().add(new ItemStack(item));
                             isTrappedDiamondChest = false;
                             isTrappedObsidianChest = true;
@@ -939,6 +1063,14 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                             Item item = chest.asItem().getDefaultInstance().getItem();
                             // Play sounds to indicate the successful opening of the mystery box
                             level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                            level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                            // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                            entity = player;
+                            for(int i = 0; i <= pos.getY() + 4; i++) {
+                                BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                spawnGoodLuckParticles(entity, pos, blockState);
+                                break;
+                            }
                             player.getInventory().add(new ItemStack(item));
                             isTrappedObsidianChest = false;
                             isTrappedCrystalChest = true;
@@ -956,6 +1088,14 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                             Item item = chest.asItem().getDefaultInstance().getItem();
                             // Play sounds to indicate the successful opening of the mystery box
                             level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                            level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                            // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                            entity = player;
+                            for(int i = 0; i <= pos.getY() + 4; i++) {
+                                BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                spawnGoodLuckParticles(entity, pos, blockState);
+                                break;
+                            }
                             player.getInventory().add(new ItemStack(item));
                             isTrappedCrystalChest = false;
                             isTrappedDirtChest = false;
@@ -967,7 +1107,7 @@ public class SuperLuckyMysteryBoxBlock extends Block {
                             isTrappedCrystalChest = false;
                         }
                     }
-                    // Give the player an iron chests chest item
+                    // Give the player a iron chests chest item
                     isLuck = true;
                 }else{
                     isGoodLuck = true;
@@ -982,13 +1122,21 @@ public class SuperLuckyMysteryBoxBlock extends Block {
     }
 
     // Give the good effect method
-    public void GiveGoodpotionEffectToPlayer(Player player, int time, int amplifier, boolean isAmbient, boolean HideParticles, Level level, BlockPos pos){
+    public void GiveGoodpotionEffectToPlayer(Player player, int time, int amplifier, boolean isAmbient, boolean HideParticles, Level level, BlockPos pos, LivingEntity entity){
         if(!isBroken){
             if(!isLuck){
                 if(isGoodLuck){
                     if(!hasGivenGoodEffect){
                         // Play sounds to indicate the successful opening of the mystery box
                         level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                        level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                        // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                        entity = player;
+                        for(int i = 0; i <= pos.getY() + 4; i++) {
+                            BlockState blockState = entity.level().getBlockState(pos.above(i));
+                            spawnGoodLuckParticles(entity, pos, blockState);
+                            break;
+                        }
                         int index1 = RANDOM.nextInt(GOOD_EFFECTS.length);
                         MobEffect good = GOOD_EFFECTS[RANDOM.nextInt(index1)];
                         player.addEffect(new MobEffectInstance(good, time, amplifier, isAmbient, HideParticles));
@@ -1010,13 +1158,21 @@ public class SuperLuckyMysteryBoxBlock extends Block {
         return;
     }
     // Spawn the pet method
-    public void SpawnPetAtPlayer(ServerLevel level, BlockPos pos, MobSpawnType type, Player player, Level level2){
+    public void SpawnPetAtPlayer(ServerLevel level, BlockPos pos, MobSpawnType type, Player player, LivingEntity entity){
         if(!isBroken){
             if(!isLuck){
                 if(isGoodLuck){
                     if(!hasSpawnedPet){
                         // Play sounds to indicate the successful opening of the mystery box
                         level.playSound(null, pos, ModSounds.MYSTERY_BOX_GOOD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                        level.playSound(null, pos, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.BLOCKS, 1f, 1f);
+                        // Spawn Confetti Particles to indicate the successful opening of the mystery box
+                        entity = player;
+                        for(int i = 0; i <= pos.getY() + 4; i++) {
+                            BlockState blockState = entity.level().getBlockState(pos.above(i));
+                            spawnGoodLuckParticles(entity, pos, blockState);
+                            break;
+                        }
                         int index1 = RANDOM.nextInt(PETS.length);
                         EntityType<?> pet = PETS[RANDOM.nextInt(index1)];
                         level.addFreshEntity(pet.spawn(level, new BlockPos(pos.getX(), pos.above().getY() + 2, pos.getZ()), type));

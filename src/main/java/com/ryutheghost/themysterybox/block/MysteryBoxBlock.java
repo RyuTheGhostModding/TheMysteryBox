@@ -889,7 +889,7 @@ public class MysteryBoxBlock extends Block {
         for(int i = 0; i < 20; i++) {
             ServerLevel level = (ServerLevel) pContext.level();
 
-            level.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, blockState),
+            level.sendParticles(ModParticles.CONFETTI_PARTICLES.get(),
                     positionClicked.getX() + 0.5d, positionClicked.getY() + 1, positionClicked.getZ() + 0.5d, 1,
                     Math.cos(i * 18) * 0.15d, 0.15d, Math.sin(i * 18) * 0.15d, 0.1);
         }
