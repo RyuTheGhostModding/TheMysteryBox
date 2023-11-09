@@ -535,7 +535,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                             break;
                         }
                         // Select the player and spawn a nuke from the mysterybox
-                        level.explode(player, player.getX(), player.getY(), player.getZ(), 999999, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        level.explode(player, player.getX(), player.getY(), player.getZ(), 5000.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
                         // Set isBroken and hasNukedWorld to true to indicate that the block has been broken
                         hasNukedWorld = true;
                         isBroken = true;
