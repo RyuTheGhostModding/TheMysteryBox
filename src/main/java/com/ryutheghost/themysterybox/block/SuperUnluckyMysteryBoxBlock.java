@@ -230,8 +230,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                             else {
                                 isBadEffect = false;
                             }
-                        }
-                        if (isBadLuck) {
+                        }if (isBadLuck) {
                             //Various condition checks
                             if (isTPToAir) {
                                 // Check if the block teleported the player in the air
@@ -260,8 +259,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                             else {
                                 isTPToAir = false;
                             }
-                        }
-                        if (isBadLuck) {
+                        }if (isBadLuck) {
                             //Various condition checks
                             if (isClearedInventory) {
                                 // Check if the player lost their inventory
@@ -290,8 +288,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                             else {
                                 isClearedInventory = false;
                             }
-                        }
-                        if (isBadLuck) {
+                        }if (isBadLuck) {
                             //Various condition checks
                             if (isNuke) {
                                 // Check if the player lost their inventory
