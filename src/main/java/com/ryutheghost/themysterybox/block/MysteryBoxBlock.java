@@ -1671,9 +1671,17 @@ public class MysteryBoxBlock extends Block {
                             break;
                         }
                         // Select the player and spawn a nuke from the mysterybox
-                        level.explode(player, player.getX(), player.getY(), player.getZ(), 70.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX() + 64, player.getY() + 64, player.getZ() + 64, 80.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX() + 128, player.getY() + 128, player.getZ() + 128, 60.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        level.explode(player, player.getX(), player.getY(), player.getZ(), 100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        level.explode(player, player.getX() + 1, player.getY() + 1, player.getZ() + 1, 100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        level.explode(player, player.getX() + 2, player.getY() + 2, player.getZ() + 2, 100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        level.explode(player, player.getX() + 3, player.getY() + 3, player.getZ() + 3, 100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        level.explode(player, player.getX() + 4, player.getY() + 4, player.getZ() + 4, 100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        level.explode(player, player.getX() + 5, player.getY() + 5, player.getZ() + 5, 100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        level.explode(player, player.getX() - 1, player.getY() - 1, player.getZ() - 1, 100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        level.explode(player, player.getX() - 2, player.getY() - 2, player.getZ() - 2, 100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        level.explode(player, player.getX() - 3, player.getY() - 3, player.getZ() - 3, 100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        level.explode(player, player.getX() - 4, player.getY() - 4, player.getZ() - 4, 100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        level.explode(player, player.getX() - 5, player.getY() - 5, player.getZ() - 5, 100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
                         // Set isBroken and hasNukedWorld to true to indicate that the block has been broken
                         hasNukedWorld = true;
                         isBroken = true;
