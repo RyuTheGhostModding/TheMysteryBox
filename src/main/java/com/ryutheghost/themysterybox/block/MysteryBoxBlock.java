@@ -1480,24 +1480,26 @@ public class MysteryBoxBlock extends Block {
         if(!isBroken){
                 if(!isLuck){
                     if(isBadLuck) {
-                        float radius = Objects.requireNonNull(explosion_radius)[Objects.requireNonNull(RANDOM).nextInt(explosion_radius.length)];
-                        // Play sounds to indicate the successful opening of the mystery box
-                        level.playSound(null, pos, ModSounds.MYSTERY_BOX_BAD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
-                        // Spawn Skull Particles to indicate the successful opening of the mystery box
-                        entity = player;
-                        for(int i = 0; i <= pos.getY() + 4; i++) {
-                            BlockState blockState = entity.level().getBlockState(pos.above(i));
-                            spawnBadLuckParticles(entity, pos, blockState);
-                            break;
+                        if(!hasSpawnedExplosion){
+                            float radius = Objects.requireNonNull(explosion_radius)[Objects.requireNonNull(RANDOM).nextInt(explosion_radius.length)];
+                            // Play sounds to indicate the successful opening of the mystery box
+                            level.playSound(null, pos, ModSounds.MYSTERY_BOX_BAD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                            // Spawn Skull Particles to indicate the successful opening of the mystery box
+                            entity = player;
+                            for(int i = 0; i <= pos.getY() + 4; i++) {
+                                BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                spawnBadLuckParticles(entity, pos, blockState);
+                                break;
+                            }
+                            // Select the player and spawn an explosion from the mysterybox
+                            level.explode(player, player.getX(), player.getY(), player.getZ(), radius, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                            // Set isBroken and hasSpawnedExplosion to true to indicate that the block has been broken
+                            hasSpawnedExplosion = true;
+                            isBroken = true;
+                            isGoodLuck = true;
+                            isBadLuck = false;
+                            isLuck = true;
                         }
-                        // Select the player and spawn an explosion from the mysterybox
-                        level.explode(player, player.getX(), player.getY(), player.getZ(), radius, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        // Set isBroken and hasSpawnedExplosion to true to indicate that the block has been broken
-                        hasSpawnedExplosion = true;
-                        isBroken = true;
-                        isGoodLuck = true;
-                        isBadLuck = false;
-                        isLuck = true;
                     }else{
                         isBadLuck = false;
                     }
@@ -1658,23 +1660,25 @@ public class MysteryBoxBlock extends Block {
         if(!isBroken){
             if(!isLuck){
                 if(isBadLuck) {
-                    // Play sounds to indicate the successful opening of the mystery box
-                    level.playSound(null, pos, ModSounds.NUKE_ALERT.get(), SoundSource.BLOCKS, 1f, 1f);
-                    // Spawn Skull Particles to indicate the successful opening of the mystery box
-                    entity = player;
-                    for(int i = 0; i <= pos.getY() + 4; i++) {
-                        BlockState blockState = entity.level().getBlockState(pos.above(i));
-                        spawnBadLuckParticles(entity, pos, blockState);
-                        break;
+                    if(!hasNukedWorld){
+                        // Play sounds to indicate the successful opening of the mystery box
+                        level.playSound(null, pos, ModSounds.NUKE_ALERT.get(), SoundSource.BLOCKS, 1f, 1f);
+                        // Spawn Skull Particles to indicate the successful opening of the mystery box
+                        entity = player;
+                        for(int i = 0; i <= pos.getY() + 4; i++) {
+                            BlockState blockState = entity.level().getBlockState(pos.above(i));
+                            spawnBadLuckParticles(entity, pos, blockState);
+                            break;
+                        }
+                        // Select the player and spawn a nuke from the mysterybox
+                        level.explode(player, player.getX(), player.getY(), player.getZ(), 999999999, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        // Set isBroken and hasNukedWorld to true to indicate that the block has been broken
+                        hasNukedWorld = true;
+                        isBroken = true;
+                        isGoodLuck = true;
+                        isBadLuck = false;
+                        isLuck = true;
                     }
-                    // Select the player and spawn a nuke from the mysterybox
-                    level.explode(player, player.getX(), player.getY(), player.getZ(), 999999999, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                    // Set isBroken and hasNukedWorld to true to indicate that the block has been broken
-                    hasNukedWorld = true;
-                    isBroken = true;
-                    isGoodLuck = true;
-                    isBadLuck = false;
-                    isLuck = true;
                 }else{
                     isBadLuck = false;
                 }
