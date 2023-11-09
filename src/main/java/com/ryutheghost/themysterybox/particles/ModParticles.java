@@ -15,6 +15,9 @@ public class ModParticles {
     public static final RegistryObject<SimpleParticleType> CONFETTI_PARTICLES =
             PARTICLE_TYPES.register("confetti_particles", () -> new SimpleParticleType(true));
 
+    public static final RegistryObject<SimpleParticleType> SKULL_PARTICLES =
+            PARTICLE_TYPES.register("skull_particles", () -> new SimpleParticleType(true));
+
     public static void register(IEventBus eventBus) {
         PARTICLE_TYPES.register(eventBus);
     }

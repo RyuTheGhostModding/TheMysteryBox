@@ -2,14 +2,11 @@ package com.ryutheghost.themysterybox.block;
 
 import com.progwml6.ironchest.common.block.IronChestsBlocks;
 import com.progwml6.ironchest.common.block.regular.AbstractIronChestBlock;
-import com.ryutheghost.themysterybox.particles.ConfettiParticles;
 import com.ryutheghost.themysterybox.particles.ModParticles;
 import com.ryutheghost.themysterybox.sound.ModSounds;
 import com.tiviacz.travelersbackpack.init.ModItems;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,10 +28,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraftforge.client.event.sound.SoundEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 @SuppressWarnings("ALL")
 public class MysteryBoxBlock extends Block {
@@ -738,7 +737,7 @@ public class MysteryBoxBlock extends Block {
                                         isbadluckmessageSent = false;
                                     }
                                     // Spawn an explosion on open
-                                    SpawnExplosionAtPlayer(level, pos, player, true);
+                                    SpawnExplosionAtPlayer(level, pos, player, true, player);
                                     // Sets isExplosion to false
                                     isExplosion = false;
                                     // Sets isMobSpawn to true
@@ -768,7 +767,7 @@ public class MysteryBoxBlock extends Block {
                                         isbadluckmessageSent = false;
                                     }
                                     // Spawn a monster on open
-                                    SpawnMonsterAtPlayer((ServerLevel) level, pos.above(), MobSpawnType.SPAWNER, player);
+                                    SpawnMonsterAtPlayer((ServerLevel) level, pos.above(), MobSpawnType.SPAWNER, player, player);
                                     // Sets isMobSpawn to false
                                     isMobSpawn = false;
                                     // Sets isBadEffect to true
@@ -797,7 +796,7 @@ public class MysteryBoxBlock extends Block {
                                         isbadluckmessageSent = false;
                                     }
                                     // Give a bad potion effect on open
-                                    GiveBadpotionEffectToPlayer(player, 500, 2, false, true, level, pos);
+                                    GiveBadpotionEffectToPlayer(player, 500, 2, false, true, level, pos, player);
                                     // Sets isBadEffect to false
                                     isBadEffect = false;
                                     isTPToAir = true;
@@ -827,7 +826,7 @@ public class MysteryBoxBlock extends Block {
                                         isbadluckmessageSent = false;
                                     }
                                     // Teleport the player on open
-                                    TPToAir(pos, (ServerPlayer) player, (ServerLevel) level, level);
+                                    TPToAir(pos, (ServerPlayer) player, (ServerLevel) level, level, player);
                                     // Sets isTPToAir to false
                                     isTPToAir = false;
                                     isClearedInventory = true;
@@ -857,7 +856,7 @@ public class MysteryBoxBlock extends Block {
                                         isbadluckmessageSent = false;
                                     }
                                     // Clear the inventory of the player on open
-                                    ClearInventory(player, level, pos);
+                                    ClearInventory(player, level, pos, player);
                                     // Sets isClearedInventory to false
                                     isClearedInventory = false;
                                     isNuke = true;
@@ -887,7 +886,7 @@ public class MysteryBoxBlock extends Block {
                                         isbadluckmessageSent = false;
                                     }
                                     // Clear the inventory of the player on open
-                                    ClearInventory(player, level, pos);
+                                    ClearInventory(player, level, pos, player);
                                     // Sets isClearedInventory to false
                                     isNuke = false;
                                 }
@@ -923,6 +922,16 @@ public class MysteryBoxBlock extends Block {
             ServerLevel level = (ServerLevel) pContext.level();
 
             level.sendParticles(ModParticles.CONFETTI_PARTICLES.get(),
+                    positionClicked.getX() + 0.5d, positionClicked.getY() + 1, positionClicked.getZ() + 0.5d, 1,
+                    Math.cos(i * 18) * 0.15d, 0.15d, Math.sin(i * 18) * 0.15d, 0.1);
+        }
+    }
+
+    private void spawnBadLuckParticles(LivingEntity pContext, BlockPos positionClicked, BlockState blockState) {
+        for(int i = 0; i < 20; i++) {
+            ServerLevel level = (ServerLevel) pContext.level();
+
+            level.sendParticles(ModParticles.SKULL_PARTICLES.get(),
                     positionClicked.getX() + 0.5d, positionClicked.getY() + 1, positionClicked.getZ() + 0.5d, 1,
                     Math.cos(i * 18) * 0.15d, 0.15d, Math.sin(i * 18) * 0.15d, 0.1);
         }
@@ -1467,13 +1476,20 @@ public class MysteryBoxBlock extends Block {
     }
 
     // Spawn the explosion method
-    public void SpawnExplosionAtPlayer(Level level, BlockPos pos, Player player, boolean SpawnFire){
+    public void SpawnExplosionAtPlayer(Level level, BlockPos pos, Player player, boolean SpawnFire, LivingEntity entity){
         if(!isBroken){
                 if(!isLuck){
                     if(isBadLuck) {
                         float radius = Objects.requireNonNull(explosion_radius)[Objects.requireNonNull(RANDOM).nextInt(explosion_radius.length)];
                         // Play sounds to indicate the successful opening of the mystery box
                         level.playSound(null, pos, ModSounds.MYSTERY_BOX_BAD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                        // Spawn Skull Particles to indicate the successful opening of the mystery box
+                        entity = player;
+                        for(int i = 0; i <= pos.getY() + 4; i++) {
+                            BlockState blockState = entity.level().getBlockState(pos.above(i));
+                            spawnBadLuckParticles(entity, pos, blockState);
+                            break;
+                        }
                         // Select the player and spawn an explosion from the mysterybox
                         level.explode(player, player.getX(), player.getY(), player.getZ(), radius, SpawnFire, Level.ExplosionInteraction.BLOCK);
                         // Set isBroken and hasSpawnedExplosion to true to indicate that the block has been broken
@@ -1495,13 +1511,20 @@ public class MysteryBoxBlock extends Block {
     }
 
     // Spawn the monster method
-    public void SpawnMonsterAtPlayer(ServerLevel level, BlockPos pos, MobSpawnType type, Player player){
+    public void SpawnMonsterAtPlayer(ServerLevel level, BlockPos pos, MobSpawnType type, Player player, LivingEntity entity){
         if(!isBroken){
                 if(!isLuck){
                     if(isBadLuck){
                         if(!hasSpawnedMonster){
                                 // Play sounds to indicate the successful opening of the mystery box
                                 level.playSound(null, pos, ModSounds.MYSTERY_BOX_BAD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                                // Spawn Skull Particles to indicate the successful opening of the mystery box
+                                entity = player;
+                                for(int i = 0; i <= pos.getY() + 4; i++) {
+                                    BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                    spawnBadLuckParticles(entity, pos, blockState);
+                                    break;
+                                }
                                 int index1 = RANDOM.nextInt(MONSTERS.length);
                                 EntityType<?> monster = MONSTERS[RANDOM.nextInt(index1)];
                                 level.addFreshEntity(monster.spawn(level, new BlockPos(pos.getX(), pos.above().getY() + 2, pos.getZ()), type));
@@ -1525,13 +1548,20 @@ public class MysteryBoxBlock extends Block {
     }
 
     // Give the bad effect method
-    public void GiveBadpotionEffectToPlayer(Player player, int time, int amplifier, boolean isAmbient, boolean HideParticles, Level level, BlockPos pos){
+    public void GiveBadpotionEffectToPlayer(Player player, int time, int amplifier, boolean isAmbient, boolean HideParticles, Level level, BlockPos pos, LivingEntity entity){
         if(!isBroken){
                 if(!isLuck){
                     if(isBadLuck){
                         if(!hasGivenBadEffect){
                                 // Play sounds to indicate the successful opening of the mystery box
                                 level.playSound(null, pos, ModSounds.MYSTERY_BOX_BAD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                                // Spawn Skull Particles to indicate the successful opening of the mystery box
+                                entity = player;
+                                for(int i = 0; i <= pos.getY() + 4; i++) {
+                                    BlockState blockState = entity.level().getBlockState(pos.above(i));
+                                    spawnBadLuckParticles(entity, pos, blockState);
+                                    break;
+                                }
                                 int index1 = RANDOM.nextInt(BAD_EFFECTS.length);
                                 MobEffect bad = BAD_EFFECTS[RANDOM.nextInt(index1)];
                                 player.addEffect(new MobEffectInstance(bad, time, amplifier, isAmbient, HideParticles));
@@ -1554,23 +1584,28 @@ public class MysteryBoxBlock extends Block {
         return;
     }
 
-    public void TPToAir(BlockPos pos, ServerPlayer player, ServerLevel level, Level level1){
+    public void TPToAir(BlockPos pos, ServerPlayer player, ServerLevel level, Level level1, LivingEntity entity){
         if(!isBroken){
             if(!isLuck){
                 if(isBadLuck) {
                     if (!hasTPToAir) {
                         // Play sounds to indicate the successful opening of the mystery box
                         level.playSound(null, player.blockPosition().above(), ModSounds.MYSTERY_BOX_BAD_LUCK.get(), SoundSource.PLAYERS, 1f, 1f);
+                        // Spawn Skull Particles to indicate the successful opening of the mystery box
+                        entity = player;
+                        for(int i = 0; i <= pos.getY() + 4; i++) {
+                            BlockState blockState = entity.level().getBlockState(pos.above(i));
+                            spawnBadLuckParticles(entity, pos, blockState);
+                            break;
+                        }
+                        BlockPos pos1 = player.getOnPos().containing(player.getBlockX(), player.getBlockY(), player.getBlockZ());
+                        player.teleportTo(pos1.getX(), pos1.getY() + 3000.0d, pos1.getZ());
                         // Set isBroken and hasTPToAir to true to indicate that the block has been broken
                         hasTPToAir = true;
                         isBroken = true;
                         isGoodLuck = true;
                         isBadLuck = false;
                         isLuck = true;
-                        BlockPos pos1 = player.getOnPos().containing(player.getBlockX(), player.getBlockY(), player.getBlockZ());
-                        player.teleportTo(pos1.getX(), pos1.getY() + 3000.0d, pos1.getZ());
-
-
                     }
 
                 }else{
@@ -1585,13 +1620,20 @@ public class MysteryBoxBlock extends Block {
         return;
     }
 
-    public void ClearInventory(Player player, Level level, BlockPos pos) {
+    public void ClearInventory(Player player, Level level, BlockPos pos, LivingEntity entity) {
         if (!isBroken) {
             if (!isLuck) {
                 if (isBadLuck) {
                     if (!hasClearedInventory) {
                         // Play sounds to indicate the successful opening of the mystery box
                         level.playSound(null, pos, ModSounds.MYSTERY_BOX_BAD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                        // Spawn Skull Particles to indicate the successful opening of the mystery box
+                        entity = player;
+                        for(int i = 0; i <= pos.getY() + 4; i++) {
+                            BlockState blockState = entity.level().getBlockState(pos.above(i));
+                            spawnBadLuckParticles(entity, pos, blockState);
+                            break;
+                        }
                         player.getInventory().clearContent();
                         // Set isBroken and hasClearedInventory to true to indicate that the block has been broken
                         hasClearedInventory = true;
@@ -1612,15 +1654,22 @@ public class MysteryBoxBlock extends Block {
         return;
     }
 
-    public void SpawnNukeAtPlayer(Level level, BlockPos pos, Player player, boolean SpawnFire){
+    public void SpawnNukeAtPlayer(Level level, BlockPos pos, Player player, boolean SpawnFire, LivingEntity entity){
         if(!isBroken){
             if(!isLuck){
                 if(isBadLuck) {
                     // Play sounds to indicate the successful opening of the mystery box
                     level.playSound(null, pos, ModSounds.NUKE_ALERT.get(), SoundSource.BLOCKS, 1f, 1f);
-                    // Select the player and spawn an explosion from the mysterybox
+                    // Spawn Skull Particles to indicate the successful opening of the mystery box
+                    entity = player;
+                    for(int i = 0; i <= pos.getY() + 4; i++) {
+                        BlockState blockState = entity.level().getBlockState(pos.above(i));
+                        spawnBadLuckParticles(entity, pos, blockState);
+                        break;
+                    }
+                    // Select the player and spawn a nuke from the mysterybox
                     level.explode(player, player.getX(), player.getY(), player.getZ(), 999999999, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                    // Set isBroken and hasSpawnedExplosion to true to indicate that the block has been broken
+                    // Set isBroken and hasNukedWorld to true to indicate that the block has been broken
                     hasNukedWorld = true;
                     isBroken = true;
                     isGoodLuck = true;

@@ -3,6 +3,7 @@ package com.ryutheghost.themysterybox.util.events;
 import com.ryutheghost.themysterybox.TheMysteryBoxMod;
 import com.ryutheghost.themysterybox.particles.ConfettiParticles;
 import com.ryutheghost.themysterybox.particles.ModParticles;
+import com.ryutheghost.themysterybox.particles.SkullParticles;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,5 +14,6 @@ public class ModEventClientBusEvents {
     @SubscribeEvent
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ModParticles.CONFETTI_PARTICLES.get(), ConfettiParticles.Provider::new);
+        event.registerSpriteSet(ModParticles.SKULL_PARTICLES.get(), SkullParticles.Provider::new);
     }
 }
