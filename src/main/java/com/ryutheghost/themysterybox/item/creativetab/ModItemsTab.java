@@ -1,6 +1,6 @@
 package com.ryutheghost.themysterybox.item.creativetab;
 
-import com.ryutheghost.themysterybox.MainMod;
+import com.ryutheghost.themysterybox.TheMysteryBoxMod;
 import com.ryutheghost.themysterybox.item.registry.MysteryBoxModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -16,7 +16,7 @@ public class ModItemsTab {
 
     // Create a deferred register for creative mode tabs
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
-            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MainMod.MODID);
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TheMysteryBoxMod.MODID);
 
     // Define a creative mode tab for mystery items
     public static final RegistryObject<CreativeModeTab> MYSTERY_ITEMS_TAB = CREATIVE_MODE_TABS.register("unknown_items_tab",

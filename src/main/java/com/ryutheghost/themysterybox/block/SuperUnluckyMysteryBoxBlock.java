@@ -118,6 +118,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
     public boolean hasGivenBadEffect = false; // Boolean field to check if it is a bad potion effect
     public boolean hasTPToAir = false; // Boolean field to check if a teleport has been given to a player
     public boolean hasClearedInventory = false; // Boolean field to check if a player's inventory has been cleared
+    public boolean hasNukedWorld = false; // Boolean field to check if a player has been nuked
     public boolean isBadLuck = true; // Boolean field to check if it is bad luck
     public boolean isBroken = false; // Boolean field to check if it is broken
     public boolean isExplosion = true; // Boolean field to check if it is an explosion
@@ -125,6 +126,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
     public boolean isTPToAir = false; // Boolean field to check if it is a teleport
     public boolean isClearedInventory = false; // Boolean field to check if a player's inventory is cleared
     public boolean isBadEffect = false; // Boolean field to check if it is a bad effect
+    public boolean isNuke = false; // Boolean field to check if a player is nuked
     public boolean isLuck = false; // Boolean field to check if it is luck
 
     @Override
@@ -277,6 +279,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                                     ClearInventory(player, level, pos);
                                     // Sets isClearedInventory to false
                                     isClearedInventory = false;
+                                    isNuke = true;
                                 }
                                 // Reset the default boolean values
                                 else {
@@ -287,8 +290,38 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                             else {
                                 isClearedInventory = false;
                             }
-                        }else{
-                            isBadLuck = true;
+                        }
+                        if (isBadLuck) {
+                            //Various condition checks
+                            if (isNuke) {
+                                // Check if the player lost their inventory
+                                if (!hasNukedWorld) {
+                                    if(!isbadluckmessageSent){
+                                        // Generate a random index to get a random translation key for a bad luck message
+                                        int index = new Random().nextInt(Objects.requireNonNull(bad_translation_keys_messages).size());
+                                        // Send the bad luck message to the player
+                                        Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(bad_translation_keys_messages.get(index))));
+                                        player.sendSystemMessage(Component.nullToEmpty("§4Oh no! You've unleashed a Nuke upon this world."));
+                                    }else{
+                                        isbadluckmessageSent = false;
+                                    }
+                                    // Clear the inventory of the player on open
+                                    ClearInventory(player, level, pos);
+                                    // Sets isClearedInventory to false
+                                    isNuke = false;
+                                }
+                                // Reset the default boolean values
+                                else {
+                                    hasNukedWorld = false;
+                                }
+                            }
+                            // Reset the default boolean values
+                            else {
+                                isNuke = false;
+                            }
+                        }
+                        else{
+                            isBadLuck = false;
                         }
                     }else{
                         isLuck = false;
@@ -437,6 +470,31 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                     isBadLuck = true;
                 }
             } else {
+                isLuck = false;
+            }
+        }else{
+            isBroken = false;
+        }
+        return;
+    }
+
+    public void SpawnNukeAtPlayer(Level level, BlockPos pos, Player player, boolean SpawnFire){
+        if(!isBroken){
+            if(!isLuck){
+                if(isBadLuck) {
+                    // Play sounds to indicate the successful opening of the mystery box
+                    level.playSound(null, pos, ModSounds.NUKE_ALERT.get(), SoundSource.BLOCKS, 1f, 1f);
+                    // Select the player and spawn an explosion from the mysterybox
+                    level.explode(player, player.getX(), player.getY(), player.getZ(), 999999999, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                    // Set isBroken and hasSpawnedExplosion to true to indicate that the block has been broken
+                    hasNukedWorld = true;
+                    isBroken = true;
+                    isBadLuck = true;
+                    isLuck = true;
+                }else{
+                    isBadLuck = false;
+                }
+            }else{
                 isLuck = false;
             }
         }else{

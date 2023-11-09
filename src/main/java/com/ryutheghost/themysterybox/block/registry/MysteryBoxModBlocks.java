@@ -1,6 +1,6 @@
 package com.ryutheghost.themysterybox.block.registry;
 
-import com.ryutheghost.themysterybox.MainMod;
+import com.ryutheghost.themysterybox.TheMysteryBoxMod;
 import com.ryutheghost.themysterybox.block.MysteryBoxBlock;
 import com.ryutheghost.themysterybox.block.SuperLuckyMysteryBoxBlock;
 import com.ryutheghost.themysterybox.block.SuperUnluckyMysteryBoxBlock;
@@ -26,7 +26,7 @@ public class MysteryBoxModBlocks {
 
     // DeferredRegister for Block
     public static final DeferredRegister<Block> BLOCKS =
-            DeferredRegister.create(Objects.requireNonNull(ForgeRegistries.BLOCKS), MainMod.MODID);
+            DeferredRegister.create(Objects.requireNonNull(ForgeRegistries.BLOCKS), TheMysteryBoxMod.MODID);
 
     // RegistryObject for the Mystery Box block
     public static final RegistryObject<Block> MYSTERY_BOX_BLOCK = registerNormalMysteryBox(

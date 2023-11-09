@@ -27,8 +27,8 @@ import org.slf4j.Logger;
 
 import java.util.Objects;
 
-@Mod(MainMod.MODID)
-public class MainMod {
+@Mod(TheMysteryBoxMod.MODID)
+public class TheMysteryBoxMod {
 
     // Define mod id in a common place for everything to reference
     public static final String MODID = "mysterybox";
@@ -36,7 +36,7 @@ public class MainMod {
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public MainMod() {
+    public TheMysteryBoxMod() {
         IEventBus modEventBus = Objects.requireNonNull(FMLJavaModLoadingContext.get()).getModEventBus();
 
         // Register the commonSetup method for modloading

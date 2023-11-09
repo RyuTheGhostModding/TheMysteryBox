@@ -10,5 +10,11 @@
     "sounds": [
       "mysterybox:mystery_box_bad_luck"
     ]
+  },
+  "nuke_alert": {
+    "subtitle": "sounds.mysterybox.nuke_alert",
+    "sounds": [
+      "mysterybox:nuke_alert"
+    ]
   }
 }
