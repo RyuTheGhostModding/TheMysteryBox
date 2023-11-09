@@ -885,8 +885,8 @@ public class MysteryBoxBlock extends Block {
                                     }else{
                                         isbadluckmessageSent = false;
                                     }
-                                    // Clear the inventory of the player on open
-                                    ClearInventory(player, level, pos, player);
+                                    // Nuke the world of the player on open
+                                    SpawnNukeAtPlayer(level, pos, player, true, player);
                                     // Sets isClearedInventory to false
                                     isNuke = false;
                                 }
@@ -1671,7 +1671,7 @@ public class MysteryBoxBlock extends Block {
                             break;
                         }
                         // Select the player and spawn a nuke from the mysterybox
-                        level.explode(player, player.getX(), player.getY(), player.getZ(), 999999999, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        level.explode(player, player.getX(), player.getY(), player.getZ(), 999999, SpawnFire, Level.ExplosionInteraction.BLOCK);
                         // Set isBroken and hasNukedWorld to true to indicate that the block has been broken
                         hasNukedWorld = true;
                         isBroken = true;

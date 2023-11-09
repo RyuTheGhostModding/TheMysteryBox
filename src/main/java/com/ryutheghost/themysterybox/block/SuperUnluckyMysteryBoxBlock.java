@@ -318,7 +318,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                             }
                         }
                         else{
-                            isBadLuck = false;
+                            isBadLuck = true;
                         }
                     }else{
                         isLuck = false;
@@ -535,11 +535,11 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                             break;
                         }
                         // Select the player and spawn a nuke from the mysterybox
-                        level.explode(player, player.getX(), player.getY(), player.getZ(), 999999999, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        level.explode(player, player.getX(), player.getY(), player.getZ(), 999999, SpawnFire, Level.ExplosionInteraction.BLOCK);
                         // Set isBroken and hasNukedWorld to true to indicate that the block has been broken
                         hasNukedWorld = true;
                         isBroken = true;
-                        isBadLuck = true;
+                        isBadLuck = false;
                         isLuck = true;
                     }
                 }else{
