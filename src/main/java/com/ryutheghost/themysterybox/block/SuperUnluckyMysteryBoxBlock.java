@@ -16,6 +16,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
@@ -119,6 +120,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
     public boolean hasTPToAir = false; // Boolean field to check if a teleport has been given to a player
     public boolean hasClearedInventory = false; // Boolean field to check if a player's inventory has been cleared
     public boolean hasNukedWorld = false; // Boolean field to check if a player has been nuked
+    public boolean hasRainedArrows = false; // Boolean field to check if arrows have rained on a player
     public boolean isBadLuck = true; // Boolean field to check if it is bad luck
     public boolean isBroken = false; // Boolean field to check if it is broken
     public boolean isExplosion = true; // Boolean field to check if it is an explosion
@@ -127,6 +129,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
     public boolean isClearedInventory = false; // Boolean field to check if a player's inventory is cleared
     public boolean isBadEffect = false; // Boolean field to check if it is a bad effect
     public boolean isNuke = false; // Boolean field to check if a player is nuked
+    public boolean isRainingArrows = false; // Boolean field to check if arrows are raining on a player
     public boolean isLuck = false; // Boolean field to check if it is luck
 
     @Override
@@ -315,6 +318,35 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                             // Reset the default boolean values
                             else {
                                 isNuke = false;
+                            }
+                        }
+                        if (isBadLuck) {
+                            //Various condition checks
+                            if (isRainingArrows) {
+                                // Check if the player lost their inventory
+                                if (!hasRainedArrows) {
+                                    if(!isbadluckmessageSent){
+                                        // Generate a random index to get a random translation key for a bad luck message
+                                        int index = new Random().nextInt(Objects.requireNonNull(bad_translation_keys_messages).size());
+                                        // Send the bad luck message to the player
+                                        Objects.requireNonNull(player).sendSystemMessage(Component.translatable(Objects.requireNonNull(bad_translation_keys_messages.get(index))));
+                                        player.sendSystemMessage(Component.nullToEmpty("§4Oh no! It's raining arrows! Duck and cover!"));
+                                    }else{
+                                        isbadluckmessageSent = false;
+                                    }
+                                    // Rain Arrows in the world of the player on open
+                                    SpawnArrowRainAtPlayer(level, pos, player, player);
+                                    // Sets isRainingArrows to false
+                                    isRainingArrows = false;
+                                }
+                                // Reset the default boolean values
+                                else {
+                                    hasRainedArrows = false;
+                                }
+                            }
+                            // Reset the default boolean values
+                            else {
+                                isRainingArrows = false;
                             }
                         }
                         else{
@@ -602,6 +634,71 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                         level.explode(player, player.getX(), player.getY() - 64, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
                         // Set isBroken and hasNukedWorld to true to indicate that the block has been broken
                         hasNukedWorld = true;
+                        isBroken = true;
+                        isBadLuck = false;
+                        isLuck = true;
+                    }
+                }else{
+                    isBadLuck = true;
+                }
+            }else{
+                isLuck = false;
+            }
+        }else{
+            isBroken = false;
+        }
+        return;
+    }
+
+    public void SpawnArrowRainAtPlayer(Level level, BlockPos pos, Player player, LivingEntity entity){
+        if(!isBroken){
+            if(!isLuck){
+                if(isBadLuck) {
+                    if(!hasRainedArrows){
+                        // Play sounds to indicate the successful opening of the mystery box
+                        level.playSound(null, pos, ModSounds.MYSTERY_BOX_BAD_LUCK.get(), SoundSource.BLOCKS, 1f, 1f);
+                        // Spawn Skull Particles to indicate the successful opening of the mystery box
+                        entity = player;
+                        for(int i = 0; i <= pos.getY() + 4; i++) {
+                            BlockState blockState = entity.level().getBlockState(pos.above(i));
+                            spawnBadLuckParticles(entity, pos, blockState);
+                            break;
+                        }
+
+                        // Select the player and spawn a rain of arrows from the mysterybox
+                        // Create the Arrow Projectile Entity at the specified coordinates
+                        // Please replace 'YourArrowEntity' with your actual Arrow Projectile Entity class
+                        Arrow arrow = new Arrow(level, player.getX(), player.getY() + 100, player.getZ());
+
+                        // Spawn the entity into the world
+                        level.addFreshEntity(arrow);
+                        for (int i = 1; i <= 64; i++) {
+                            double x = player.getX() + i;
+                            double y = player.getY() + 100;
+                            double z = player.getZ();
+
+                            // Create the Arrow Projectile Entity at the specified coordinates
+                            // Please replace 'YourArrowEntity' with your actual Arrow Projectile Entity class
+                            Arrow arrow1 = new Arrow(level, x, y, z);
+
+                            // Spawn the entity into the world
+                            level.addFreshEntity(arrow1);
+                        }
+
+                        for (int i = 1; i <= 64; i--) {
+                            double x = player.getX() - i;
+                            double y = player.getY() + 100;
+                            double z = player.getZ();
+
+                            // Create the Arrow Projectile Entity at the specified coordinates
+                            // Please replace 'YourArrowEntity' with your actual Arrow Projectile Entity class
+                            Arrow arrow2 = new Arrow(level, x, y, z);
+
+                            // Spawn the entity into the world
+                            level.addFreshEntity(arrow2);
+                        }
+                        // Set isBroken and hasRainedArrows to true to indicate that the block has been broken
+                        hasRainedArrows = true;
                         isBroken = true;
                         isBadLuck = false;
                         isLuck = true;
