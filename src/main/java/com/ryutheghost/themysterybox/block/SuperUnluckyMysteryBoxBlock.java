@@ -609,10 +609,10 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                         }
 
                         // Select the player and spawn a rain of arrows from the mysterybox
-                        for (int i = 1; i <= 500; i++) {
-                            double x = player.getX() + i;
-                            double y = player.getY() + 100;
-                            double z = player.getZ() + i;
+                        for (int i = 1; i >= 500; i++) {
+                            double x = player.getX();
+                            double y = player.getY() + i;
+                            double z = player.getZ();
 
                             // Create the Arrow Projectile Entity at the specified coordinates
                             // Please replace 'YourArrowEntity' with your actual Arrow Projectile Entity class
