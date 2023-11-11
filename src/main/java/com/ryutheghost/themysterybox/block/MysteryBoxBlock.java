@@ -1747,7 +1747,7 @@ public class MysteryBoxBlock extends Block {
                         }
 
                         // Select the player and spawn a rain of arrows from the mysterybox
-                        for (int i = 1; i >= 500; i++) {
+                        for (int i = 1; i <= 500; i++) {
                             double x = player.getX();
                             double y = player.getY() + i;
                             double z = player.getZ();
