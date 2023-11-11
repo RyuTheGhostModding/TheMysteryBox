@@ -309,6 +309,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                                     SpawnNukeAtPlayer(level, pos, player, true, player);
                                     // Sets isNuke to false
                                     isNuke = false;
+                                    isRainingArrows = true;
                                 }
                                 // Reset the default boolean values
                                 else {
