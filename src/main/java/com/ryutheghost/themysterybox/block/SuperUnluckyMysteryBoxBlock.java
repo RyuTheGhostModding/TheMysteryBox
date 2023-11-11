@@ -294,7 +294,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                         }if (isBadLuck) {
                             //Various condition checks
                             if (isNuke) {
-                                // Check if the player lost their inventory
+                                // Check if the player has nuked the world
                                 if (!hasNukedWorld) {
                                     if(!isbadluckmessageSent){
                                         // Generate a random index to get a random translation key for a bad luck message
@@ -324,7 +324,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                         if (isBadLuck) {
                             //Various condition checks
                             if (isRainingArrows) {
-                                // Check if the player lost their inventory
+                                // Check if the player had arrows rained on them
                                 if (!hasRainedArrows) {
                                     if(!isbadluckmessageSent){
                                         // Generate a random index to get a random translation key for a bad luck message
@@ -568,71 +568,21 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
                             break;
                         }
                         // Select the player and spawn a nuke from the mysterybox
-                        level.explode(player, player.getX(), player.getY(), player.getZ(), 100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 1,  player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 2,  player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 3,  player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 4,  player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 5,  player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 6,  player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 7,  player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 8,  player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 9,  player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 10, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 11, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 12, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 13, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 14, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 15, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 16, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 17, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 18, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 19, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 20, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 21, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 22, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 23, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 24, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 25, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 26, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 27, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 28, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 29, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 30, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 31, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 32, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 33, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 34, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 35, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 36, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 37, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 38, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 39, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 40, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 41, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 42, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 43, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 44, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 45, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 46, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 47, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 48, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 49, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 50, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 51, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 52, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 53, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 54, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 55, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 56, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 57, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 58, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 59, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 60, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 61, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 62, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 63, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        level.explode(player, player.getX(), player.getY() - 64, player.getZ(),100.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        level.explode(player, player.getX(), player.getY(), player.getZ(), 50.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        for (int i = 1; i <= 1500; i++) {
+                            double x = player.getX() + i;
+                            double y = player.getY();
+                            double z = player.getZ();
+
+                            level.explode(player, x, y, z, 50.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        }
+                        for (int i = 1; i <= 1500; i++) {
+                            double x = player.getX();
+                            double y = player.getY() - i;
+                            double z = player.getZ();
+
+                            level.explode(player, x, y, z, 50.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        }
                         // Set isBroken and hasNukedWorld to true to indicate that the block has been broken
                         hasNukedWorld = true;
                         isBroken = true;
@@ -673,7 +623,7 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
 
                         // Spawn the entity into the world
                         level.addFreshEntity(arrow);
-                        for (int i = 1; i <= 64; i++) {
+                        for (int i = 1; i <= 500; i++) {
                             double x = player.getX() + i;
                             double y = player.getY() + 100;
                             double z = player.getZ();
@@ -684,19 +634,6 @@ public class SuperUnluckyMysteryBoxBlock extends Block {
 
                             // Spawn the entity into the world
                             level.addFreshEntity(arrow1);
-                        }
-
-                        for (int i = 1; i <= 64; i--) {
-                            double x = player.getX() - i;
-                            double y = player.getY() + 100;
-                            double z = player.getZ();
-
-                            // Create the Arrow Projectile Entity at the specified coordinates
-                            // Please replace 'YourArrowEntity' with your actual Arrow Projectile Entity class
-                            Arrow arrow2 = new Arrow(level, x, y, z);
-
-                            // Spawn the entity into the world
-                            level.addFreshEntity(arrow2);
                         }
                         // Set isBroken and hasRainedArrows to true to indicate that the block has been broken
                         hasRainedArrows = true;
