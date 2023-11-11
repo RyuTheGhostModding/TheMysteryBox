@@ -1704,20 +1704,13 @@ public class MysteryBoxBlock extends Block {
                             break;
                         }
                         // Select the player and spawn a nuke from the mysterybox
-                        level.explode(player, player.getX(), player.getY(), player.getZ(), 50.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                        // Select the player and spawn a nuke from the mysterybox
                         for (int i = 1; i <= 1500; i++) {
                             double x = player.getX() + i;
-                            double y = player.getY();
-                            double z = player.getZ();
-
-                            level.explode(player, x, y, z, 50.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
-                        }
-                        for (int i = 1; i <= 1500; i++) {
-                            double x = player.getX();
                             double y = player.getY() - i;
-                            double z = player.getZ();
+                            double z = player.getZ() + i;
 
-                            level.explode(player, x, y, z, 50.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
+                            level.explode(player, x, y, z, 25.0f, SpawnFire, Level.ExplosionInteraction.BLOCK);
                         }
                         // Set isBroken and hasNukedWorld to true to indicate that the block has been broken
                         hasNukedWorld = true;
@@ -1754,16 +1747,10 @@ public class MysteryBoxBlock extends Block {
                         }
 
                         // Select the player and spawn a rain of arrows from the mysterybox
-                        // Create the Arrow Projectile Entity at the specified coordinates
-                        // Please replace 'YourArrowEntity' with your actual Arrow Projectile Entity class
-                        Arrow arrow = new Arrow(level, player.getX(), player.getY() + 100, player.getZ());
-
-                        // Spawn the entity into the world
-                        level.addFreshEntity(arrow);
                         for (int i = 1; i <= 500; i++) {
                             double x = player.getX() + i;
                             double y = player.getY() + 100;
-                            double z = player.getZ();
+                            double z = player.getZ() + i;
 
                             // Create the Arrow Projectile Entity at the specified coordinates
                             // Please replace 'YourArrowEntity' with your actual Arrow Projectile Entity class
